@@ -6,8 +6,8 @@ This repo consists of details and open-sourced codes and materials of the HeRoCa
 
 ![Demo Vid](Images/DemoVid.gif)
 
-### Want to test it live?
-[Demo Live](https://andersonmolter1.github.io/LTG-Project-3D-RC-Car-Simulation/demo.html)
+### Want to test it live ?
+[Demo Live](https://andersonmolter1.github.io/LTG-Project-3D-RC-Car-Simulation/demo.html) - This is an earlier version of our simulator, so some of the features may not be visible/disabled. We are constantly developing this and will update this link periodically.
 
 
 ## PID (Proportional-Integral-Derivative) Controller
