@@ -6,7 +6,7 @@ This repo consists of details and open-sourced codes and materials of the HeRoCa
 
 ![Demo Vid](Images/DemoVid.gif)
 
-## Want to test it live?
+### Want to test it live?
 [Demo Live](https://andersonmolter1.github.io/LTG-Project-3D-RC-Car-Simulation/)
 
 
@@ -18,17 +18,17 @@ One concept you will hear me talk about a lot in this tutorial is the idea of er
 In the simulation in this repo, the cars have 5 trackers on the front of the car that will be looking for where the car is on the track. We will talk about how they do this later in this tutorial. For now, keep in mind that if the car is not in the middle of the track or is swaying to one side of the track, the car will have a higher error. If the car is in the middle of the track, the car will have no error. 
 
 
-### P (Proportion)
+#### P (Proportion)
 ![\Large (J_P\vert_{J_{P=25}}error)](https://latex.codecogs.com/gif.latex?%28J_P%5Cvert_%7BJ_%7BP%3D25%7D%7Derror%29) <br>
 This section of the model will be determining the initial amount of steering to be applied depedent on the amount of error off the line the car is experiencing. We will start with this variable at 25 to account for the 4 errors on each side of the line that can occur. 
-### I (Integral)
+#### I (Integral)
 ![\Large (J_I\sum_{n=0}^{k\vert_{k=v.len}}v\vert_{v=v[]})](https://latex.codecogs.com/gif.latex?%28J_I%5Csum_%7Bn%3D0%7D%5E%7Bk%5Cvert_%7Bk%3Dv.len%7D%7Dv%5Cvert_%7Bv%3Dv%5B%5D%7D%29) <br>
 This section of the model will take into consideration all of the previous errors and add them up. If the summation of these errors is not 0, then this section will smooth out the correction to get back on the line. For now the constant will be set to 1. We will figure out the best value of this constant later.
-### D (Derivative)
+#### D (Derivative)
 ![(J_D\vert_{J_{D=0}}\frac{d}{dt}error) ](https://latex.codecogs.com/gif.latex?%28J_D%5Cvert_%7BJ_%7BD%3D0%7D%7D%5Cfrac%7Bd%7D%7Bdt%7Derror%29) <br>
 This portion of the model calculates the delta between the previous error and the current error and then multiply that by the constant which we will figure out in a later step. For now, it will be set to 0. Once implemented, this should reduce the overshoot effect that can happen when the current error greatly deviates from the last error. 
 
-### PID Control
+#### PID Control
 Control of this car is going to use a PID Controller Model below. The variable "error" will be defined by how far left or right the car is angled relative to the line the car is following. We will be calculating our error with the following logic. Error of Left (LL), Left-Middle (LM), Middle (M), Right-Middle (RM), Right (RR).
 
     0 0 0 0 1 ==> Error = 4
@@ -64,7 +64,7 @@ To actually know where the car is relative to the track, we are using box collid
 A 1 in this visualization means that that sensor is currently interacting with the box collider that is in the middle of the track. As you can see from the Trackers section, 2 trackers can be interacting with that collider at the same time giving us a greater level of accurary when seeing where on the track the car currently is. 
 
 
-## Interface
+##  Unity Simulator Interface
 
 ![View of Car](Images/Interface.png)
 
