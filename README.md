@@ -97,6 +97,26 @@ If you cannot find the tuning that you desire, slow the speed of the car down an
 
 # Contributors
 
-This work is contributed by the following students of Heterogeneous Robotics Research Lab ([HeRoLab](http://hero.uga.edu)) at the University of Georgia.
+This work is contributed by the following students of [HeRoLab](http://hero.uga.edu) at the University of Georgia.
 
 Anderson Molter, Undergraduate Research Assistant
+
+
+## Heterogeneous Robotics (HeRoLab)
+
+This project is a part of Swarms project at the Heterogeneous Robotics Research Lab (HeRoLab) of the University of Georgia.
+
+Please contact hero at uga . edu for any queries
+
+http://hero.uga.edu/
+
+<p align="center">
+<img src="http://hero.uga.edu/wp-content/uploads/2019/04/HeRo-Logo-3.png" width="300">
+</p>
+
+
+
+
+
+
+
