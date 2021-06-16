@@ -5,7 +5,7 @@ import socket
 from datetime import datetime
 from AutoPhat.AutoPhatMD import AutoPhatMD
 import os
-import qwiic_icm20948
+import qwiic_scmd
 import threading
 
 class CarController:
