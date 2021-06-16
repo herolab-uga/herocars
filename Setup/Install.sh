@@ -4,6 +4,7 @@ read static_ip
 echo "Enter routers IP:"
 read router_ip
 sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get -y install python-pip
 sudo apt-get install python3-pip -y
 sudo apt-get install python3-rpi.gpio python3-rpi.gpio -y
 sudo pip3 install sparkfun-qwiic-scmd
