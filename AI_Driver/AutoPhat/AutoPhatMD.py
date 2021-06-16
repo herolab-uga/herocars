@@ -48,11 +48,11 @@ class AutoPhatMD:
         self.myMotor.set_drive(0, 1, 0)
         time.sleep(0.05)
     def ManualForward(self):
-        for i in range (75, 150, 25):
+        for i in range (60, 120, 20):
             self.myMotor.set_drive(1, 1, i)
             time.sleep(0.01)
     def ManualReverse(self):
-        for i in range (75, 150, 25):
+        for i in range (60, 120, 20):
             self.myMotor.set_drive(1, 0, i)
             time.sleep(0.01)
     def ManualDriveStop(self):

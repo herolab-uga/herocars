@@ -40,13 +40,12 @@ class CarController:
     minSpeed = 75
     IMU.begin()
     def Speed(self):  # Gets speed proportional to error term
-        speed = int(abs(self.error) *self.maxSpeed /4) + self.minSpeed
+        speed = abs(int(abs(self.error) * self.maxSpeed /4) + self.minSpeed)
         if (speed > self.maxSpeed):
             return self.maxSpeed
         return speed
     def Proportion(self):  # Calculates P of PID multiplied by the its constant
         return (self.error * self.J_P)
-
     def Integral(self):  # Calculates I of PID multiplied by the its constant
         if (self.PV > 10):
             self.PV = 10
