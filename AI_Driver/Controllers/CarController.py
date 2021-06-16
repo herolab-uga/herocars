@@ -127,6 +127,7 @@ class CarController:
         while (True):
             if (self.isConnected):
                 if (motor == 0):
+                    self.prevError = self.error
                     self.error = self.getError()
                 if (self.controlType == 0):
                     if (self.error == -5):

@@ -18,28 +18,25 @@ def TCP (car):
     host_addr = get_ip_address()
     carNum = 0
     oclet = host_addr.split('.')
-    # if (host_addr[-2] != '.'):
-    #     carNum = host_addr[-2] + host_addr[-1]
-    # else:
-    #     carNum = host_addr[-1]
     carNum = oclet[3]
     if (int(carNum) > 9):
         prefPort = '60'
     else:
         prefPort = '600'
     port = int(prefPort + carNum)
-    if (port > 65535):
+    if (port > 65535 or port < 1024):
       port = 60606
     print(port)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     ip = GetServerIP(carNum)
+    print(ip)
     server_address = (ip, port)
     try:
         sock.connect(server_address)
     except Exception as e:
         print(e)
         os._exit(0)
-    
+    print("here")
     sock.settimeout(3)
     isConnected = True
     car.isConnected = True
@@ -79,7 +76,7 @@ def GetServerIP(deviceNumber):
     else:
         prefPort = '006'
     port = int(deviceNumber + prefPort)
-    if (port > 65535):
+    if (port > 65535 or port < 1024):
       port = 60606
     print(port)
     server_address = ('', port)
