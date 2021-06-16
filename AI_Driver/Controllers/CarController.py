@@ -40,7 +40,7 @@ class CarController:
     minSpeed = 75
     IMU.begin()
     def Speed(self):  # Gets speed proportional to error term
-        speed = abs(int(abs(self.error) * self.maxSpeed /4) + self.minSpeed)
+        speed = abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed
         if (speed > self.maxSpeed):
             return self.maxSpeed
         return speed
