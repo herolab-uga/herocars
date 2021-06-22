@@ -25,12 +25,13 @@ def TCP (car):
         prefPort = '600'
     port = int(prefPort + carNum)
     if (port > 65535 or port < 1024):
-      port = 60606
+      port = 1024 + carNum
     print(port)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     ip = GetServerIP(carNum)
     print(ip)
     server_address = (ip, port)
+    print(server_address)
     try:
         sock.connect(server_address)
     except Exception as e:
@@ -77,7 +78,7 @@ def GetServerIP(deviceNumber):
         prefPort = '006'
     port = int(deviceNumber + prefPort)
     if (port > 65535 or port < 1024):
-      port = 60606
+      port = 1024 + int(deviceNumber)
     print(port)
     server_address = ('', port)
     sock.bind(server_address)
