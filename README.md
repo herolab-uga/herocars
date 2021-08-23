@@ -9,7 +9,7 @@ In this research, we focus on innovation in low-cost, open, intuitive learning a
 ## What you will learn from this project?
 This project is jampacked with cool ideas, interesting technologies, and interactive activities for the user to take part in! One major thing you will learn about is AI! AI comes in many shapes and sizes and has a very broad range of possibilities. For this project, we will be discussing a very popular AI that is common in self-driving cars around the world! That AI model is a PID controller or a proportional–integral–derivative controller . A PID controller consist of 3 calculations that are then combined together to give you a smooth decision tree. Ever wonder why your air conditioner doesn't constantly make the temperature way colder the moment the temperature goes ever so slightly below the set temp? The reason is many of them use a PID controller to help smooth out the temperature pattern to keep the temperature consistent without constantly over shooting the desired temperature. We will break the PID controller into 3 parts and describe what each element does, how it affects decisions, and how this can be applied into an RC car which we will make here shortly. But first, we must learn what an error is!
 
-## PID and Error
+## Baisc of PID and Error
 [Click Here](https://github.com/andersonmolter1/LTG-Project-3D-RC-Car-Simulation/wiki/PID-Controller-and-Error) to learn about the PID controller and the concept of Error! You should fully read this before moving on for these two concepts are the main driving ideas behind this project.
 
 ## RC Car Hardware Assembly and Software Installation
@@ -27,7 +27,7 @@ There are two guides for building the car and installing the software. It is rec
 [Click Here](https://github.com/herolab-uga/herocars/wiki/RC-Car-Interface) for instructions, information and a link to download our RC car simulation!
 
 ## Final Robotized RC Car After Assembly
-![RC Car](https://github.com/herolab-uga/herocars/blob/master/Images/PoliceCam.jpg?raw=true)
+![RC Car](https://github.com/herolab-uga/herocars/blob/master/Images/PoliceCam.jpg)
 ## Demo of the Robotized RC Car Driving Around the Track
 ![RC Car Driving Around the Track](https://github.com/herolab-uga/herocars/blob/master/Images/CarDriving.gif)
 
