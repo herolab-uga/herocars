@@ -27,7 +27,7 @@ There are two guides for building the car and installing the software. It is rec
 [Click Here](https://github.com/herolab-uga/herocars/wiki/RC-Car-Interface) for instructions, information and a link to download our RC car simulation!
 
 ## Final Robotized RC Car After Assembly
-![RC Car](https://github.com/herolab-uga/herocars/blob/master/Images/PoliceCam.jpg)
+![RC Car](https://github.com/herolab-uga/herocars/blob/master/Images/PoliceCam.jpg?raw=true)
 ## Demo of the Robotized RC Car Driving Around the Track
 ![RC Car Driving Around the Track](https://github.com/herolab-uga/herocars/blob/master/Images/CarDriving.gif)
 
