@@ -47,6 +47,7 @@ def TCP (car):
 
             try:
                 data = sock.recv(11, socket.MSG_WAITALL)
+                print(data)
             except socket.timeout as e:
                 car.isConnected = False
                 isConnected = False
