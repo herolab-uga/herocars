@@ -37,41 +37,50 @@ class CarController:
     GPIO.setup(35, GPIO.IN)  # LM IR Sensor
     GPIO.setup(37, GPIO.IN)  # LL IR Sensor
     minSpeed = 75
+
     def Speed(self):  # Gets speed proportional to error term
         speed = abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed
         if (speed > self.maxSpeed):
             return self.maxSpeed
         return speed
+
     def Proportion(self):  # Calculates P of PID multiplied by the its constant
         return (self.error * self.J_P)
+
     def Integral(self):  # Calculates I of PID multiplied by the its constant
         if (self.PV > 10):
             self.PV = 10
         if (self.PV < -10):
             self.PV = -10
         return (self.J_I * self.PV)
+
     def Derivative(self):  # Caluclates D of PID multiplied by the its constant
         return ((self.error - self.prevError) * self.J_D)
 
     def PID(self):  # Returns PID model
         return (self.Proportion() -  self.Integral() - self.Derivative())
+
     def modifyPID(self, newConstants):
         self.minSpeed = newConstants[0]
         self.turningDegree = newConstants[1]
         self.drivingDegree = newConstants[2]
+
         if (self.direction == 1):
             self.turningDegree = self.turningDegree * -1
         self.J_P = newConstants[3]
         self.J_I = newConstants[4]
         self.J_D = newConstants[5]
+
         self.controlType = newConstants[6]
         self.steeringM = newConstants[7]
         self.drivingM = newConstants[8]
         self.lineColor = newConstants[9]
         self.maxSpeed = newConstants[10]
+
     def DisconnectCar(self):
         self.motorDriver.Stop()
         os._exit(0)
+
     def getError(self):
         if (self.error != -5):
             self.prevError = self.error
@@ -87,6 +96,7 @@ class CarController:
         MM = GPIO.input(33)  # Middle Middle Sensor
         LM = GPIO.input(35)  # Left Middle Sensor
         LL = GPIO.input(37)  # Left Left Sensor
+
         # 0 0 0 0 1 ==> Error = 4
         # 0 0 0 1 1 ==> Error = 3
         # 0 0 0 1 0 ==> Error = 2
@@ -96,6 +106,7 @@ class CarController:
         # 0 1 0 0 0 ==> Error = -2
         # 1 1 0 0 0 ==> Error = -3
         # 1 0 0 0 0 ==> Error = -4
+        
         if (LL == noLine and LM == noLine and MM == noLine and RM == noLine and RR == line):
             self.error = 4
         elif (LL == noLine and LM == noLine and MM == noLine and RM == line and RR == line):
@@ -121,6 +132,7 @@ class CarController:
         #print(str(LL) + " " + str(LM) + " " + str(MM) + " " + str(RM) + " " + str(RR))
         #print(self.error)
         return self.error
+
     def driveCar(self, motor):
         while (True):
             if (self.isConnected):
@@ -157,6 +169,7 @@ class CarController:
                         elif (self.drivingM  == 0):
                             self.motorDriver.ManualDriveStop()
             sleep(0.01)
+
     def StartCar(self):
         try:
             # creating thread
