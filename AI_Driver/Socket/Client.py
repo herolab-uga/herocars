@@ -53,6 +53,7 @@ def TCP (car):
                 isConnected = False
                 print("closed")
                 sock.close()
+                break
             if not data: 
                 break
 
