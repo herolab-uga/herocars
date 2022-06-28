@@ -1,11 +1,16 @@
-
+// https://blog.idrisolubisi.com/how-to-integrate-real-time-webcam-on-a-web-page-using-javascript
+// sliders for p, i, d
+// sliders for min and max
+// big camera view
+// button to switch control modes
+// button to switch line types
 
 function startLTGCars() {
     // ip address and stuff and connect button
     LTGCarsArea.start();
 }
 
-var LTGCarsArea = {
+var LTGCarsArea = { // to canvas or no canvas 
     canvas : document.createElement("canvas"),
     start : function() {
         this.canvas.width = 600;
@@ -43,6 +48,10 @@ function updateCarPlacement() {
 
     node.addEventListener('keydown', function(event) {
         const key = event.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+        if (key == "ArrowRight")
+            Movement.right();
+        if (key == "ArrowLeft")
+            Movement.left();
     });
 }
 
