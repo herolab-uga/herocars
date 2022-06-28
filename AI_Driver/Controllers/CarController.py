@@ -1,172 +1,182 @@
 import RPi.GPIO as GPIO
-from time import sleep
-import sys
-import socket
-from datetime import datetime
 from AutoPhat.AutoPhatMD import AutoPhatMD
-import os
-import qwiic_scmd
-import threading
 
 class CarController:
-    isConnected = False
-    motorDriver = AutoPhatMD()
-    steeringM = 0
-    drivingM = 0
-    direction = 0
-    prevSteer = 0
-    prevDrive = 0
-    socket = 0
-    maxSpeed = 150
-    carStopped = True
-    lineColor = 0
-    J_P = 43 # Proportion value
-    J_I = 1 # Integral Step value
-    J_D = 13  # Derivative Step Value
-    error = 0  # amount of error on the line the car is experiencing
-    controlType = 0
-    speed = 0
-    timer = False
-    isPID = 0
-    PV = 0  # list of all values errors that the car has experienced
-    prevError = 0  # error of last calculation used for Derivative calc
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(29, GPIO.IN)  # RR IR Sensor
-    GPIO.setup(31, GPIO.IN)  # RM IR Sensor
-    GPIO.setup(33, GPIO.IN)  # MM IR Sensor
-    GPIO.setup(35, GPIO.IN)  # LM IR Sensor
-    GPIO.setup(37, GPIO.IN)  # LL IR Sensor
-    minSpeed = 75
-    def Speed(self):  # Gets speed proportional to error term
-        speed = abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed
-        if (speed > self.maxSpeed):
-            return self.maxSpeed
-        return speed
-    def Proportion(self):  # Calculates P of PID multiplied by the its constant
-        return (self.error * self.J_P)
-    def Integral(self):  # Calculates I of PID multiplied by the its constant
-        if (self.PV > 10):
-            self.PV = 10
-        if (self.PV < -10):
-            self.PV = -10
-        return (self.J_I * self.PV)
-    def Derivative(self):  # Caluclates D of PID multiplied by the its constant
-        return ((self.error - self.prevError) * self.J_D)
 
-    def PID(self):  # Returns PID model
-        return (self.Proportion() -  self.Integral() - self.Derivative())
-    def modifyPID(self, newConstants):
-        self.minSpeed = newConstants[0]
-        self.turningDegree = newConstants[1]
-        self.drivingDegree = newConstants[2]
-        if (self.direction == 1):
-            self.turningDegree = self.turningDegree * -1
-        self.J_P = newConstants[3]
-        self.J_I = newConstants[4]
-        self.J_D = newConstants[5]
-        self.controlType = newConstants[6]
-        self.steeringM = newConstants[7]
-        self.drivingM = newConstants[8]
-        self.lineColor = newConstants[9]
-        self.maxSpeed = newConstants[10]
-    def DisconnectCar(self):
-        self.motorDriver.Stop()
-        os._exit(0)
-    def getError(self):
-        if (self.error != -5):
-            self.prevError = self.error
-        if (self.lineColor == 0):
-            line = 0
-            noLine = 1
-        else:
-            line = 1
-            noLine = 0
+    def __init__(self) -> None:
         
-        RR = GPIO.input(29)  # Right Right Sensor
-        RM = GPIO.input(31)  # Right Middle Sensor
-        MM = GPIO.input(33)  # Middle Middle Sensor
-        LM = GPIO.input(35)  # Left Middle Sensor
-        LL = GPIO.input(37)  # Left Left Sensor
-        # 0 0 0 0 1 ==> Error = 4
-        # 0 0 0 1 1 ==> Error = 3
-        # 0 0 0 1 0 ==> Error = 2
-        # 0 0 1 1 0 ==> Error = 1
-        # 0 0 1 0 0 ==> Error = 0
-        # 0 1 1 0 0 ==> Error = -1
-        # 0 1 0 0 0 ==> Error = -2
-        # 1 1 0 0 0 ==> Error = -3
-        # 1 0 0 0 0 ==> Error = -4
-        if (LL == noLine and LM == noLine and MM == noLine and RM == noLine and RR == line):
-            self.error = 4
-        elif (LL == noLine and LM == noLine and MM == noLine and RM == line and RR == line):
-            self.error = 3
-        elif (LL == noLine and LM == noLine and MM == noLine and RM == line and RR == noLine):
-            self.error = 2
-        elif (LL == noLine and LM == noLine and MM == line and RM == line and RR == noLine):
-            self.error = 1
-        elif (LL == noLine and LM == noLine and MM == line and RM == noLine and RR == noLine):
-            self.error = 0
-        elif (LL == noLine and LM == line and MM == line and RM == noLine and RR == noLine):
-            self.error = -1
-        elif (LL == noLine and LM == line and MM == noLine and RM == noLine and RR == noLine):
-            self.error = -2
-        elif (LL == line and LM == line and MM == noLine and RM == noLine and RR == noLine):
-            self.error = -3
-        elif (LL == line and LM == noLine and MM == noLine and RM == noLine and RR == noLine):
-            self.error = -4
-        else:
-            self.error = -5
-        if (self.error != -5):
-            self.PV +=  -.0001 * self.error
-        #print(str(LL) + " " + str(LM) + " " + str(MM) + " " + str(RM) + " " + str(RR))
-        #print(self.error)
-        return self.error
-    def driveCar(self, motor):
-        while (True):
-            if (self.isConnected):
-                if (motor == 0):
-                    self.prevError = self.error
-                    self.error = self.getError()
-                if (self.controlType == 0):
-                    if (self.error == -5):
-                        if (self.speed != 0):
-                            self.speed = self.speed - 50
-                        else:
-                            self.speed = 0
-                        self.motorDriver.Stop()
-                    elif (motor == 0):
-                        self.motorDriver.Turn(self.PID())
-                    else:
-                        self.speed = self.Speed()
-                        self.motorDriver.Drive(self.speed)
-                elif (self.controlType == 1):
-                    if (self.prevSteer != self.steeringM and motor == 0):
-                        self.prevSteer = self.steeringM
-                        if (self.steeringM == 2):
-                            self.motorDriver.ManualLeft()
-                        elif (self.steeringM == 1):      
-                            self.motorDriver.ManualRight()
-                        elif (self.steeringM == 0):
-                            self.motorDriver.ManualSteerStop()
-                    elif (self.prevDrive != self.drivingM and motor == 1):
-                        self.prevDrive = self.drivingM
-                        if (self.drivingM == 2):
-                            self.motorDriver.ManualForward()
-                        elif (self.drivingM == 1):
-                            self.motorDriver.ManualReverse()
-                        elif (self.drivingM  == 0):
-                            self.motorDriver.ManualDriveStop()
-            sleep(0.01)
-    def StartCar(self):
-        try:
-            # creating thread
-            t1 = threading.Thread(target=self.driveCar, args=(0,))
-            t2 = threading.Thread(target=self.driveCar, args=(1,))
+        # Initialize the car
+        # Autohat Object
+        self.motor_driver = AutoPhatMD()
 
-            # starting thread 1
-            t1.start()
-            # starting thread 2
-            t2.start()
-        except Exception as e:
-            print(e)
-            sys.exit(0)
+        self.steeringM = 0
+        self.drivingM = 0
+
+        self.direction = 0
+
+        self.prev_steer = 0
+        self.prev_drive = 0
+
+        self.socket = 0
+
+        self.max_speed = 150
+        self.min_speed
+
+        self.car_stopped = True
+        self.line_color = 0
+
+        self.__p = 43       # Proportion value
+        self.__i = 1        # Integral Step value
+        self.__d = 13       # Derivative Step Value
+        self.error = 0      # amount of error on the line the car is experiencing
+
+        self.control_type = 0
+        self.car_speed = 0
+        self.timer = False
+        self.isPID = 0
+
+        self.PV = 0  # sum of all values errors that the car has experienced
+
+        self.prevError = 0  # error of last calculation used for Derivative calc
+
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(29, GPIO.IN)  # RR IR Sensor
+        GPIO.setup(31, GPIO.IN)  # RM IR Sensor
+        GPIO.setup(33, GPIO.IN)  # MM IR Sensor
+        GPIO.setup(35, GPIO.IN)  # LM IR Sensor
+        GPIO.setup(37, GPIO.IN)  # LL IR Sensor
+
+    # Create getter and setter methods for the car's __p, __i, and __d
+    @property
+    def p(self):
+        return self.__p
+    
+    @p.setter
+    def p(self, value):
+        self.__p = value
+    
+    @property
+    def i(self):
+        return self.__i
+    
+    @i.setter
+    def i(self, value):
+        self.__i = value
+    
+    @property
+    def d(self):
+        return self.__d
+    
+    @d.setter
+    def d(self, value):
+        self.__d = value  
+
+    # Create getter and setter methods for the car's control_type
+    @property
+    def control_type(self):
+        return self.__control_type
+    
+    @control_type.setter
+    def control_type(self, value):
+        self.__control_type = value
+
+    # Create getter and setter methods for the car's car_speed
+    @property
+    def car_speed(self):
+        return self.__car_speed
+    
+    @car_speed.setter
+    def car_speed(self, value):
+        self.__car_speed = value
+    
+    # Create getter and setter methods for the car's line_color
+    @property
+    def line_color(self):
+        return self.__line_color
+    
+    @line_color.setter
+    def line_color(self, value):
+        self.__line_color = value
+
+    # Create getter and setter methods for the car's error
+    @property
+    def error(self):
+        return self.__error
+    
+    @error.setter
+    def error(self, value):
+        self.__error = value
+
+    # Create getter and setter methods for the car's min_speed
+    @property
+    def min_speed(self):
+        return self.__min_speed
+    
+    @min_speed.setter
+    def min_speed(self, value):
+        self.__min_speed = value
+    
+    # Create getter and setter methods for the car's max_speed
+    @property
+    def max_speed(self):
+        return self.__max_speed
+    
+    @max_speed.setter
+    def max_speed(self, value):
+        self.__max_speed = value
+
+    # Create getter and setter methods for the car's control_type
+    @property
+    def control_type(self):
+        return self.__control_type
+    
+    @control_type.setter
+    def control_type(self, value):
+        self.__control_type = value   
+
+    # Gets the speed proportional to the error
+    def speed(self):
+        return min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
+
+    def calculate_error(self):
+
+        self.prevError = self.error
+
+        # Combine IR sensors into error value
+        if self.line_color == 1:
+
+            # Get the states of the IR sensors
+            # If the line color is white, the IR sensors will turn on when the line is detected
+            RR = GPIO.input(29)  # Right Right Sensor
+            RM = GPIO.input(31)  # Right Middle Sensor
+            MM = GPIO.input(33)  # Middle Middle Sensor
+            LM = GPIO.input(35)  # Left Middle Sensor
+            LL = GPIO.input(37)  # Left Left Sensor
+
+            self.error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
+        else:
+
+            # If the line color is white, the IR sensors will turn on when the line is not detected
+            RR = not GPIO.input(29)  # Right Right Sensor
+            RM = not GPIO.input(31)  # Right Middle Sensor
+            MM = not GPIO.input(33)  # Middle Middle Sensor
+            LM = not GPIO.input(35)  # Left Middle Sensor
+            LL = not GPIO.input(37)  # Left Left Sensor
+
+            self.error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
+        
+        if abs(self.error) < 4:
+            self.PV += -.0001 * self.error
+
+    def turn_left(self):
+        self.motor_driver.ManualLeft()
+    
+    def turn_right(self):
+        self.motor_driver.ManualRight()
+    
+    def drive_forward(self):
+        self.motor_driver.ManualForward()
+    
+    def drive_backward(self):
+        self.motor_driver.ManualReverse()
+
