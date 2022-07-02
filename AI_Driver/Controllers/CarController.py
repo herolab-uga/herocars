@@ -1,4 +1,3 @@
-from abc import update_abstractmethods
 import threading
 
 from cv2 import line
