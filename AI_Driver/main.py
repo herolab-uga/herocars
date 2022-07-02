@@ -4,8 +4,8 @@ import Controllers.CarController as CarController
 
 
 def main():
-    
-    car = CarController()
+
+    car = CarController.CarController()
 
     while True:
         ctl = getch.getch()
