@@ -34,7 +34,7 @@ class CarController:
         GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
         # Create update thread
-        update_thread = threading.Thread(target=self.auton_control_update,args=(),deamon=True)
+        update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
         update_thread.start()
 
     # Create getter and setter methods for the car's __p, __i, and __d
