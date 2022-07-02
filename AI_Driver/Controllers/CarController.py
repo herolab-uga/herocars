@@ -1,5 +1,5 @@
+import time
 import threading
-
 import RPi.GPIO as GPIO
 from AutoPhat.AutoPhatMD import AutoPhatMD
 
@@ -11,10 +11,12 @@ class CarController:
         # Autohat Object
         self.motor_driver = AutoPhatMD()
 
-        self.max_speed = 150
         self.min_speed = 0
-
+        self.max_speed = 150
+        
         self.line_color = 1 # 1: white, 0: black
+
+        self.last_time = 0 # last time the car was commanded in manual mode
 
         self.__p = 43       # Proportion value
         self.__i = 1        # Integral Step value
@@ -36,6 +38,19 @@ class CarController:
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
         update_thread.start()
+
+        # Create stop thread
+        stop_thread = threading.Thread(target=self.car_auto_stop,args=(),daemon=True)
+        stop_thread.start()
+
+    # Create getter and setter methods for the last_time variable
+    @property
+    def last_time(self):
+        return self.__last_time
+    
+    @last_time.setter
+    def last_time(self, value):
+        self.__last_time = value
 
     # Create getter and setter methods for the car's __p, __i, and __d
     @property
@@ -159,6 +174,12 @@ class CarController:
                 self.motorDriver.Turn(correction)
                 self.motorDriver.Drive(self.calulate_speed())
 
+    def car_auto_stop(self):
+        while True:
+            if self.control_type == 0 and time.time() - self.last_time > 10:
+                self.center_steering()
+                self.stop()
+
     def turn_left(self):
         self.motor_driver.ManualLeft()
     
@@ -173,4 +194,7 @@ class CarController:
     
     def stop(self):
         self.motor_driver.ManualDriveStop()
+    
+    def center_steering(self):
+        self.motor_driver.ManualCenter()
 
