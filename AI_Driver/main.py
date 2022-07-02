@@ -10,13 +10,13 @@ def main():
     while True:
         ctl = getch.getch()
         if ctl == 'w':
-            car.forward()
+            car.drive_forward()
         elif ctl == 's':
-            car.backward()
+            car.stop()
         elif ctl == 'a':
-            car.left()
+            car.turn_left()
         elif ctl == 'd':
-            car.right()
+            car.turn_right()
 
 if __name__ == '__main__':
     main()

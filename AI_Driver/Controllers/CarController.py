@@ -170,4 +170,7 @@ class CarController:
     
     def drive_backward(self):
         self.motor_driver.ManualReverse()
+    
+    def stop(self):
+        self.motor_driver.ManualDriveStop()
 
