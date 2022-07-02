@@ -16,3 +16,6 @@ def main_manual():
                 s.send(13)
             else:
                 s.send(14)
+            
+if __name__ == "__main__":
+    main_manual()
