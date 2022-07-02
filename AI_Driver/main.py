@@ -85,6 +85,9 @@ def main_manual():
             car.turn_left()
         elif ctl == 'd':
             car.turn_right()
+        else:
+            car.stop()
+            car.center_steering()
 
 
 

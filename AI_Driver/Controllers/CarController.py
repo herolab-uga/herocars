@@ -196,5 +196,5 @@ class CarController:
         self.motor_driver.ManualDriveStop()
     
     def center_steering(self):
-        self.motor_driver.ManualCenter()
+        self.motor_driver.ManualSteerStop()
 
