@@ -3,18 +3,134 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
-    <link rel="stylesheet" href="./stylesheet.css" type="text/css" />
-    
-    <style type="text/css">.body { width: auto; }</style>
+    <link rel="stylesheet" href="./style.css" type="text/css" />
+    <script src="./LTGCarsUI.js"></script>
   </head>
-  <body onload="startLTGCars()">
-    <script href="LTGCarsUI.js"></script>
-  
-    <button onclick="Movement.forward()">FORWARD</button>
-    <button onclick="Movement.backward()">BACKWARD</button>
-    <button onclick="Movement.right()">RIGHT</button>
-    <button onclick="Movement.left()">LEFT</button>
-    </body>
+  <body onload="start()">
+    
+    <!-- 
+        // big camera view
+        // button to switch control modes
+        // change values to show up
+        // fix button ui 
+    -->
+    <div class="game">
+      <!-- =================== left side =================== -->
+      <div class="left">
+        <!-- PID Constant Values -->
+        <div class="box2">
+          <div class="speeds">
+            <label>p: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="pRange">
+          </div>
+          <div class="speeds">
+            <label>i: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
+          </div>
+          <div class="speeds">
+            <label>d: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
+          </div>
+        </div>
+
+        <!-- Speed -->
+        <div class="box1">
+          <h2>Current Speed</h2>
+          <div class="speeds">
+            <label>Max Speed: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="maxSpeed">
+          </div>
+          <div class="speeds">
+            <label>Min Speed: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
+          </div>
+        </div>
+
+        <!-- IR Tracker Indicators -->
+        <div class="box2">
+          <h2>IR Tracker Indicators</h2>
+          <div class="circVals">
+            <p>LL</p>
+            <p>LM</p>
+            <p>MM</p>
+            <p>RM</p>
+            <p>RR</p>
+          </div>
+        </div>
+        
+
+        <!-- Current Lap Time -->
+        <div class="box1">
+          <h2>Current Lap Time</h2>
+          <p>00:00:00</p>
+        </div>
+
+      </div>
+
+
+      <!-- =================== center =================== -->
+      <div class="center">
+        <div class="imageHolder" style="margin-top:50px;">
+          <img src="img/imgPlace.png">
+        </div>
+
+        <div class="movements">
+          <div class="top">
+            <button onclick="Movement.forward()" style="width: 25%">FORWARD</button>
+          </div>
+          <div class="mid">
+            <button onclick="Movement.backward()" style="width: 25%">BACKWARD</button>
+            <button onclick="Movement.right()" style="width: 25%">RIGHT</button>
+          </div>
+          <div class="bot">
+            <button onclick="Movement.left()" style="width: 25%">LEFT</button>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- =================== right side =================== -->
+      <div class="right">
+        <div class="box1">
+          <div class="speeds">
+            <button>Menu</button>
+            <button>Exit</button>
+          </div>
+          <div class="speeds">
+            <button>Start Race</button>
+            <button>Reset Interface</button>
+          </div>
+          
+        </div>
+        
+        <div class="box2">
+          <h2>Line Type</h2>
+          <div class="speeds">
+            <p>White or Black (switch)</p>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+        </div>
+        
+    
+        <div class="box1">
+          <h2>Control Modes</h2>
+          <div class="speeds">
+            <p>W1 or 2 (switch)</p>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+
+    <div class="bottom">
+      <img src="img/herolab_newlogo_whitebg.png">
+    </div>
+
+  </body>
 </html>
 
 
