@@ -76,6 +76,7 @@ def main_manual():
 
     while True:
         ctl = getch.getch()
+        car.last_time = time.time()
         if ctl == 'w':
             car.drive_forward()
         elif ctl == 's':
