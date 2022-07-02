@@ -1,6 +1,5 @@
 import threading
 
-from cv2 import line
 import RPi.GPIO as GPIO
 from AutoPhat.AutoPhatMD import AutoPhatMD
 
