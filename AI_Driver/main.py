@@ -92,6 +92,8 @@ def main_manual():
 
 
 if __name__ == '__main__':
-    main_manual()
+    main_thread = threading.Thread(target=main_manual(),args=(),daemon=True)
+    main_thread.start()
+    # main_manual()
 
 
