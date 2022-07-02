@@ -9,7 +9,7 @@ def main_socket():
 
     car = CarController.CarController()
     control_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ("127.0.0.1",5000)
+    server_address = ("192.168.1.33",5000)#("127.0.0.1",5000)
     control_socket.bind(server_address)
     control_socket.listen()
     conn, addr = control_socket.accept()
@@ -70,26 +70,6 @@ def main_socket():
             else:
                 car.stop()
                 car.center_steering()
-
-def main_manual():
-    car = CarController.CarController()
-
-    while True:
-        ctl = getch.getch()
-        car.last_time = time.time()
-        if ctl == 'w':
-            car.drive_forward()
-        elif ctl == 's':
-            car.drive_backward()
-        elif ctl == 'a':
-            car.turn_left()
-        elif ctl == 'd':
-            car.turn_right()
-        else:
-            car.stop()
-            car.center_steering()
-
-
 
 if __name__ == '__main__':
     main_socket()
