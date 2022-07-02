@@ -7,15 +7,15 @@ def main_manual():
         while True:
             ctl = getch.getch()
             if ctl == 'w':
-                s.send(10)
+                s.send("10".encode())
             elif ctl == 's':
-                s.send(11)
+                s.send("11".encode())
             elif ctl == 'a':
-                s.send(12)
+                s.send("12".encode())
             elif ctl == 'd':
-                s.send(13)
+                s.send("13".encode())
             else:
-                s.send(14)
+                s.send("14".encode())
             
 if __name__ == "__main__":
     main_manual()

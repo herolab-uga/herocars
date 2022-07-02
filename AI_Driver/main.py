@@ -15,28 +15,28 @@ def main_socket():
     conn, addr = control_socket.accept()
     with conn:
         while True:
-            command = conn.recv(1024)
+            command = int(conn.recv(1024).decode())
             if command == 1:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.p = data
 
             elif command == 2:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.i = data
 
             elif command == 3:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.d = data
                 
             elif command == 4:
                 conn.send(car.car_speed)
                 
             elif command == 5:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.min_speed = data
 
             elif command == 6:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.max_speed = data
 
             elif command == 7:
@@ -44,11 +44,11 @@ def main_socket():
                 conn.send(c)
 
             elif command == 8:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.line_color = data
 
             elif command == 9:
-                data = conn.recv(1024)
+                data = int(conn.recv(1024).decode())
                 car.control_type = data
 
             elif command == 10:
