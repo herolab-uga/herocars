@@ -1,5 +1,7 @@
 from abc import update_abstractmethods
 import threading
+
+from cv2 import line
 import RPi.GPIO as GPIO
 from AutoPhat.AutoPhatMD import AutoPhatMD
 
@@ -14,7 +16,7 @@ class CarController:
         self.max_speed = 150
         self.min_speed = 0
 
-        self.line_color = 0
+        self.line_color = 1 # 1: white, 0: black
 
         self.__p = 43       # Proportion value
         self.__i = 1        # Integral Step value
@@ -22,7 +24,7 @@ class CarController:
         self.error = 0      # amount of error on the line the car is experiencing
         self.prevError = 0  # error of last calculation used for Derivative calc
 
-        self.control_type = 0
+        self.control_type = 0 # 0:Manual, 1:Auton
 
         self.PV = 0  # sum of all values errors that the car has experienced
 
@@ -61,15 +63,6 @@ class CarController:
     @d.setter
     def d(self, value):
         self.__d = value  
-
-    # Create getter and setter methods for the car's control_type
-    @property
-    def control_type(self):
-        return self.__control_type
-    
-    @control_type.setter
-    def control_type(self, value):
-        self.__control_type = value
 
     # Create getter and setter methods for the car's car_speed
     @property
@@ -129,44 +122,41 @@ class CarController:
     def calculate_speed(self):
         return min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
 
+    # Gets the state of the car's line
+    def get_line_state(self):
+        # Get the states of the IR sensors
+        line_state = [GPIO.input(37), GPIO.input(35), GPIO.input(33), GPIO.input(31), GPIO.input(29)]
+
+        # If the line is set to white return the list
+        if self.line_color == "white":
+            return line_state
+        # If the line is set to black return the list with the opposite values
+        else:
+            return [not x for x in line_state]
+
     def calculate_error(self):
 
         self.prevError = self.error
 
         # Combine IR sensors into error value
-        if self.line_color == 1:
 
-            # Get the states of the IR sensors
-            # If the line color is white, the IR sensors will turn on when the line is detected
-            RR = GPIO.input(29)  # Right Right Sensor
-            RM = GPIO.input(31)  # Right Middle Sensor
-            MM = GPIO.input(33)  # Middle Middle Sensor
-            LM = GPIO.input(35)  # Left Middle Sensor
-            LL = GPIO.input(37)  # Left Left Sensor
+        # Get the states of the IR sensors
+        LL,LM,MM,RM,RR = self.get_line_state()
 
-            self.error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
-        else:
-
-            # If the line color is white, the IR sensors will turn on when the line is not detected
-            RR = not GPIO.input(29)  # Right Right Sensor
-            RM = not GPIO.input(31)  # Right Middle Sensor
-            MM = not GPIO.input(33)  # Middle Middle Sensor
-            LM = not GPIO.input(35)  # Left Middle Sensor
-            LL = not GPIO.input(37)  # Left Left Sensor
-
-            self.error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
+        self.error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
         
         if abs(self.error) < 4:
             self.PV += -.0001 * self.error
+
         self.PV = max(self.PV,-10)
         self.PV = min(self.PV,10)
             
         return self.error
 
-    def auton_control_update():
+    def auton_control_update(self):
         while True:
             if self.control_type == 1:
-                error = calculate_error()
+                error = self.calculate_error()
                 correction = self.__p * error + self.__i * self.PV + self.__d * (self.error -self.prev_error)
                 self.motorDriver.Turn(correction)
                 self.motorDriver.Drive(self.calulate_speed())
