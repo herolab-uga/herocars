@@ -177,7 +177,7 @@ class CarController:
     def car_auto_stop(self):
         while True:
             print(time.time() - self.last_time)
-            if self.control_type == 0 and time.time() - self.last_time > .02:
+            if self.control_type == 0 and time.time() - self.last_time > .05:
                 self.center_steering()
                 self.stop()
             time.sleep(.01)
