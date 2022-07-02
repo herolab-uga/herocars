@@ -92,8 +92,6 @@ def main_manual():
 
 
 if __name__ == '__main__':
-    # main_manual()
-    while True:
-        continue
+    main_socket()
 
 
