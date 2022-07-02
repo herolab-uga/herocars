@@ -180,6 +180,7 @@ class CarController:
             if self.control_type == 0 and time.time() - self.last_time > 10:
                 self.center_steering()
                 self.stop()
+            time.sleep(.1)
 
     def turn_left(self):
         self.motor_driver.ManualLeft()
