@@ -11,7 +11,7 @@ def main_socket():
     control_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_address = ("127.0.0.1",5000)
     control_socket.bind(server_address)
-    recv,_ = control_socket.listen(1)
+    control_socket.listen()
     conn, addr = control_socket.accept()
     with conn:
         while True:
