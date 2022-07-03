@@ -1,5 +1,3 @@
-import * as ltgcars from './LTGCarsUI.js'
-
 const express = require('express'); 
 const app = express();              
 const port = 5001;                  
@@ -10,9 +8,10 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, '/')));
 
 
-// const ltgcars = require("./LTGCarsUI");
+const ltgcars = require("./LTGCarsUI");
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineType = true;
+
 
 
 
