@@ -79,7 +79,7 @@ def main_socket():
                         car.turn_right()
 
                 else:
-                    print("other command")
+                    print(data)
                     car.stop()
                     car.center_steering()
 
@@ -90,6 +90,7 @@ def main_socket():
                     conn.send("255".encode("ascii"))
                 except BrokenPipeError:
                     print("Broken Pipe")
+                    conn.close()
 
 if __name__ == '__main__':
     while True:
