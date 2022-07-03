@@ -8,16 +8,6 @@ var slidei = 50;
 var slided = 50;
 var slideMin, slideMax = 50;
 
-function start() {
-    if (enableButtons( ) == true) {
-        console.log("Program Started");
-        setInterval(updateCarIMG(), 1000);
-    } else {
-        // disable buttons
-    }
-    
-}
-
 var slideValues = { // these are received from LTGCarsApp at slider script oninput
     p: function(value) {
         slidep = value;
@@ -46,29 +36,26 @@ function changeLineType() {
     console.log("Line Type Changed To : " + lineType);
 }
 
-function getP() {
+export function getP() {
     return slidep;
 }
-function getI() {
+export function getI() {
     return slidei;
 }
-function getD() {
+export function getD() {
     return slided;
 }
-function getLineType() {
+export function getLineType() {
     if (lineType == "Black")
         return false;
     else 
         return lineType;
 }
-function getMinSpeed() {
+export function getMinSpeed() {
     return minSpeed;
 }
-function getMaxSpeed() {
+export function getMaxSpeed() {
     return maxSpeed;
-}
-function getLineType() {
-    return lineType;
 }
 
 var Movement = { // received from button pushes on input
@@ -102,11 +89,3 @@ function updateCar() {
     });
 }
 
-// module.exports = {
-//     getP,
-//     getI,
-//     getD,
-//     getLineType,
-//     getMaxSpeed,
-//     getMinSpeed,
-// }
