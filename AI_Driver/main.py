@@ -9,6 +9,7 @@ def main_socket():
 
     car = CarController.CarController()
     control_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    control_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_address = ("",5000)
     control_socket.bind(server_address)
     control_socket.listen()
