@@ -1,9 +1,9 @@
-import * as express from 'express';
-// import app from '../app';
-import * as http from 'http';
-import * as Net from 'net';
+import express from 'express';
+// import * as app from '../app';
+import http from 'http';
+import Net from 'net';
 import path from 'path';
-import * as ltgcars from './LTGCarsUI.cjs';
+import ltgcars from './LTGCarsUI.cjs';
 
 const app = express();              
 const port = 5001;                  
