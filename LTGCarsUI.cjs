@@ -1,14 +1,10 @@
-// https://blog.idrisolubisi.com/how-to-integrate-real-time-webcam-on-a-web-page-using-javascript
-
-// big camera view
-
-var lineType = "White"; // set to white
+var lineType = "White";
 var slidep = 50;
 var slidei = 50;
 var slided = 50;
 var slideMin, slideMax = 50;
 
-var slideValues = { // these are received from LTGCarsApp at slider script oninput
+var slideValues = {
     p: function(value) {
         slidep = value;
         // console.log(slidep);
