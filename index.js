@@ -19,17 +19,6 @@ app.use(express.static(path.join(publicDirectoryPath)));
 
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineTypeB = true;
-var lineType="White";
-
-
-function changeLineType() {
-    if (lineType == "Black") {
-        lineType = "White";
-    } else {
-        lineType = "Black";
-    }
-    console.log("Line Type Changed To : " + lineType);
-}
 
 //Idiomatic expression in express to route and respond to a client request
 app.get('/', (req, res) => { 
