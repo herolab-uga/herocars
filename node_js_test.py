@@ -11,7 +11,7 @@ def main_socket():
     conn, addr = control_socket.accept()
     with conn:
         while True:
-            print(conn.recv().decode())
+            print(conn.recv(1024).decode())
 
 if __name__ == '__main__':
     main_socket()
