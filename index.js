@@ -6,14 +6,11 @@ var io = require('socket.io')(server);
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, '/')));
+const ltgcars = require('./LTGCarsUI');
 
-
-const ltgcars = require("./LTGCarsUI");
+// const ltgcars = require("./LTGCarsUI");
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineType = true;
-
-
-
 
 //Idiomatic expression in express to route and respond to a client request
 app.get('/', (req, res) => {        //get requests to the root ("/") will route here
@@ -28,7 +25,6 @@ app.listen(port, () => {
 
 // Include Nodejs' net module.
 const Net = require('net');
-// The port number and hostname of the server.
 const host = 'localhost';
 
 const client = new Net.Socket();
@@ -47,6 +43,7 @@ client.connect({ port: port_control, host: host }), function() {
     function updateAll() {
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
+            
             client.write(1);
             client.write(p);
         }
