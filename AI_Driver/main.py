@@ -53,18 +53,22 @@ def main_socket():
                 car.control_type = data
 
             elif command == 10:
+                car.car_speed = car.max_speed
                 car.last_time = time.time()
                 car.drive_forward()
 
             elif command == 11:
+                car.car_speed = car.max_speed
                 car.last_time = time.time()
                 car.drive_backward()
 
             elif command == 12:
+                car.car_speed = car.max_speed
                 car.last_time = time.time()
                 car.turn_left()
 
             elif command == 13:
+                car.car_speed = car.max_speed
                 car.last_time = time.time()
                 car.turn_right()
 
