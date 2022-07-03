@@ -39,8 +39,6 @@ const client = net.createConnection({ port: port_control }, () => {
 client.connect({ port: port_control, host: host }), function() {
     console.log('TCP connection established with the server.');
 
-    
-    client.write('server on');
 
     setInterval(() => {
         updateAll();
