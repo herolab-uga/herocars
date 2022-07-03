@@ -1,3 +1,4 @@
+global 
 var lineType = "White";
 var slidep = 50;
 var slidei = 50;
@@ -54,15 +55,6 @@ function getMaxSpeed() {
     return slideMax;
 }
 
-module.exports = {
-    getD,
-    getI,
-    getP,
-    getLineType,
-    getMinSpeed,
-    getMaxSpeed
-}
-
 var Movement = { // received from button pushes on input
     right: function() {
         console.log("Moving right");
@@ -93,6 +85,15 @@ function updateCar() {
             Movement.backward();
     });
 }
-// console.log(exports);
 
-// export {getP, getI, getD, getMaxSpeed, getMinSpeed, getLineType, LTGCarsUI};
+export {
+    getD,
+    getI,
+    getP,
+    getLineType,
+    getMinSpeed,
+    getMaxSpeed,
+    changeLineType,
+    lineType,
+    slideValues,
+}

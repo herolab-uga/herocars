@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import Net from 'net';
 import path from 'path';
-import ltgcars from '/home/pi/herocars/LTGCarsUI.cjs';
+import * as ltgcars from './LTGCarsUI.mjs';
 import {fileURLToPath} from 'url';
 
 const app = express();              
@@ -18,7 +18,18 @@ app.use(express.static(path.join(publicDirectoryPath)));
 
 
 var p, i, d, minSpeed, maxSpeed = 50;
-var lineType = true;
+var lineTypeB = true;
+var lineType="White";
+
+
+function changeLineType() {
+    if (lineType == "Black") {
+        lineType = "White";
+    } else {
+        lineType = "Black";
+    }
+    console.log("Line Type Changed To : " + lineType);
+}
 
 //Idiomatic expression in express to route and respond to a client request
 app.get('/', (req, res) => { 
@@ -43,21 +54,21 @@ const client = Net.createConnection({ port: port_control }, () => {
         
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
-            keyCode = Buffer("1".toString(), "ascii");
+            keyCode = Buffer(1, "ascii");
             keyVal = Buffer(p.toString(), "ascii");
             client.write(keyCode);
             client.write(keyVal);
         }
         if (i != ltgcars.getI()) {
             i = ltgcars.getI();
-            keyCode = Buffer("2".toString(), "ascii");
+            keyCode = Buffer(2, "ascii");
             keyVal = Buffer(i.toString(), "ascii");
             client.write(keyCode);
             client.write(keyVal);  
         }
         if (d != ltgcars.getD()) {
             d = ltgcars.getD();
-            keyCode = Buffer("3".toString(), "ascii");
+            keyCode = Buffer(3, "ascii");
             keyVal = Buffer(d.toString(), "ascii");
             client.write(keyCode);
             client.write(keyVal);

@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
-    <!-- <script type="module" src="./LTGCarsUI.cjs"></script> -->
-    <script type="module">import * as ltgcars from "/home/pi/herocars/LTGCarsUI.cjs";</script>
+    <!-- <script type="application/octet-stream" src="./LTGCarsUI.cjs"></script> -->
+    <script type="module" src=".LTGCarsUI.mjs"></script>
   </head>
   <body>
 
@@ -36,11 +36,11 @@
             outputP.innerHTML = p.value;
             outputI.innerHTML = i.value;
             outputD.innerHTML = d.value;
-
+            
             
             p.oninput = function() {
               outputP.innerHTML = this.value; 
-              slideValues.p(this.value);
+              // ltgcars.slideValues.p(this.value);
             }
             i.oninput = function() {
               outputI.innerHTML = this.value;
@@ -48,7 +48,7 @@
             }
             d.oninput = function() {
               outputD.innerHTML = this.value;
-              slideValues.d(this.value);
+              ltgcars.slideValues.d(this.value);
             }
 
           </script>
@@ -77,11 +77,11 @@
 
             sliderMS.oninput = function() {
                 outputMS.innerHTML = this.value;
-                slideValues.maxSpeed(this.value);
+                ltgcars.slideValues.maxSpeed(this.value);
             }
             sliderMiS.oninput = function() {
                 outputMiS.innerHTML = this.value;
-                slideValues.minSpeed(this.value);
+                ltgcars.slideValues.minSpeed(this.value);
             }
 
           </script>
@@ -154,7 +154,7 @@
           <div class="speeds">
             <p>Line Color: <span id="blackVwhite"></span></p>
             <label class="switch">
-              <input type="checkbox" oninput="ltgcars.changeLineType()">
+              <input type="checkbox" oninput="changeLineType()">
               <span class="slider"></span>
             </label>
           </div>
