@@ -54,21 +54,21 @@ const client = Net.createConnection({ port: port_control }, () => {
         
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
-            keyCode = Buffer(1, "ascii");
+            keyCode = Buffer("1", "ascii");
             keyVal = Buffer(p.toString(), "ascii");
             client.write(keyCode);
             client.write(keyVal);
         }
         if (i != ltgcars.getI()) {
             i = ltgcars.getI();
-            keyCode = Buffer(2, "ascii");
+            keyCode = Buffer("2", "ascii");
             keyVal = Buffer(i.toString(), "ascii");
             client.write(keyCode);
             client.write(keyVal);  
         }
         if (d != ltgcars.getD()) {
             d = ltgcars.getD();
-            keyCode = Buffer(3, "ascii");
+            keyCode = Buffer("3", "ascii");
             keyVal = Buffer(d.toString(), "ascii");
             client.write(keyCode);
             client.write(keyVal);
