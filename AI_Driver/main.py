@@ -9,7 +9,7 @@ def main_socket():
 
     car = CarController.CarController()
     control_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ("192.168.1.33",5000)#("127.0.0.1",5000)
+    server_address = ("",5000)
     control_socket.bind(server_address)
     control_socket.listen()
     conn, addr = control_socket.accept()
