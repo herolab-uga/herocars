@@ -14,8 +14,8 @@ var server = http.Server(app);
 
 // from LTGCarsUI.js
 // const ltgcars = require('LTGCarsUI');
-// var p, i, d, minSpeed, maxSpeed = 50;
-// var lineType = true;
+var p, i, d, minSpeed, maxSpeed = 50;
+var lineType = true;
 
 var d = ltgcars.getD();
 console.log("D" + d);
@@ -44,7 +44,7 @@ const client = Net.createConnection({ port: port_control }, () => {
     }, 1000);
     
     function updateAll() {
-        console.log(ltgcars.getP); // still undefined
+        
         console.log(ltgcars.p);
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
