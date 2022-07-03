@@ -25,7 +25,7 @@ app.listen(port, () => {
 
 // Include Nodejs' net module.
 const Net = require('net');
-const host = 'localhost';
+const host = '127.0.0.1';
 
 const client = new Net.Socket();
 const port_control = 5000;
