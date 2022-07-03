@@ -52,10 +52,10 @@ function getLineType() {
         return lineType;
 }
 function getMinSpeed() {
-    return minSpeed;
+    return slideMin;
 }
 function getMaxSpeed() {
-    return maxSpeed;
+    return slideMax;
 }
 
 module.exports = {

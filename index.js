@@ -17,9 +17,6 @@ var server = http.Server(app);
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineType = true;
 
-var d = ltgcars.getD();
-console.log("D" + d);
-
 //Idiomatic expression in express to route and respond to a client request
 app.get('/', (req, res) => { 
     res.sendFile('index.html', {root: __dirname});      //server responds by sending the index.html file to the client's browser 
@@ -44,49 +41,62 @@ const client = Net.createConnection({ port: port_control }, () => {
     }, 1000);
     
     function updateAll() {
+        var keyCode;
+        var keyVal;
         
         console.log(ltgcars.p);
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
-            
-            client.write(1);
-            client.write(p);
+            keyCode = Buffer("1".toString(), "ascii");
+            keyVal = Buffer(p.toString(), "ascii");
+            client.write(keyCode);
+            client.write(keyVal);
         }
         if (i != ltgcars.getI()) {
             i = ltgcars.getI();
-            client.write(2);
-            client.write(i);
+            keyCode = Buffer("2".toString(), "ascii");
+            keyVal = Buffer(i.toString(), "ascii");
+            client.write(keyCode);
+            client.write(keyVal);  
         }
         if (d != ltgcars.getD()) {
             d = ltgcars.getD();
-            client.write(3);
-            client.write(d);
+            keyCode = Buffer("3".toString(), "ascii");
+            keyVal = Buffer(d.toString(), "ascii");
+            client.write(keyCode);
+            client.write(keyVal);
         }
         if (minSpeed != ltgcars.getMinSpeed()) {
             minSpeed = ltgcars.getMinSpeed();
-            client.write(5);
-            client.write(minSpeed);
+            keyCode = Buffer("5".toString(), "ascii");
+            keyVal = Buffer(minSpeed.toString(), "ascii");
+            client.write(keyCode);
+            client.write(keyVal);
         }
         if (maxSpeed != ltgcars.getMaxSpeed()) {
             maxSpeed = ltgcars.getMaxSpeed();
-            client.write(6);
-            client.write(maxSpeed);
+            keyCode = Buffer("6".toString(), "ascii");
+            keyVal = Buffer(maxSpeed.toString(), "ascii");
+            client.write(keyCode);
+            client.write(keyVal);
         }
         if (lineType != ltgcars.getLineType()) { // white is true
             lineType = ltgcars.getLineType();
-            client.write(8);
-            client.write(lineType)
+            keyCode = Buffer("8".toString(), "ascii");
+            keyVal = Buffer(lineType, "ascii");
+            client.write(keyCode);
+            client.write(keyVal);
         }
     }
   });
 
 // The client can also receive data from the server by reading from its socket.
-client.on('data', function(chunk) {
-    console.log(`Data received from the server: ${chunk.toString()}.`);
+// client.on('data', function(chunk) {
+//     console.log(`Data received from the server: ${chunk.toString()}.`);
     
-    // Request an end to the connection after the data has been received.
-    client.end();
-});
+//     // Request an end to the connection after the data has been received.
+//     client.end();
+// });
 
 client.on('end', function() {
     console.log('Requested an end to the TCP connection');
