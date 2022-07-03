@@ -1,6 +1,6 @@
 const express = require('express'); 
 const app = express();              
-const port = 5000;                  
+const port = 5001;                  
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -31,8 +31,8 @@ const Net = require('net');
 const host = 'localhost';
 
 const client = new Net.Socket();
-
-client.connect({ port: port, host: host }), function() {
+const port_control = 5000;
+client.connect({ port: port_control, host: host }), function() {
     console.log('TCP connection established with the server.');
 
     
