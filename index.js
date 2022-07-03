@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import Net from 'net';
 import path from 'path';
-import * as ltgcars from 'LTGCarsUI.mjs';
+import * as ltgcars from './LTGCarsUI.mjs';
 import {fileURLToPath} from 'url';
 
 const app = express();              
