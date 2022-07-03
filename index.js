@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import Net from 'net';
 import path from 'path';
-import ltgcars from '/home/pi/herocars/LTGCarsUI.cjs';
+import ltgcars from 'LTGCarsUI.cjs';
 import {fileURLToPath} from 'url';
 
 const app = express();              
