@@ -25,7 +25,7 @@ app.listen(port, () => {
 
 // Include Nodejs' net module.
 const Net = require('net');
-const host = '127.0.0.0';
+const host = '127.0.0.1';
 
 // const client = new Net.Socket();
 const port_control = 5000;
@@ -36,51 +36,51 @@ const client = Net.createConnection({ port: port_control }, () => {
     client.write('world!\r\n');
   });
 
-// client.connect({ port: port_control, host: host }), function() {
-//     console.log('TCP connection established with the server.');
+client.connect({ port: port_control, host: host }), function() {
+    console.log('TCP connection established with the server.');
 
 
-//     setInterval(() => {
-//         updateAll();
-//     }, 1000);
+    setInterval(() => {
+        updateAll();
+    }, 1000);
     
-//     function updateAll() {
-//         if (p != ltgcars.getP()) {
-//             p = ltgcars.getP();
+    function updateAll() {
+        if (p != ltgcars.getP()) {
+            p = ltgcars.getP();
             
-//             client.write(1);
-//             client.write(p);
-//         }
-//         if (i != ltgcars.getI()) {
-//             i = ltgcars.getI();
-//             client.write(2);
-//             client.write(i);
-//         }
-//         if (d != ltgcars.getD()) {
-//             d = ltgcars.getD();
-//             client.write(3);
-//             client.write(d);
-//         }
-//         if (minSpeed != ltgcars.getMinSpeed()) {
-//             minSpeed = ltgcars.getMinSpeed();
-//             client.write(5);
-//             client.write(minSpeed);
-//         }
-//         if (maxSpeed != ltgcars.getMaxSpeed()) {
-//             maxSpeed = ltgcars.getMaxSpeed();
-//             client.write(6);
-//             client.write(maxSpeed);
-//         }
-//         if (lineType != ltgcars.getLineType()) { // white is true
-//             lineType = ltgcars.getLineType();
-//             client.write(8);
-//             client.write(lineType)
-//         }
-//     }
+            client.write(1);
+            client.write(p);
+        }
+        if (i != ltgcars.getI()) {
+            i = ltgcars.getI();
+            client.write(2);
+            client.write(i);
+        }
+        if (d != ltgcars.getD()) {
+            d = ltgcars.getD();
+            client.write(3);
+            client.write(d);
+        }
+        if (minSpeed != ltgcars.getMinSpeed()) {
+            minSpeed = ltgcars.getMinSpeed();
+            client.write(5);
+            client.write(minSpeed);
+        }
+        if (maxSpeed != ltgcars.getMaxSpeed()) {
+            maxSpeed = ltgcars.getMaxSpeed();
+            client.write(6);
+            client.write(maxSpeed);
+        }
+        if (lineType != ltgcars.getLineType()) { // white is true
+            lineType = ltgcars.getLineType();
+            client.write(8);
+            client.write(lineType)
+        }
+    }
     
     
 
-// };
+};
 
 // The client can also receive data from the server by reading from its socket.
 client.on('data', function(chunk) {
