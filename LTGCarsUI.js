@@ -35,7 +35,7 @@ function changeLineType() {
     }
     console.log("Line Type Changed To : " + lineType);
 }
-modules.export = {
+exports = {
 
     getP: function() {
         return slidep;
