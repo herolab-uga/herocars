@@ -16,71 +16,77 @@ def main_socket():
     conn, addr = control_socket.accept()
     with conn:
         while True:
-            command = int(conn.recv(1024).decode())
-            if command == 1:
-                data = int(conn.recv(1024).decode())
-                car.p = data
-                print(data)
+            try:
+                command = int(conn.recv(1024).decode())
+                if command == 1:
+                    data = int(conn.recv(1024).decode())
+                    car.p = data
+                    print(data)
 
-            elif command == 2:
-                data = int(conn.recv(1024).decode())
-                car.i = data
-                print(data)
-            elif command == 3:
-                data = int(conn.recv(1024).decode())
-                car.d = data
-                print(data)
-            elif command == 4:
-                conn.send(car.car_speed)
-                
-            elif command == 5:
-                data = int(conn.recv(1024).decode())
-                car.min_speed = data
-                print(data)
-            elif command == 6:
-                data = int(conn.recv(1024).decode())
-                car.max_speed = data
-                print(data)
-            elif command == 7:
-                # need to send a list
-                conn.send(c)
+                elif command == 2:
+                    data = int(conn.recv(1024).decode())
+                    car.i = data
+                    print(data)
+                elif command == 3:
+                    data = int(conn.recv(1024).decode())
+                    car.d = data
+                    print(data)
+                elif command == 4:
+                    conn.send(car.car_speed)
+                    
+                elif command == 5:
+                    data = int(conn.recv(1024).decode())
+                    car.min_speed = data
+                    print(data)
+                elif command == 6:
+                    data = int(conn.recv(1024).decode())
+                    car.max_speed = data
+                    print(data)
+                elif command == 7:
+                    # need to send a list
+                    conn.send(c)
 
-            elif command == 8:
-                data = int(conn.recv(1024).decode())
-                car.line_color = data
-                print(data)
-            elif command == 9:
-                data = int(conn.recv(1024).decode())
-                car.control_type = data
+                elif command == 8:
+                    data = int(conn.recv(1024).decode())
+                    car.line_color = data
+                    print(data)
+                elif command == 9:
+                    data = int(conn.recv(1024).decode())
+                    car.control_type = data
 
-            elif command == 10:
-                if car.control_type == 0:
-                    car.car_speed = car.max_speed
-                    car.last_time = time.time()
-                    car.drive_forward()
+                elif command == 10:
+                    if car.control_type == 0:
+                        car.car_speed = car.max_speed
+                        car.last_time = time.time()
+                        car.drive_forward()
 
-            elif command == 11:
-                if car.control_type == 0:
-                    car.car_speed = car.max_speed
-                    car.last_time = time.time()
-                    car.drive_backward()
+                elif command == 11:
+                    if car.control_type == 0:
+                        car.car_speed = car.max_speed
+                        car.last_time = time.time()
+                        car.drive_backward()
 
-            elif command == 12:
-                if car.control_type == 0:
-                    car.car_speed = car.max_speed
-                    car.last_time = time.time()
-                    car.turn_left()
+                elif command == 12:
+                    if car.control_type == 0:
+                        car.car_speed = car.max_speed
+                        car.last_time = time.time()
+                        car.turn_left()
 
-            elif command == 13:
-                if car.control_type == 0:
-                    car.car_speed = car.max_speed
-                    car.last_time = time.time()
-                    car.turn_right()
+                elif command == 13:
+                    if car.control_type == 0:
+                        car.car_speed = car.max_speed
+                        car.last_time = time.time()
+                        car.turn_right()
 
-            else:
-                print("other command")
-                car.stop()
-                car.center_steering()
+                else:
+                    print("other command")
+                    car.stop()
+                    car.center_steering()
+                    
+                conn.send("0".encode())
+
+            except Exception:
+                conn.send("255".encode())
 
 if __name__ == '__main__':
     main_socket()
