@@ -1,4 +1,3 @@
-global 
 var lineType = "White";
 var slidep = 50;
 var slidei = 50;

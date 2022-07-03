@@ -4,8 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
-    <!-- <script type="application/octet-stream" src="./LTGCarsUI.cjs"></script> -->
-    <script type="module" src="./LTGCarsUI.mjs"></script>
   </head>
   <body>
 
@@ -26,7 +24,8 @@
             <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
           </div>
 
-          <script>
+          <script type="module">
+            import * as ltgcars from './LTGCarsUI.mjs';
             var p = document.getElementById("pRange");
             var outputP = document.getElementById("pValToPrint");
             var i = document.getElementById("iRange");
@@ -40,11 +39,11 @@
             
             p.oninput = function() {
               outputP.innerHTML = this.value; 
-              // ltgcars.slideValues.p(this.value);
+              ltgcars.slideValues.p(this.value);
             }
             i.oninput = function() {
               outputI.innerHTML = this.value;
-              slideValues.i(this.value);
+              ltgcars.slideValues.i(this.value);
             }
             d.oninput = function() {
               outputD.innerHTML = this.value;
@@ -67,7 +66,8 @@
             <input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
           </div>
 
-          <script>
+          <script type="module">
+            import * as ltgcars from './LTGCarsUI.mjs';
             var sliderMS = document.getElementById("maxSpeed");
             var outputMS = document.getElementById("maxSpeedPrint");
             var sliderMiS = document.getElementById("minSpeed");
