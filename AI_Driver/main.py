@@ -69,6 +69,7 @@ def main_socket():
                 car.turn_right()
 
             else:
+                print("other command")
                 car.stop()
                 car.center_steering()
 

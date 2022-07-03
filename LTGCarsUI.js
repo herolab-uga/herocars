@@ -102,11 +102,11 @@ function updateCar() {
     });
 }
 
-module.exports = {
-    getP,
-    getI,
-    getD,
-    getLineType,
-    getMaxSpeed,
-    getMinSpeed,
-}
+// module.exports = {
+//     getP,
+//     getI,
+//     getD,
+//     getLineType,
+//     getMaxSpeed,
+//     getMinSpeed,
+// }
