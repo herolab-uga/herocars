@@ -3,7 +3,7 @@ import socket
 
 def main_manual():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(("127.0.0.1",5000))
+        s.connect(("",5000))
         while True:
             ctl = getch.getch()
             if ctl == 'w':
