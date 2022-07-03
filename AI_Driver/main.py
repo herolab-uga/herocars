@@ -82,13 +82,17 @@ def main_socket():
                     print("other command")
                     car.stop()
                     car.center_steering()
-                    
+
                 conn.send("0".encode())
 
             except Exception:
-                conn.send("255".encode())
+                try:
+                    conn.send("255".encode())
+                except BrokenPipeError:
+                    conn.close()
 
 if __name__ == '__main__':
-    main_socket()
+    while True:
+        main_socket()
 
 
