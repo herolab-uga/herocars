@@ -7,15 +7,15 @@ import {fileURLToPath} from 'url';
 
 const app = express();              
 const port = 5001;                  
-var server = http.Server(app);
+var server = http.Server(app); 
+const host = '127.0.0.1';
 
-// allows html, style sheets, and other images to send to server
- 
+const port_control = 5000;
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
-const publicDirectoryPath = path.join(__dirname, '../public/')
+const publicDirectoryPath = path.join(__dirname, '/');
 app.use(express.static(path.join(publicDirectoryPath)));
+
 
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineType = true;
@@ -29,12 +29,6 @@ app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
 });
 
-
-// Include Nodejs' net module.
-// const Net = require('net');
-const host = '127.0.0.1';
-
-const port_control = 5000;
 
 const client = Net.createConnection({ port: port_control }, () => {
     // 'connect' listener.
