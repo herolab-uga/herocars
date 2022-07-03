@@ -18,7 +18,7 @@ app.use(express.static(path.join(publicDirectoryPath)));
 
 
 var p, i, d, minSpeed, maxSpeed = 50;
-var lineTypeB = true;
+var lineType = true;
 
 //Idiomatic expression in express to route and respond to a client request
 app.get('/', (req, res) => { 
