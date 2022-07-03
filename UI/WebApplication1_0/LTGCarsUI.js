@@ -1,11 +1,8 @@
 // https://blog.idrisolubisi.com/how-to-integrate-real-time-webcam-on-a-web-page-using-javascript
 
 // big camera view
-// button to switch control modes
-// button to switch line types
 
-// =================== pid sliders ===================
-var lineType = "White";
+var lineType = "White"; // set to white
 
 function start() {
     if (enableButtons( ) == true) {
@@ -60,7 +57,7 @@ var Movement = { // received from button pushes on input
 }
 
 function updateCarIMG () {
-    // just something to update the image received from the car
+    // updates the image received from the car
     console.log("Image updated");
 }
 
