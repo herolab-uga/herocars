@@ -19,26 +19,27 @@ def main_socket():
             if command == 1:
                 data = int(conn.recv(1024).decode())
                 car.p = data
+                print(data)
 
             elif command == 2:
                 data = int(conn.recv(1024).decode())
                 car.i = data
-
+                print(data)
             elif command == 3:
                 data = int(conn.recv(1024).decode())
                 car.d = data
-                
+                print(data)
             elif command == 4:
                 conn.send(car.car_speed)
                 
             elif command == 5:
                 data = int(conn.recv(1024).decode())
                 car.min_speed = data
-
+                print(data)
             elif command == 6:
                 data = int(conn.recv(1024).decode())
                 car.max_speed = data
-
+                print(data)
             elif command == 7:
                 # need to send a list
                 conn.send(c)
@@ -46,7 +47,7 @@ def main_socket():
             elif command == 8:
                 data = int(conn.recv(1024).decode())
                 car.line_color = data
-
+                print(data)
             elif command == 9:
                 data = int(conn.recv(1024).decode())
                 car.control_type = data
