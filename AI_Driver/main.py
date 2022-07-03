@@ -17,41 +17,41 @@ def main_socket():
     with conn:
         while True:
             try:
-                command = int(conn.recv(1024).decode())
+                command = int(conn.recv(1024).decode("ascii"))
                 if command == 1:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.p = data
                     print(data)
 
                 elif command == 2:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.i = data
                     print(data)
                 elif command == 3:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.d = data
                     print(data)
                 elif command == 4:
-                    conn.send(car.car_speed)
+                    conn.send(str(car.car_speed).encode("ascii"))
                     
                 elif command == 5:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.min_speed = data
                     print(data)
                 elif command == 6:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.max_speed = data
                     print(data)
                 elif command == 7:
                     # need to send a list
-                    conn.send(c)
+                    conn.send(str(c).encode("ascii"))
 
                 elif command == 8:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.line_color = data
                     print(data)
                 elif command == 9:
-                    data = int(conn.recv(1024).decode())
+                    data = int(conn.recv(1024).decode("ascii"))
                     car.control_type = data
 
                 elif command == 10:
@@ -83,11 +83,11 @@ def main_socket():
                     car.stop()
                     car.center_steering()
 
-                conn.send("0".encode())
+                conn.send("0".encode("ascii"))
 
             except Exception:
                 try:
-                    conn.send("255".encode())
+                    conn.send("255".encode("ascii"))
                 except BrokenPipeError:
                     conn.close()
 
