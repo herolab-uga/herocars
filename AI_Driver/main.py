@@ -89,7 +89,7 @@ def main_socket():
                 try:
                     conn.send("255".encode("ascii"))
                 except BrokenPipeError:
-                    conn.close()
+                    print("Broken Pipe")
 
 if __name__ == '__main__':
     while True:
