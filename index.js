@@ -4,13 +4,18 @@ import http from 'http';
 import Net from 'net';
 import path from 'path';
 import ltgcars from './LTGCarsUI.cjs';
+import {fileURLToPath} from 'url';
 
 const app = express();              
 const port = 5001;                  
 var server = http.Server(app);
 
 // allows html, style sheets, and other images to send to server
-// app.use(express.static(path.join(__dirname, '/'))); 
+ 
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, '/')));
 
 // from LTGCarsUI.js
 // const ltgcars = require('LTGCarsUI');
@@ -44,7 +49,6 @@ const client = Net.createConnection({ port: port_control }, () => {
         var keyCode;
         var keyVal;
         
-        console.log(ltgcars.p);
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
             keyCode = Buffer("1".toString(), "ascii");
