@@ -4,17 +4,8 @@
 // button to switch control modes
 // button to switch line types
 
-var p = document.getElementById("pRange");
-var i = document.getElementById("iRange");
-var d = document.getElementById("dRange");
-var min = document.getElementById("min");
-var max = document.getElementById("max");
-
-var pValToPrint = document.getElementById("pPrint"); // to show user
-var iValToPrint = document.getElementById("iPrint");
-var dValToPrint = document.getElementById("dPrint");
-var minToPrint = document.getElementById("min");
-var maxToPrint = document.getElementById("max");
+// =================== pid sliders ===================
+var lineType = "White";
 
 function start() {
     if (enableButtons( ) == true) {
@@ -26,9 +17,35 @@ function start() {
     
 }
 
-var Movement = {
+var slideValues = { // these are received from LTGCarsApp at slider script oninput
+    p: function(value) {
+        console.log(value);
+    },
+    i: function(value) {
+        console.log(value);
+    },
+    d: function(value) {
+        console.log(value);
+    },
+    minSpeed: function(value) {
+        console.log(value);
+    },
+    maxSpeed: function(value) {
+        console.log(value);
+    }
+}
+
+function changeLineType() {
+    if (lineType == "Black") {
+        lineType = "White";
+    } else {
+        lineType = "Black";
+    }
+    console.log("Line Type Changed To : " + lineType);
+}
+
+var Movement = { // received from button pushes on input
     right: function() {
-        // send message to car to move 
         console.log("Moving right");
     },
     left: function() {

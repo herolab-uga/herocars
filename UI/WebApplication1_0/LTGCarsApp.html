@@ -20,25 +20,73 @@
         <!-- PID Constant Values -->
         <div class="box2">
           <div class="speeds">
-            <label>p: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="pRange">
+            <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="pRange">
           </div>
           <div class="speeds">
-            <label>i: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
+            <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
           </div>
           <div class="speeds">
-            <label>d: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
+            <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
           </div>
+
+          <script>
+            var p = document.getElementById("pRange");
+            var outputP = document.getElementById("pValToPrint");
+            var i = document.getElementById("iRange");
+            var outputI = document.getElementById("iValToPrint");
+            var d = document.getElementById("dRange");
+            var outputD = document.getElementById("dValToPrint");
+            outputP.innerHTML = p.value;
+            outputI.innerHTML = i.value;
+            outputD.innerHTML = d.value;
+
+            p.oninput = function() {
+              outputP.innerHTML = this.value;
+              slideValues.maxSpeed(this.value);
+            }
+            i.oninput = function() {
+              outputI.innerHTML = this.value;
+              slideValues.minSpeed(this.value);
+            }
+            d.oninput = function() {
+              outputD.innerHTML = this.value;
+              slideValues.minSpeed(this.value);
+            }
+
+          </script>
         </div>
 
         <!-- Speed -->
         <div class="box1">
           <h2>Current Speed</h2>
           <div class="speeds">
-            <label>Max Speed: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="maxSpeed">
+            <p>Max Speed: <span id="maxSpeedPrint"></span></p>
+            <input type="range" min="1" max="100" value="50" class="sliderp" id="maxSpeed">
           </div>
+
           <div class="speeds">
-            <label>Min Speed: </label><p>50</p><input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
+            <p>Min Speed: <span id="minSpeedPrint"></span></p>
+            <input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
           </div>
+
+          <script>
+            var sliderMS = document.getElementById("maxSpeed");
+            var outputMS = document.getElementById("maxSpeedPrint");
+            var sliderMiS = document.getElementById("minSpeed");
+            var outputMiS = document.getElementById("minSpeedPrint");
+            outputMS.innerHTML = sliderMS.value;
+            outputMiS.innerHTML = sliderMiS.value;
+
+            sliderMS.oninput = function() {
+                outputMS.innerHTML = this.value;
+                slideValues.maxSpeed(this.value);
+            }
+            sliderMiS.oninput = function() {
+                outputMiS.innerHTML = this.value;
+                slideValues.minSpeed(this.value);
+            }
+
+          </script>
         </div>
 
         <!-- IR Tracker Indicators -->
@@ -86,6 +134,7 @@
 
       <!-- =================== right side =================== -->
       <div class="right">
+        <!-- Menu Buttons -->
         <div class="box1">
           <div class="speeds">
             <button>Menu</button>
@@ -98,12 +147,13 @@
           
         </div>
         
+        <!-- Line Type -->
         <div class="box2">
           <h2>Line Type</h2>
           <div class="speeds">
-            <p>White or Black (switch)</p>
+            <p>Line Color: <span id="blackVwhite"></span></p>
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" oninput="changeLineType()">
               <span class="slider"></span>
             </label>
           </div>
