@@ -171,3 +171,7 @@
     display: flex;
     justify-content: center;
   }
+
+  body {
+    background-color: #1e1e1e;
+  }
