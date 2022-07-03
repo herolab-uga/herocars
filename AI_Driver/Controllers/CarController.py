@@ -28,6 +28,8 @@ class CarController:
 
         self.PV = 0  # sum of all values errors that the car has experienced
 
+        self._car_speed = 0 # speed of the car
+
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(29, GPIO.IN)  # RR IR Sensor
         GPIO.setup(31, GPIO.IN)  # RM IR Sensor
@@ -80,11 +82,11 @@ class CarController:
     # Create getter and setter methods for the car's car_speed
     @property
     def car_speed(self):
-        return self.__car_speed
+        return self._car_speed
     
     @car_speed.setter
     def car_speed(self, value):
-        self.__car_speed = value
+        self._car_speed = value
     
     # Create getter and setter methods for the car's line_color
     @property
@@ -133,7 +135,8 @@ class CarController:
 
     # Gets the speed proportional to the error
     def calculate_speed(self):
-        return min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
+        self.car_speed = min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
+        return self.car_speed
 
     # Gets the state of the car's line
     def get_line_state(self):
@@ -176,7 +179,7 @@ class CarController:
 
     def car_auto_stop(self):
         while True:
-            if self.control_type == 0 and time.time() - self.last_time > .05:
+            if self.control_type == 0 and time.time() - self.last_time > .05 and not self.car_speed == 0:
                 self.center_steering()
                 self.stop()
             time.sleep(.01)
@@ -194,6 +197,7 @@ class CarController:
         self.motor_driver.ManualReverse()
     
     def stop(self):
+        self.car_speed = 0
         self.motor_driver.ManualDriveStop()
     
     def center_steering(self):
