@@ -25,10 +25,17 @@ app.listen(port, () => {
 
 // Include Nodejs' net module.
 const Net = require('net');
-const host = 'localhost';
+const host = '127.0.0.0';
 
-const client = new Net.Socket();
+// const client = new Net.Socket();
 const port_control = 5000;
+
+const client = net.createConnection({ port: port_control }, () => {
+    // 'connect' listener.
+    console.log('connected to server!');
+    client.write('world!\r\n');
+  });
+
 client.connect({ port: port_control, host: host }), function() {
     console.log('TCP connection established with the server.');
 
