@@ -1,5 +1,4 @@
 import express from 'express';
-// import * as app from '../app';
 import http from 'http';
 import Net from 'net';
 import path from 'path';
@@ -15,10 +14,9 @@ var server = http.Server(app);
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, '/')));
+const publicDirectoryPath = path.join(__dirname, '../public/')
+app.use(express.static(path.join(publicDirectoryPath)));
 
-// from LTGCarsUI.js
-// const ltgcars = require('LTGCarsUI');
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineType = true;
 
