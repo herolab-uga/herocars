@@ -20,5 +20,6 @@
     "express": "^4.18.1",
     "pi-camera": "^1.7.0",
     "socket.io": "^4.5.1"
-  }
+  },
+  "devDependencies": {}
 }
