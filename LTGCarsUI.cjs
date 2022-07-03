@@ -35,29 +35,36 @@ function changeLineType() {
     }
     console.log("Line Type Changed To : " + lineType);
 }
-exports = {
 
-    getP: function() {
-        return slidep;
-    },
-    getI: function() {
-        return slidei;
-    },
-    getD: function() {
-        return slided;
-    },
-    getLineType: function() {
-        if (lineType == "Black")
-            return false;
-        else 
-            return lineType;
-    },
-    getMinSpeed: function() {
-        return minSpeed;
-    },
-    getMaxSpeed: function() {
-        return maxSpeed;
-    }
+function getP() {
+    return slidep;
+}
+function getI() {
+    return slidei;
+}
+function getD() {
+    return slided;
+}
+function getLineType() {
+    if (lineType == "Black")
+        return false;
+    else 
+        return lineType;
+}
+function getMinSpeed() {
+    return minSpeed;
+}
+function getMaxSpeed() {
+    return maxSpeed;
+}
+
+module.exports = {
+    getD,
+    getI,
+    getP,
+    getLineType,
+    getMinSpeed,
+    getMaxSpeed
 }
 
 var Movement = { // received from button pushes on input
@@ -90,5 +97,6 @@ function updateCar() {
             Movement.backward();
     });
 }
+// console.log(exports);
 
 // export {getP, getI, getD, getMaxSpeed, getMinSpeed, getLineType, LTGCarsUI};

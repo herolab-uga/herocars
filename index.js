@@ -1,21 +1,28 @@
-const express = require('express'); 
+import express from 'express';
+// import * as app from '../app';
+import http from 'http';
+import Net from 'net';
+import path from 'path';
+import ltgcars from './LTGCarsUI.cjs';
+
 const app = express();              
 const port = 5001;                  
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var server = http.Server(app);
 
-const path = require('path');
-app.use(express.static(path.join(__dirname, '/')));
-const ltgcars = require('./LTGCarsUI');
+// allows html, style sheets, and other images to send to server
+// app.use(express.static(path.join(__dirname, '/'))); 
 
-// const ltgcars = require("./LTGCarsUI");
+// from LTGCarsUI.js
+// const ltgcars = require('LTGCarsUI');
 var p, i, d, minSpeed, maxSpeed = 50;
 var lineType = true;
 
+var d = ltgcars.getD();
+console.log("D" + d);
+
 //Idiomatic expression in express to route and respond to a client request
-app.get('/', (req, res) => {        //get requests to the root ("/") will route here
-    res.sendFile('index.html', {root: __dirname});      //server responds by sending the index.html file to the client's browser
-                                                        //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile 
+app.get('/', (req, res) => { 
+    res.sendFile('index.html', {root: __dirname});      //server responds by sending the index.html file to the client's browser 
 });
 
 app.listen(port, () => {
@@ -24,10 +31,9 @@ app.listen(port, () => {
 
 
 // Include Nodejs' net module.
-const Net = require('net');
+// const Net = require('net');
 const host = '127.0.0.1';
 
-// const client = new Net.Socket();
 const port_control = 5000;
 
 const client = Net.createConnection({ port: port_control }, () => {
@@ -38,6 +44,8 @@ const client = Net.createConnection({ port: port_control }, () => {
     }, 1000);
     
     function updateAll() {
+        
+        console.log(ltgcars.p);
         if (p != ltgcars.getP()) {
             p = ltgcars.getP();
             
@@ -71,49 +79,6 @@ const client = Net.createConnection({ port: port_control }, () => {
         }
     }
   });
-
-// client.connect({ port: port_control, host: host }), function() {
-//     console.log('TCP connection established with the server.');
-
-
-//     setInterval(() => {
-//         updateAll();
-//     }, 1000);
-    
-//     function updateAll() {
-//         if (p != ltgcars.getP()) {
-//             p = ltgcars.getP();
-            
-//             client.write(1);
-//             client.write(p);
-//         }
-//         if (i != ltgcars.getI()) {
-//             i = ltgcars.getI();
-//             client.write(2);
-//             client.write(i);
-//         }
-//         if (d != ltgcars.getD()) {
-//             d = ltgcars.getD();
-//             client.write(3);
-//             client.write(d);
-//         }
-//         if (minSpeed != ltgcars.getMinSpeed()) {
-//             minSpeed = ltgcars.getMinSpeed();
-//             client.write(5);
-//             client.write(minSpeed);
-//         }
-//         if (maxSpeed != ltgcars.getMaxSpeed()) {
-//             maxSpeed = ltgcars.getMaxSpeed();
-//             client.write(6);
-//             client.write(maxSpeed);
-//         }
-//         if (lineType != ltgcars.getLineType()) { // white is true
-//             lineType = ltgcars.getLineType();
-//             client.write(8);
-//             client.write(lineType)
-//         }
-//     }
-// };
 
 // The client can also receive data from the server by reading from its socket.
 client.on('data', function(chunk) {
