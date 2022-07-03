@@ -4,7 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
-    <script src="./LTGCarsUI.cjs"></script>
+    <!-- <script type="module" src="./LTGCarsUI.cjs"></script> -->
+    <script type="module">import * as ltgcars from "./LTGCarsUI.cjs";</script>
   </head>
   <body>
 
@@ -153,7 +154,7 @@
           <div class="speeds">
             <p>Line Color: <span id="blackVwhite"></span></p>
             <label class="switch">
-              <input type="checkbox" oninput="changeLineType()">
+              <input type="checkbox" oninput="ltgcars.changeLineType()">
               <span class="slider"></span>
             </label>
           </div>
