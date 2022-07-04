@@ -15,6 +15,7 @@ def p():
     if request.method == "GET":
        return str(car.p)
     else:
+        print(request.data)
         car.p = int(request.form["data"])
         return Flask.Response(status=200)
 
