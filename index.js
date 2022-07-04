@@ -15,19 +15,48 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicDirectoryPath = path.join(__dirname, '/');
 app.use(express.static(path.join(publicDirectoryPath)));
+// app.use(express.static('public'));
 
-
-var p, i, d, minSpeed, maxSpeed = 50;
-var lineType = true;
-
-//Idiomatic expression in express to route and respond to a client request
-app.get('/', (req, res) => { 
-    res.sendFile('index.html', {root: __dirname});      //server responds by sending the index.html file to the client's browser 
-});
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + 'index.html');
+  });
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
 });
+
+
+
+var lineType = "White";
+var p = 50;
+var i = 50;
+var d = 50;
+var minSpeed, maxSpeed = 50;
+
+
+var slideValues = {
+    p: function(value) {
+        p = value;
+        console.log("P" + slidep);
+    },
+    i: function(value) {
+        i = value;
+    },
+    d: function(value) {
+        d = value;
+    },
+    minSpeed: function(value) {
+        minSpeed = value;
+    },
+    maxSpeed: function(value) {
+        maxSpeed = value;
+    },
+    getP: function() {
+        return p;
+    }
+}
+
+
 
 
 const client = Net.createConnection({ port: port_control }, () => {
@@ -40,9 +69,11 @@ const client = Net.createConnection({ port: port_control }, () => {
     function updateAll() {
         var keyCode;
         var keyVal;
-        
-        if (p != ltgcars.getP()) {
-            p = ltgcars.getP();
+
+        if (p != slideValues.getP()) {
+            console.log("current p " + p);
+            p = slideValues.getP();
+            console.log("new p " + p);
             keyCode = Buffer("1", "ascii");
             keyVal = Buffer(p.toString(), "ascii");
             client.write(keyCode);

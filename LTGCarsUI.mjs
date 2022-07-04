@@ -7,7 +7,7 @@ var slideMin, slideMax = 50;
 var slideValues = {
     p: function(value) {
         slidep = value;
-        // console.log(slidep);
+        console.log("P" + slidep);
     },
     i: function(value) {
         slidei = value;
