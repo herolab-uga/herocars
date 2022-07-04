@@ -3,7 +3,11 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+    <script type="module" src="./index.js"></script>
+    <script src="./LTGCarsUI.js"></script>
+
+    
   </head>
   <body>
 
@@ -24,8 +28,8 @@
             <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
           </div>
 
-          <script type="module">
-            import * as ltgcars from './index.js';
+          <script>
+            // purely for visuals, does not change anything
             var p = document.getElementById("pRange");
             var outputP = document.getElementById("pValToPrint");
             var i = document.getElementById("iRange");
@@ -36,18 +40,16 @@
             outputI.innerHTML = i.value;
             outputD.innerHTML = d.value;
             
+
             
             p.oninput = function() {
               outputP.innerHTML = this.value; 
-              ltgcars.slideValues.p(this.value);
             }
             i.oninput = function() {
               outputI.innerHTML = this.value;
-              ltgcars.slideValues.i(this.value);
             }
             d.oninput = function() {
               outputD.innerHTML = this.value;
-              ltgcars.slideValues.d(this.value);
             }
 
           </script>
@@ -67,22 +69,22 @@
           </div>
 
           <script type="module">
-            import * as ltgcars from './LTGCarsUI.mjs';
-            var sliderMS = document.getElementById("maxSpeed");
-            var outputMS = document.getElementById("maxSpeedPrint");
-            var sliderMiS = document.getElementById("minSpeed");
-            var outputMiS = document.getElementById("minSpeedPrint");
-            outputMS.innerHTML = sliderMS.value;
-            outputMiS.innerHTML = sliderMiS.value;
+            // import * as ltgcars from './LTGCarsUI.js';
+            // var sliderMS = document.getElementById("maxSpeed");
+            // var outputMS = document.getElementById("maxSpeedPrint");
+            // var sliderMiS = document.getElementById("minSpeed");
+            // var outputMiS = document.getElementById("minSpeedPrint");
+            // outputMS.innerHTML = sliderMS.value;
+            // outputMiS.innerHTML = sliderMiS.value;
 
-            sliderMS.oninput = function() {
-                outputMS.innerHTML = this.value;
-                ltgcars.slideValues.maxSpeed(this.value);
-            }
-            sliderMiS.oninput = function() {
-                outputMiS.innerHTML = this.value;
-                ltgcars.slideValues.minSpeed(this.value);
-            }
+            // sliderMS.oninput = function() {
+            //     outputMS.innerHTML = this.value;
+            //     ltgcars.slideValues.maxSpeed(this.value);
+            // }
+            // sliderMiS.oninput = function() {
+            //     outputMiS.innerHTML = this.value;
+            //     ltgcars.slideValues.minSpeed(this.value);
+            // }
 
           </script>
         </div>
@@ -183,5 +185,6 @@
     </div>
 
   </body>
+  <script src="./LTGCarsUI.js"></script>
 </html>
 
