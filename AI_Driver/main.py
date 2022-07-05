@@ -105,6 +105,11 @@ def min_speed():
         car.turn_right()
         return Flask.Response(status=200)
 
+@app.route("/camera_frame", methods=["GET"])
+def camera_frame():
+    if request.method == "GET":
+        return car.camera_frame["frame"]
+
 if __name__ == '__main__':
     app.run("127.0.0.1", port=5000)
 
