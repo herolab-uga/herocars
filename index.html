@@ -220,13 +220,13 @@
     function sendDataCallback() {
         // Check response is ready or not
         if (xhr.readyState == 4 && xhr.status == 201) {
-            console.log("Data creation response received!");
+          console.log("Data creation response received!");
         }
     }
     function sendData(val) {
         if (!val) {
-            console.log("Data is empty.");
-            return;
+          console.log("Data is empty.");
+          return;
         }
         let dataToSend = val.split(" ");
         console.log("Sending data: " + dataToSend);
@@ -240,20 +240,21 @@
         // Send the request over the network
         xhr.send(dataToSend[1]);
     }
-
+    
     function changeLineType() {
 
       let lineType = document.getElementById('blackorwhite');
       let linePost = document.getElementById('blackVwhite');
       linePost.innerHTML = lineType.value;
-      if (lineType == "Black") {
-          lineType.value = "White";
-          linePost.innerHTML = lineType.value;
-          sendData("0 x");
-      } else {
-          lineType.value = "Black";
-          linePost.innerHTML = lineType.value;
-          sendData("1 x");
+
+      if (lineType.value == "Black") {
+        lineType.value = "White";
+        linePost.innerHTML = lineType.value;
+        sendData("0 x");
+      } else if (lineType.value == "White") {
+        lineType.value = "Black";
+        linePost.innerHTML = lineType.value;
+        sendData("1 x");
       }
     
     }
