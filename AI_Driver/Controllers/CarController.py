@@ -1,3 +1,4 @@
+import cv2
 import time
 import threading
 import RPi.GPIO as GPIO
@@ -33,12 +34,19 @@ class CarController:
 
         self.car_speed = 0 # speed of the car
 
+        self.camera_frame = {
+            "frame": None
+        }
+
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(29, GPIO.IN)  # RR IR Sensor
         GPIO.setup(31, GPIO.IN)  # RM IR Sensor
         GPIO.setup(33, GPIO.IN)  # MM IR Sensor
         GPIO.setup(35, GPIO.IN)  # LM IR Sensor
         GPIO.setup(37, GPIO.IN)  # LL IR Sensor
+
+        self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
+        self.thread.start()
 
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
@@ -143,12 +151,34 @@ class CarController:
     
     @control_type.setter
     def control_type(self, value):
-        self.control_type = value   
+        self.control_type = value
+
+    # Create getter for the camera frame
+    @property
+    def camera_frame(self):
+        return self.camera_frame
 
     # Gets the speed proportional to the error
     def calculate_speed(self):
         self.car_speed = min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
         return self.car_speed
+
+    # Reads the frame from the camera
+    def read_camera(self):
+        # Create the video capture object
+        cap = cv2.VideoCapture(0)
+
+        # Loop until the camera is open
+        while not cap.isOpened():
+            pass
+
+        # Loop until the camera is open
+        while True:
+            # Read the frame
+            ret, self.camera["frame"] = cap.read()
+
+            # Wait for the user to press a key
+            key = cv2.waitKey(30)
 
     # Gets the state of the car's line
     def get_line_state(self):
