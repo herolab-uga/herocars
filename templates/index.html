@@ -161,17 +161,18 @@
                     click: function () {
                       $(this).data('clicked', true);
                       var process = function() {
+
                         if ($(this).data('clicked')) {
                           // Do your stuff
-                          setTimeout($(function() {
-                            $('a#testF').on('click', function(e) {
-                              e.preventDefault()
-                              $.getJSON('/forward',
-                                  function(data) {
+                          setTimeout($(function(e) {
+                            e.preventDefault();
+                            $.getJSON('/forward',
+                              function(data) {
                                 //do nothing
-                              });
-                              return false;
-                            })}), 100);
+                              }
+                            );
+                            return false;
+                          }), 100);
                         }
                       };
                       process();
