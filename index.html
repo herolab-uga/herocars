@@ -214,7 +214,7 @@
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = dataCallback;
         // asynchronous requests
-        xhr.open("GET", "http://localhost:5001/", true);
+        xhr.open("GET", "http://localhost:80/", true);
         // Send the request over the network
         xhr.send(null);
     }
@@ -232,7 +232,7 @@
         let dataToSend = val.split(" ");
         console.log("Sending data: " + dataToSend);
 
-        let url = "http://localhost:5001/" + dataToSend[0];    
+        let url = "http://localhost:80/" + dataToSend[0];    
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
