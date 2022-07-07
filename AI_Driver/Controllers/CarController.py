@@ -1,8 +1,8 @@
-import cv2
+from cv2 import VideoCapture, waitKey
 import time
 import threading
 import RPi.GPIO as GPIO
-from AutoPhat.AutoPhatMD import AutoPhatMD
+from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
 
 class CarController:
 
@@ -166,7 +166,7 @@ class CarController:
     # Reads the frame from the camera
     def read_camera(self):
         # Create the video capture object
-        cap = cv2.VideoCapture(0)
+        cap = VideoCapture(0)
 
         # Loop until the camera is open
         while not cap.isOpened():
@@ -178,7 +178,7 @@ class CarController:
             ret, self._camera_frame["frame"] = cap.read()
 
             # Wait for the user to press a key
-            key = cv2.waitKey(30)
+            key = waitKey(30)
 
     # Gets the state of the car's line
     def get_line_state(self):
