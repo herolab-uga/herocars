@@ -59,14 +59,6 @@ def current_speed():
     if request.method == "GET":
        return str(car.car_speed)
 
-@app.route("/line_type", methods=["GET","POST"])
-def line_type():
-    if request.method == "GET":
-       return str(car.line_type)
-    else:
-        car.line_type = int(request.form["data"])
-        return Flask.Response(status=200)
-
 @app.route("/control_type", methods=["GET","POST"])
 def control_type():
     if request.method == "GET":
