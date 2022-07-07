@@ -158,6 +158,16 @@ class CarController:
     def camera_frame(self):
         return self._camera_frame
 
+    # Create getter for the _straight variable
+    @property
+    def straight(self):
+        return self._straight 
+
+    # Create setter for the _straight variable
+    @straight.setter
+    def straight(self, value):
+        self._straight = value
+
     # Gets the speed proportional to the _error
     def calculate_speed(self):
         self._car_speed = min(abs(int(abs(self._error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
@@ -224,9 +234,8 @@ class CarController:
             if self._control_type == 0 and time.time() - self._last_velo_time > .05 and not self._car_speed == 0 :
                 self.stop()
             if self._control_type == 0 and time.time() - self._last_steer_time > .05 and not self._straight:
-                self.stragith = 1
+                self._straight = 1
                 self.center_steering()
-            time.sleep(.01)
 
     def turn_left(self):
         self._motor_driver.ManualLeft()
