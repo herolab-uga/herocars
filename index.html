@@ -134,7 +134,7 @@
             
           </div>
           <div class="mid">
-            <button onclick="sendData('left')" style="width: 25%">LEFT</button>
+            <a href=# id=teste><button style="width: 25%">FORWARD</button></a>
             <button onclick="sendData('right')" style="width: 25%">RIGHT</button>
           </div>
           <div class="bot">
@@ -146,7 +146,7 @@
                   $(function() {
                     $('a#test').on('click', function(e) {
                       e.preventDefault()
-                      $.getJSON('http://192.168.1.33/forward',
+                      $.getJSON('http://192.168.1.33:8080/forward',
                           function(data) {
                         //do nothing
                       });
