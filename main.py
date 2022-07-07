@@ -59,14 +59,6 @@ def current_speed():
     if request.method == "GET":
        return str(car.car_speed)
 
-@app.route("/line_type", methods=["GET","POST"])
-def line_type():
-    if request.method == "GET":
-       return str(car.line_type)
-    else:
-        car.line_type = int(request.form["data"])
-        return Flask.Response(status=200)
-
 @app.route("/control_type", methods=["GET","POST"])
 def control_type():
     if request.method == "GET":
@@ -105,6 +97,16 @@ def right():
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_right()
+    return ("nothing")
+
+@app.route("/0")
+def line_type():
+    car.line_color = "white"
+    return ("nothing")
+
+@app.route("/1")
+def line_type():
+    car.line_color = "black"
     return ("nothing")
 
 @app.route("/camera_frame", methods=["GET"])
