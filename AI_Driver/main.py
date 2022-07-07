@@ -1,5 +1,6 @@
 import time
 import getch
+from flask_cors import CORS
 from flask import Flask, request, Response
 import Controllers.CarController as CarController
 
@@ -7,6 +8,7 @@ car = CarController.CarController()
 
 # Initialize web server for controlling the car
 app = Flask("LGT_Car")
+CORS(app)
 
 @app.route("/p", methods=["GET","POST"])
 def p():
