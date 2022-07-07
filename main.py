@@ -3,6 +3,7 @@ import time
 import getch
 import socket
 from flask_cors import CORS
+from flask_socketio import SocketIO
 from flask import Flask, request, Response, render_template
 import AI_Driver.Controllers.CarController as CarController
 
@@ -11,6 +12,7 @@ car = CarController.CarController()
 # Initialize web server for controlling the car
 app = Flask("LTG_Car")
 CORS(app)
+socketio = SocketIO(app)
 
 @app.route("/p", methods=["GET","POST"])
 def p():
@@ -69,30 +71,40 @@ def control_type():
 
 @app.route("/forward")
 def forward():
-    car.last_velo_time = time.time()
-    car.car_speed = car.max_speed
+    # car.last_velo_time = time.time()
+    # car.car_speed = car.max_speed
     car.drive_forward()
     return ("nothing")
 
 @app.route("/backward")
 def backward():
-    car.last_velo_time = time.time()
-    car.car_speed = -car.max_speed
+    # car.last_velo_time = time.time()
+    # car.car_speed = -car.max_speed
     car.drive_backward()
     return ("nothing")
 
 @app.route("/left")
 def left():
-    car.last_steer_time = time.time()
-    car.straight = 0
+    # car.last_steer_time = time.time()
+    # car.straight = 0
     car.turn_left()
     return ("nothing")
 
 @app.route("/right")
 def right():
-    car.last_steer_time = time.time()
-    car.straight = 0
+    # car.last_steer_time = time.time()
+    # car.straight = 0
     car.turn_right()
+    return ("nothing")
+
+@app.route("/stop")
+def stop():
+    car.stop()
+    return ("nothing")
+
+@app.route("/center_steering")
+def center_steering():
+    car.center_steering()
     return ("nothing")
 
 @app.route("/0")
@@ -113,6 +125,11 @@ def camera_frame():
 @app.route("/")
 def execute():
     return render_template("index.html")
+
+@socketio.on('disconnect')
+def test_disconnect():
+    car.stop()
+    car.center_steering()
 
 if __name__ == '__main__':
     host_addr = socket.gethostbyname(socket.gethostname() + ".local")
