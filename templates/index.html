@@ -88,7 +88,7 @@
           </div>
         </div>
 
-        <!-- Current Lap Time -->
+        <!-- Current Lap Time don't need to send to Michael -->
         <div class="box1">
           <h2>Current Lap Time</h2>
           <p>00:00:00</p>
@@ -122,15 +122,15 @@
           </div>
           <script type=text/javascript>
                   $(function() {
-                    $('a#testF').on('click', function(e) {
-                      e.preventDefault()
-                      $.getJSON('/forward',
-                          function(data) {
-                        //do nothing
-                      });
-                      return false;
-                    });
-                    $('a#testB').on('click', function(e) {
+                    // $('a#testF').on('click', function(e) {
+                    //   e.preventDefault()
+                    //   $.getJSON('/forward',
+                    //       function(data) {
+                    //     //do nothing
+                    //   });
+                    //   return false;
+                    // });
+                    $('a#testB').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/backward',
                           function(data) {
@@ -138,7 +138,7 @@
                       });
                       return false;
                     });
-                    $('a#testL').on('click', function(e) {
+                    $('a#testL').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/left',
                           function(data) {
@@ -146,7 +146,7 @@
                       });
                       return false;
                     });
-                    $('a#testR').on('click', function(e) {
+                    $('a#testR').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/right',
                           function(data) {
@@ -155,6 +155,26 @@
                       return false;
                     });
                   });
+
+                  moveForward = function() {
+                    $(function() {
+                      $('a#testF').on('click', function(e) {
+                        e.preventDefault()
+                        $.getJSON('/forward',
+                            function(data) {
+                          //do nothing
+                        });
+                        return false;
+                      });
+                    });
+                  }
+                  
+                  // $('a#testF').mousedown(function() {
+                  //     event.preventDefault();
+                  //     rightIntervalId = setInterval(moveForward, 5);
+                  // }).mouseup(function() {
+                  //     clearInterval(rightIntervalId);
+                  // });
           </script>
         </div>
       </div>
@@ -236,7 +256,8 @@
 
     <!-- HeRo Lab Logo -->
     <div class="bottom">
-      <img src="/static/styles/imgherolab_newlogo_whitebg.png">
+      <img src="{{ url_for('static',filename='imgherolab_newlogo_whitebg.png') }}">
+      
     </div>
 
   </body>
