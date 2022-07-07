@@ -128,7 +128,7 @@
 
         <!-- Movements -->
         <div class="movements">
-          <form method="POST">
+          <form method="POST" action="http://127.0.0.1/forward">
           <div class="top">
             <button onclick="sendData('forward')" style="width: 25%">FORWARD</button>
           </div>
@@ -239,7 +239,7 @@
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
         xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "text/html;charset=UTF-8");
+        xhr.setRequestHeader("Content-Type", "text/html;accept-charset=UTF-8");
         // Send the request over the network
 
         // xhr.send("forward");
