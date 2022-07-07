@@ -52,9 +52,9 @@ class CarController:
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
         update_thread.start()
 
-        # Create stop thread
-        stop_thread = threading.Thread(target=self.car_auto_stop,args=(),daemon=True)
-        stop_thread.start()
+        # # Create stop thread
+        # stop_thread = threading.Thread(target=self.car_auto_stop,args=(),daemon=True)
+        # stop_thread.start()
 
     # Create getter and setter methods for the last_time variable
     @property
