@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
     <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/style.css') }}"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- make buttons send continuously -->
     
   </head>
@@ -36,16 +37,6 @@
             outputP.innerHTML = p.value;
             outputI.innerHTML = i.value;
             outputD.innerHTML = d.value;
-
-            p.onchange = function() {
-              sendData("p " + this.value.toString());
-            }
-            i.onchange = function() {
-              sendData("i " + this.value.toString());
-            }
-            d.onchange = function() {
-              sendData("d " + this.value.toString());
-            }
             
             p.oninput = function() {
               outputP.innerHTML = this.value; 
@@ -80,19 +71,7 @@
             var outputMiS = document.getElementById("minSpeedPrint");
             outputMS.innerHTML = sliderMS.value;
             outputMiS.innerHTML = sliderMiS.value;
-
-            sliderMS.onchange = function() {
-              sendData("5 " + this.value.toString());
-            }
-            sliderMiS.onchange = function() {
-              sendData("6 " + this.value.toString());
-            }
-            sliderMS.oninput = function() {
-                outputMS.innerHTML = this.value;
-            }
-            sliderMiS.oninput = function() {
-                outputMiS.innerHTML = this.value;
-            }
+            
           </script>
         </div>
 
@@ -129,24 +108,47 @@
         <div class="movements">
           <div class="top">
             <form>
-              <a href=# id=test><button style="width: 25%">FORWARD</button></a>
-          </form>
+              <a href=# id=testF style="width: 25%"><button>FORWARD</button></a>
+            </form>
             
           </div>
           <div class="mid">
-            <button onclick="sendData('left')" style="width: 25%">LEFT</button>
-            <button onclick="sendData('right')" style="width: 25%">RIGHT</button>
+            <a href=# id=testL style="width: 25%"><button>LEFT</button></a>
+            <a href=# id=testR style="width: 25%"><button>RIGHT</button></a>
           </div>
           <div class="bot">
-            <button onclick="sendData('backward')" style="width: 25%">BACKWARD</button>
+            <a href=# id=testB style="width: 25%"><button>BACKWARD</button></a>
             
           </div>
-          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
           <script type=text/javascript>
                   $(function() {
-                    $('a#test').on('click', function(e) {
+                    $('a#testF').on('click', function(e) {
                       e.preventDefault()
                       $.getJSON('/forward',
+                          function(data) {
+                        //do nothing
+                      });
+                      return false;
+                    });
+                    $('a#testB').on('click', function(e) {
+                      e.preventDefault()
+                      $.getJSON('/backward',
+                          function(data) {
+                        //do nothing
+                      });
+                      return false;
+                    });
+                    $('a#testL').on('click', function(e) {
+                      e.preventDefault()
+                      $.getJSON('/left',
+                          function(data) {
+                        //do nothing
+                      });
+                      return false;
+                    });
+                    $('a#testR').on('click', function(e) {
+                      e.preventDefault()
+                      $.getJSON('/right',
                           function(data) {
                         //do nothing
                       });
@@ -179,9 +181,39 @@
           <div class="speeds">
             <p>Line Color: <span id="blackVwhite"></span></p>
             <label class="switch">
-              <input type="checkbox" oninput="changeLineType()" value="White" id="blackorwhite">
+              <input type="checkbox" value="White" id="blackorwhite">
               <span class="slider"></span>
             </label>
+            <script type=text/javascript>
+              function changeLineType() {
+
+                let lineType = document.getElementById('blackorwhite');
+                let linePost = document.getElementById('blackVwhite');
+                linePost.innerHTML = lineType.value;
+
+                if (lineType.value == "Black") {
+                  lineType.value = "White";
+                  linePost.innerHTML = lineType.value;
+                  return "/0";
+                } else if (lineType.value == "White") {
+                  lineType.value = "Black";
+                  linePost.innerHTML = lineType.value;
+                  return "/1";
+                }
+
+              }
+
+              $(function() {
+                $('input#blackorwhite').on('change', function(e) {
+                  let d = changeLineType();
+                  e.preventDefault()
+                  $.getJSON(d,
+                      function(data) {
+                  });
+                  return false;
+                });
+              });
+            </script>
           </div>
           
         </div>
@@ -209,70 +241,3 @@
 
   </body>
 </html>
-
-<script>
-    var xhr = null;
-    getXmlHttpRequestObject = function () {
-        if (!xhr) {
-            // Create a new XMLHttpRequest object 
-            xhr = new XMLHttpRequest();
-        }
-        return xhr;
-    };
-    function dataCallback() {
-        // Check response is ready or not
-        if ((xhr.status == 200 || xhr.status == 201)) {
-            console.log("User data received!");
-        }
-    }
-    function getUsers() {
-        xhr = getXmlHttpRequestObject();
-        xhr.onreadystatechange = dataCallback;
-        // asynchronous requests
-        xhr.open("GET", "http://192.168.1.33:80/", true);
-        // Send the request over the network
-        xhr.send(null);
-    }
-    function sendDataCallback() {
-        // Check response is ready or not
-        if ((xhr.status == 201 || xhr.status == 200)) {
-          console.log("Data creation response received!");
-        }
-    }
-    function sendData(val) {
-        if (!val) {
-          console.log("Data is empty.");
-          return;
-        }
-        let dataToSend = val.split(" ");
-        console.log("Sending data: " + dataToSend);
-
-        let url = "http://127.0.0.1:5000/" + dataToSend[0];    
-        xhr = getXmlHttpRequestObject();
-        xhr.onreadystatechange = sendDataCallback;
-        // asynchronous requests
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "text/html;accept-charset=UTF-8");
-        // Send the request over the network
-        
-        xhr.send();
-    }
-    
-    function changeLineType() {
-
-      let lineType = document.getElementById('blackorwhite');
-      let linePost = document.getElementById('blackVwhite');
-      linePost.innerHTML = lineType.value;
-
-      if (lineType.value == "Black") {
-        lineType.value = "White";
-        linePost.innerHTML = lineType.value;
-        sendData("0 x");
-      } else if (lineType.value == "White") {
-        lineType.value = "Black";
-        linePost.innerHTML = lineType.value;
-        sendData("1 x");
-      }
-    
-    }
-</script>
