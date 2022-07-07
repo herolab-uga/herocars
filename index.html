@@ -237,7 +237,7 @@
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
         xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.setRequestHeader("Content-Type", "text/html;charset=UTF-8");
         // Send the request over the network
         xhr.send(dataToSend[1]);
     }
