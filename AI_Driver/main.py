@@ -1,8 +1,6 @@
 import time
 import getch
-import socket
-import threading
-from flask import Flask, request,Response
+from flask import Flask, request, Response
 import Controllers.CarController as CarController
 
 car = CarController.CarController()
@@ -20,7 +18,7 @@ def p():
         return Flask.Response(status=200)
 
 @app.route("/i", methods=["GET","POST"])
-def p():
+def i():
     if request.method == "GET":
        return str(car.i)
     else:
@@ -74,7 +72,7 @@ def control_type():
         return Flask.Response(status=200)
 
 @app.route("/forward", methods=["GET"])
-def min_speed():
+def forward():
     if request.method == "GET":
         car.last_velo_time = time.time()
         car.car_speed = car.max_speed
@@ -90,7 +88,7 @@ def backward():
         return Flask.Response(status=200)
 
 @app.route("/left", methods=["GET"])
-def min_speed():
+def left():
     if request.method == "GET":
         car.last_steer_time = time.time()
         car.straight = 0
@@ -98,7 +96,7 @@ def min_speed():
         return Flask.Response(status=200)
 
 @app.route("/right", methods=["GET"])
-def min_speed():
+def right():
     if request.method == "GET":
         car.last_steer_time = time.time()
         car.straight = 0

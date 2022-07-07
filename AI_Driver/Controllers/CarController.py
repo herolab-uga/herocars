@@ -11,30 +11,30 @@ class CarController:
         # Initialize the car
 
         # Autohat Object
-        self.motor_driver = AutoPhatMD()
+        self._motor_driver = AutoPhatMD()
 
-        self.min_speed = 0
-        self.max_speed = 150
+        self._min_speed = 0
+        self._max_speed = 150
         
-        self.line_color = 1 # 1: white, 0: black
+        self._line_color = 1 # 1: white, 0: black
 
-        self.last_velo_time = 0 # last time the car was commanded to drive in manual mode
-        self.last_steer_time = 0 # last time the car was commanded steer in manual mode
+        self._last_velo_time = 0 # last time the car was commanded to drive in manual mode
+        self._last_steer_time = 0 # last time the car was commanded steer in manual mode
 
-        self.p = 43       # Proportion value
-        self.i = 1        # Integral Step value
-        self.d = 13       # Derivative Step Value
-        self.error = 0      # amount of error on the line the car is experiencing
-        self.prev_error = 0  # error of last calculation used for Derivative calc
-        self.straight = 1     # 1: straight, 0: not straight
+        self._p = 43       # Proportion value
+        self._i = 1        # Integral Step value
+        self._d = 13       # Derivative Step Value
+        self._error = 0      # amount of _error on the line the car is experiencing
+        self._prev_error = 0  # _error of last calculation used for Derivative calc
+        self._straight = 1     # 1: _straight, 0: not _straight
 
-        self.control_type = 0 # 0:Manual, 1:Auton
+        self._control_type = 0 # 0:Manual, 1:Auton
 
-        self.PV = 0  # sum of all values errors that the car has experienced
+        self._PV = 0  # sum of all values errors that the car has experienced
 
-        self.car_speed = 0 # speed of the car
+        self._car_speed = 0 # speed of the car
 
-        self.camera_frame = {
+        self._camera_frame = {
             "frame": None
         }
 
@@ -45,8 +45,8 @@ class CarController:
         GPIO.setup(35, GPIO.IN)  # LM IR Sensor
         GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
-        self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
-        self.thread.start()
+        # self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
+        # self.thread.start()
 
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
@@ -62,106 +62,106 @@ class CarController:
         return self.last_time
     
     @last_velo_time.setter
-    def last_vel_time(self, value):
+    def last_velo_time(self, value):
         self.last_time = value
 
-    # Create getter and setter methods for the last_steer_time variable
+    # Create getter and setter methods for the _last_steer_time variable
     @property
     def last_steer_time(self):
-        return self.last_steer_time
+        return self._last_steer_time
 
     @last_steer_time.setter
     def last_steer_time(self, value):
-        self.last_steer_time = value
+        self._last_steer_time = value
 
-    # Create getter and setter methods for the car's p, i, and d
+    # Create getter and setter methods for the car's _p, _i, and _d
     @property
     def p(self):
-        return self.p
+        return self._p
 
     @p.setter
     def p(self, value):
-        self.p = value
+        self._p = value
     
     @property
     def i(self):
-        return self.i
+        return self._i
     
     @i.setter
     def i(self, value):
-        self.i = value
+        self._i = value
     
     @property
     def d(self):
-        return self.d
+        return self._d
     
     @d.setter
     def d(self, value):
-        self.d = value  
+        self._d = value  
 
-    # Create getter and setter methods for the car's car_speed
+    # Create getter and setter methods for the car's _car_speed
     @property
     def car_speed(self):
-        return self.car_speed
+        return self._car_speed
     
     @car_speed.setter
     def car_speed(self, value):
-        self.car_speed = value
+        self._car_speed = value
     
-    # Create getter and setter methods for the car's line_color
+    # Create getter and setter methods for the car's _line_color
     @property
     def line_color(self):
-        return self.line_color
+        return self._line_color
     
     @line_color.setter
     def line_color(self, value):
-        self.line_color = value
+        self._line_color = value
 
-    # Create getter and setter methods for the car's error
+    # Create getter and setter methods for the car's _error
     @property
     def error(self):
-        return self.error
+        return self._error
     
     @error.setter
     def error(self, value):
-        self.error = value
+        self._error = value
 
-    # Create getter and setter methods for the car's min_speed
+    # Create getter and setter methods for the car's _min_speed
     @property
     def min_speed(self):
-        return self.min_speed
+        return self._min_speed
     
     @min_speed.setter
     def min_speed(self, value):
-        self.min_speed = value
+        self._min_speed = value
     
-    # Create getter and setter methods for the car's max_speed
+    # Create getter and setter methods for the car's _max_speed
     @property
     def max_speed(self):
-        return self.max_speed
+        return self._max_speed
     
     @max_speed.setter
     def max_speed(self, value):
-        self.max_speed = value
+        self._max_speed = value
 
-    # Create getter and setter methods for the car's control_type
+    # Create getter and setter methods for the car's _control_type
     @property
     def control_type(self):
-        return self.control_type
+        return self._control_type
     
     @control_type.setter
     def control_type(self, value):
-        self.control_type = value
+        self._control_type = value
 
     # Create getter for the camera frame
     @property
     def camera_frame(self):
-        return self.camera_frame
+        return self._camera_frame
 
-    # Gets the speed proportional to the error
+    # Gets the speed proportional to the _error
     def calculate_speed(self):
-        self.car_speed = min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
-        return self.car_speed
+        self._car_speed = min(abs(int(abs(self._error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
+        return self._car_speed
 
     # Reads the frame from the camera
     def read_camera(self):
@@ -175,7 +175,7 @@ class CarController:
         # Loop until the camera is open
         while True:
             # Read the frame
-            ret, self.camera["frame"] = cap.read()
+            ret, self._camera_frame["frame"] = cap.read()
 
             # Wait for the user to press a key
             key = cv2.waitKey(30)
@@ -186,7 +186,7 @@ class CarController:
         line_state = [GPIO.input(37), GPIO.input(35), GPIO.input(33), GPIO.input(31), GPIO.input(29)]
 
         # If the line is set to white return the list
-        if self.line_color == "white":
+        if self._line_color == "white":
             return line_state
         # If the line is set to black return the list with the opposite values
         else:
@@ -194,56 +194,56 @@ class CarController:
 
     def calculate_error(self):
 
-        self.prevError = self.error
+        self.prevError = self._error
 
-        # Combine IR sensors into error value
+        # Combine IR sensors into _error value
 
         # Get the states of the IR sensors
         LL,LM,MM,RM,RR = self.get_line_state()
 
-        self.error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
+        self._error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
         
-        if abs(self.error) < 4:
-            self.PV += -.0001 * self.error
+        if abs(self._error) < 4:
+            self._PV += -.0001 * self._error
 
-        self.PV = max(self.PV,-10)
-        self.PV = min(self.PV,10)
+        self._PV = max(self._PV,-10)
+        self._PV = min(self._PV,10)
             
-        return self.error
+        return self._error
 
     def auton_control_update(self):
         while True:
-            if self.control_type == 1:
-                error = self.calculate_error()
-                correction = self.p * error + self.i * self.PV + self.d * (self.error -self.prev_error)
+            if self._control_type == 1:
+                _error = self.calculate_error()
+                correction = self._p * _error + self._i * self._PV + self._d * (self._error -self._prev_error)
                 self.motorDriver.Turn(correction)
                 self.motorDriver.Drive(self.calculate_speed())
 
     def car_auto_stop(self):
         while True:
-            if self.control_type == 0 and time.time() - self.last_velo_time > .05 and not self.car_speed == 0:
+            if self._control_type == 0 and time.time() - self._last_velo_time > .05 and not self._car_speed == 0:
                 self.stop()
-            if self.control_type == 0 and time.time() - self.last_steer_time > .05 and not self.straight:
+            if self._control_type == 0 and time.time() - self._last_steer_time > .05 and not self._straight:
                 self.stragith = 1
                 self.center_steering()
             time.sleep(.01)
 
     def turn_left(self):
-        self.motor_driver.ManualLeft()
+        self._motor_driver.ManualLeft()
     
     def turn_right(self):
-        self.motor_driver.ManualRight()
+        self._motor_driver.ManualRight()
     
     def drive_forward(self):
-        self.motor_driver.ManualForward()
+        self._motor_driver.ManualForward()
     
     def drive_backward(self):
-        self.motor_driver.ManualReverse()
+        self._motor_driver.ManualReverse()
     
     def stop(self):
-        self.car_speed = 0
-        self.motor_driver.ManualDriveStop()
+        self._car_speed = 0
+        self._motor_driver.ManualDriveStop()
     
     def center_steering(self):
-        self.motor_driver.ManualSteerStop()
+        self._motor_driver.ManualSteerStop()
 
