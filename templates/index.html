@@ -130,7 +130,7 @@
                     //   });
                     //   return false;
                     // });
-                    $('a#testB').on('click', function(e) {
+                    $('a#testB').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/backward',
                           function(data) {
@@ -138,7 +138,7 @@
                       });
                       return false;
                     });
-                    $('a#testL').on('click', function(e) {
+                    $('a#testL').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/left',
                           function(data) {
@@ -146,7 +146,7 @@
                       });
                       return false;
                     });
-                    $('a#testR').on('click', function(e) {
+                    $('a#testR').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/right',
                           function(data) {
@@ -169,12 +169,12 @@
                     });
                   }
                   
-                  $('a#testF').mousedown(function() {
-                      event.preventDefault();
-                      rightIntervalId = setInterval(moveForward, 500);
-                  }).mouseup(function() {
-                      clearInterval(rightIntervalId);
-                  });
+                  // $('a#testF').mousedown(function() {
+                  //     event.preventDefault();
+                  //     rightIntervalId = setInterval(moveForward, 5);
+                  // }).mouseup(function() {
+                  //     clearInterval(rightIntervalId);
+                  // });
           </script>
         </div>
       </div>
