@@ -74,40 +74,33 @@ def control_type():
         car.control_type = int(request.form["data"])
         return Flask.Response(status=200)
 
-@app.route("/forward", methods=["POST"])
+@app.route("/forward")
 def forward():
     print("forward",file=sys.stderr)
-    if request.method == "POST":
-        car.last_velo_time = time.time()
-        car.car_speed = car.max_speed
-        car.drive_forward()
+    car.last_velo_time = time.time()
+    car.car_speed = car.max_speed
+    car.drive_forward()
 
-@app.route("/backward", methods=["POST"])
+@app.route("/backward")
 def backward():
-    if request.method == "POST":
-        print("backward")
-        car.last_velo_time = time.time()
-        car.car_speed = -car.max_speed
-        car.drive_backward()
-        return Flask.Response(status=200)
+    print("backward")
+    car.last_velo_time = time.time()
+    car.car_speed = -car.max_speed
+    car.drive_backward()
 
-@app.route("/left", methods=["POST"])
+@app.route("/left")
 def left():
-    if request.method == "POST":
-        print("left")
-        car.last_steer_time = time.time()
-        car.straight = 0
-        car.turn_left()
-        return Flask.Response(status=200)
+    print("left")
+    car.last_steer_time = time.time()
+    car.straight = 0
+    car.turn_left()
 
 @app.route("/right")
 def right():
-    if request.method == "POST":
-        print("right")
-        car.last_steer_time = time.time()
-        car.straight = 0
-        car.turn_right()
-        return Flask.Response(status=200)
+    print("right")
+    car.last_steer_time = time.time()
+    car.straight = 0
+    car.turn_right()
 
 @app.route("/camera_frame", methods=["GET"])
 def camera_frame():
