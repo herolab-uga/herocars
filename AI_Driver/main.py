@@ -1,8 +1,6 @@
 import time
 import getch
-import socket
-import threading
-from flask import Flask, request,Response
+from flask import Flask, request, Response
 import Controllers.CarController as CarController
 
 car = CarController.CarController()
