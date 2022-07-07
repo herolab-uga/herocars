@@ -222,7 +222,7 @@ class CarController:
     def car_auto_stop(self):
         while True:
             print(time.time() - self._last_velo_time)
-            if self._control_type == 0 and time.time() - self._last_velo_time > .05 andnot self._car_speed == 0 :
+            if self._control_type == 0 and time.time() - self._last_velo_time > .05 and not self._car_speed == 0 :
                 self.stop()
             if self._control_type == 0 and time.time() - self._last_steer_time > .05 and not self._straight:
                 self.stragith = 1
