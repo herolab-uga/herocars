@@ -1,8 +1,9 @@
 import sys
 import time
 import getch
-from flask_cors import CORS
-from flask import Flask, request, Response
+import socket
+from flask_cors import COR
+from flask import Flask, request, Response, render_template
 import Controllers.CarController as CarController
 
 car = CarController.CarController()
@@ -106,6 +107,10 @@ def right():
 def camera_frame():
     if request.method == "GET":
         return car.camera_frame["frame"]
+
+@app.route("/")
+def execute():
+    return render_template("../index.html")
 
 if __name__ == '__main__':
     app.run("127.0.0.1", port=5000)
