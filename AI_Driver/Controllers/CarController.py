@@ -45,8 +45,8 @@ class CarController:
         GPIO.setup(35, GPIO.IN)  # LM IR Sensor
         GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
-        self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
-        self.thread.start()
+        # self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
+        # self.thread.start()
 
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
@@ -175,7 +175,7 @@ class CarController:
         # Loop until the camera is open
         while True:
             # Read the frame
-            ret, self._camera["frame"] = cap.read()
+            ret, self._camera_frame["frame"] = cap.read()
 
             # Wait for the user to press a key
             key = cv2.waitKey(30)
