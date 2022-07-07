@@ -164,14 +164,12 @@
                       setInterval(function() {
                           while(!lock) {
                             $(function() {
-                              $('a#testF').on('click', function(e) {
                                 e.preventDefault()
                                 $.getJSON('/forward',
                                     function(data) {
                                   //do nothing
                                 });
                                 return false;
-                              });
                             });
                           }
                       }, 5);
@@ -183,14 +181,12 @@
                       setInterval(function() {
                           while(!lock) {
                             $(function() {
-                              $('a#testB').on('click', function(e) {
                                 e.preventDefault()
                                 $.getJSON('/backward',
                                     function(data) {
                                   //do nothing
                                 });
                                 return false;
-                              });
                             });
                           }
                       }, 5);
