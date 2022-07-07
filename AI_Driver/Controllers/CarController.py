@@ -63,7 +63,7 @@ class CarController:
     
     @last_velo_time.setter
     def last_velo_time(self, value):
-        self.last_time = value
+        self._last_time = value
 
     # Create getter and setter methods for the _last_steer_time variable
     @property
