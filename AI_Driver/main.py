@@ -18,7 +18,7 @@ def p():
         return Flask.Response(status=200)
 
 @app.route("/i", methods=["GET","POST"])
-def p():
+def i():
     if request.method == "GET":
        return str(car.i)
     else:
