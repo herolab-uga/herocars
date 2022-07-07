@@ -3,7 +3,9 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+
+    
   </head>
   <body>
 
@@ -24,8 +26,7 @@
             <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
           </div>
 
-          <script type="module">
-            import * as ltgcars from './LTGCarsUI.mjs';
+          <script>
             var p = document.getElementById("pRange");
             var outputP = document.getElementById("pValToPrint");
             var i = document.getElementById("iRange");
@@ -35,19 +36,25 @@
             outputP.innerHTML = p.value;
             outputI.innerHTML = i.value;
             outputD.innerHTML = d.value;
-            
+
+            p.onchange = function() {
+              sendData("p " + this.value.toString());
+            }
+            i.onchange = function() {
+              sendData("i " + this.value.toString());
+            }
+            d.onchange = function() {
+              sendData("d " + this.value.toString());
+            }
             
             p.oninput = function() {
               outputP.innerHTML = this.value; 
-              ltgcars.slideValues.p(this.value);
             }
             i.oninput = function() {
               outputI.innerHTML = this.value;
-              ltgcars.slideValues.i(this.value);
             }
             d.oninput = function() {
               outputD.innerHTML = this.value;
-              ltgcars.slideValues.d(this.value);
             }
 
           </script>
@@ -66,8 +73,7 @@
             <input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
           </div>
 
-          <script type="module">
-            import * as ltgcars from './LTGCarsUI.mjs';
+          <script>
             var sliderMS = document.getElementById("maxSpeed");
             var outputMS = document.getElementById("maxSpeedPrint");
             var sliderMiS = document.getElementById("minSpeed");
@@ -75,15 +81,18 @@
             outputMS.innerHTML = sliderMS.value;
             outputMiS.innerHTML = sliderMiS.value;
 
+            sliderMS.onchange = function() {
+              sendData("5 " + this.value.toString());
+            }
+            sliderMiS.onchange = function() {
+              sendData("6 " + this.value.toString());
+            }
             sliderMS.oninput = function() {
                 outputMS.innerHTML = this.value;
-                ltgcars.slideValues.maxSpeed(this.value);
             }
             sliderMiS.oninput = function() {
                 outputMiS.innerHTML = this.value;
-                ltgcars.slideValues.minSpeed(this.value);
             }
-
           </script>
         </div>
 
@@ -114,19 +123,20 @@
         <!-- Camera -->
         <div class="imageHolder" style="margin-top:50px;">
           <img src="./css/img/imgPlace.png">
+          <!-- <img src="{{ url_for('video_feed') }}" width="100%"> -->
         </div>
 
         <!-- Movements -->
         <div class="movements">
           <div class="top">
-            <button onclick="Movement.forward()" style="width: 25%">FORWARD</button>
+            <button onclick="sendData('forward')" style="width: 25%">FORWARD</button>
           </div>
           <div class="mid">
-            <button onclick="Movement.left()" style="width: 25%">LEFT</button>
-            <button onclick="Movement.right()" style="width: 25%">RIGHT</button>
+            <button onclick="sendData('left')" style="width: 25%">LEFT</button>
+            <button onclick="Movement.right('right')" style="width: 25%">RIGHT</button>
           </div>
           <div class="bot">
-            <button onclick="Movement.backward()" style="width: 25%">BACKWARD</button>
+            <button onclick="Movement.backward('backward')" style="width: 25%">BACKWARD</button>
             
           </div>
         </div>
@@ -154,7 +164,7 @@
           <div class="speeds">
             <p>Line Color: <span id="blackVwhite"></span></p>
             <label class="switch">
-              <input type="checkbox" oninput="changeLineType()">
+              <input type="checkbox" oninput="changeLineType()" value="White" id="blackorwhite">
               <span class="slider"></span>
             </label>
           </div>
@@ -185,3 +195,68 @@
   </body>
 </html>
 
+<script>
+    var xhr = null;
+    getXmlHttpRequestObject = function () {
+        if (!xhr) {
+            // Create a new XMLHttpRequest object 
+            xhr = new XMLHttpRequest();
+        }
+        return xhr;
+    };
+    function dataCallback() {
+        // Check response is ready or not
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log("User data received!");
+        }
+    }
+    function getUsers() {
+        xhr = getXmlHttpRequestObject();
+        xhr.onreadystatechange = dataCallback;
+        // asynchronous requests
+        xhr.open("GET", "http://localhost:5001/", true);
+        // Send the request over the network
+        xhr.send(null);
+    }
+    function sendDataCallback() {
+        // Check response is ready or not
+        if (xhr.readyState == 4 && xhr.status == 201) {
+          console.log("Data creation response received!");
+        }
+    }
+    function sendData(val) {
+        if (!val) {
+          console.log("Data is empty.");
+          return;
+        }
+        let dataToSend = val.split(" ");
+        console.log("Sending data: " + dataToSend);
+
+        let url = "http://localhost:5001/" + dataToSend[0];    
+        xhr = getXmlHttpRequestObject();
+        xhr.onreadystatechange = sendDataCallback;
+        // asynchronous requests
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        // Send the request over the network
+        xhr.send(dataToSend[1]);
+    }
+    
+    function changeLineType() {
+
+      let lineType = document.getElementById('blackorwhite');
+      let linePost = document.getElementById('blackVwhite');
+      linePost.innerHTML = lineType.value;
+
+      if (lineType.value == "Black") {
+        lineType.value = "White";
+        linePost.innerHTML = lineType.value;
+        sendData("0 x");
+      } else if (lineType.value == "White") {
+        lineType.value = "Black";
+        linePost.innerHTML = lineType.value;
+        sendData("1 x");
+      }
+    
+    }
+</script>

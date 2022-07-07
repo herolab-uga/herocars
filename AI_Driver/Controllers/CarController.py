@@ -1,3 +1,4 @@
+import cv2
 import time
 import threading
 import RPi.GPIO as GPIO
@@ -8,6 +9,7 @@ class CarController:
     def __init__(self) -> None:
         
         # Initialize the car
+
         # Autohat Object
         self.motor_driver = AutoPhatMD()
 
@@ -16,19 +18,25 @@ class CarController:
         
         self.line_color = 1 # 1: white, 0: black
 
-        self.last_time = 0 # last time the car was commanded in manual mode
+        self.last_velo_time = 0 # last time the car was commanded to drive in manual mode
+        self.last_steer_time = 0 # last time the car was commanded steer in manual mode
 
-        self.__p = 43       # Proportion value
-        self.__i = 1        # Integral Step value
-        self.__d = 13       # Derivative Step Value
+        self.p = 43       # Proportion value
+        self.i = 1        # Integral Step value
+        self.d = 13       # Derivative Step Value
         self.error = 0      # amount of error on the line the car is experiencing
-        self.prevError = 0  # error of last calculation used for Derivative calc
+        self.prev_error = 0  # error of last calculation used for Derivative calc
+        self.straight = 1     # 1: straight, 0: not straight
 
         self.control_type = 0 # 0:Manual, 1:Auton
 
         self.PV = 0  # sum of all values errors that the car has experienced
 
-        self._car_speed = 0 # speed of the car
+        self.car_speed = 0 # speed of the car
+
+        self.camera_frame = {
+            "frame": None
+        }
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(29, GPIO.IN)  # RR IR Sensor
@@ -36,6 +44,9 @@ class CarController:
         GPIO.setup(33, GPIO.IN)  # MM IR Sensor
         GPIO.setup(35, GPIO.IN)  # LM IR Sensor
         GPIO.setup(37, GPIO.IN)  # LL IR Sensor
+
+        self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
+        self.thread.start()
 
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
@@ -47,96 +58,127 @@ class CarController:
 
     # Create getter and setter methods for the last_time variable
     @property
-    def last_time(self):
-        return self.__last_time
+    def last_velo_time(self):
+        return self.last_time
     
-    @last_time.setter
-    def last_time(self, value):
-        self.__last_time = value
+    @last_velo_time.setter
+    def last_vel_time(self, value):
+        self.last_time = value
 
-    # Create getter and setter methods for the car's __p, __i, and __d
+    # Create getter and setter methods for the last_steer_time variable
+    @property
+    def last_steer_time(self):
+        return self.last_steer_time
+
+    @last_steer_time.setter
+    def last_steer_time(self, value):
+        self.last_steer_time = value
+
+    # Create getter and setter methods for the car's p, i, and d
     @property
     def p(self):
-        return self.__p
-    
+        return self.p
+
     @p.setter
     def p(self, value):
-        self.__p = value
+        self.p = value
     
     @property
     def i(self):
-        return self.__i
+        return self.i
     
     @i.setter
     def i(self, value):
-        self.__i = value
+        self.i = value
     
     @property
     def d(self):
-        return self.__d
+        return self.d
     
     @d.setter
     def d(self, value):
-        self.__d = value  
+        self.d = value  
 
     # Create getter and setter methods for the car's car_speed
     @property
     def car_speed(self):
-        return self._car_speed
+        return self.car_speed
     
     @car_speed.setter
     def car_speed(self, value):
-        self._car_speed = value
+        self.car_speed = value
     
     # Create getter and setter methods for the car's line_color
     @property
     def line_color(self):
-        return self.__line_color
+        return self.line_color
     
     @line_color.setter
     def line_color(self, value):
-        self.__line_color = value
+        self.line_color = value
 
     # Create getter and setter methods for the car's error
     @property
     def error(self):
-        return self.__error
+        return self.error
     
     @error.setter
     def error(self, value):
-        self.__error = value
+        self.error = value
 
     # Create getter and setter methods for the car's min_speed
     @property
     def min_speed(self):
-        return self.__min_speed
+        return self.min_speed
     
     @min_speed.setter
     def min_speed(self, value):
-        self.__min_speed = value
+        self.min_speed = value
     
     # Create getter and setter methods for the car's max_speed
     @property
     def max_speed(self):
-        return self.__max_speed
+        return self.max_speed
     
     @max_speed.setter
     def max_speed(self, value):
-        self.__max_speed = value
+        self.max_speed = value
 
     # Create getter and setter methods for the car's control_type
     @property
     def control_type(self):
-        return self.__control_type
+        return self.control_type
     
     @control_type.setter
     def control_type(self, value):
-        self.__control_type = value   
+        self.control_type = value
+
+    # Create getter for the camera frame
+    @property
+    def camera_frame(self):
+        return self.camera_frame
 
     # Gets the speed proportional to the error
     def calculate_speed(self):
         self.car_speed = min(abs(int(abs(self.error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
         return self.car_speed
+
+    # Reads the frame from the camera
+    def read_camera(self):
+        # Create the video capture object
+        cap = cv2.VideoCapture(0)
+
+        # Loop until the camera is open
+        while not cap.isOpened():
+            pass
+
+        # Loop until the camera is open
+        while True:
+            # Read the frame
+            ret, self.camera["frame"] = cap.read()
+
+            # Wait for the user to press a key
+            key = cv2.waitKey(30)
 
     # Gets the state of the car's line
     def get_line_state(self):
@@ -173,15 +215,17 @@ class CarController:
         while True:
             if self.control_type == 1:
                 error = self.calculate_error()
-                correction = self.__p * error + self.__i * self.PV + self.__d * (self.error -self.prev_error)
+                correction = self.p * error + self.i * self.PV + self.d * (self.error -self.prev_error)
                 self.motorDriver.Turn(correction)
-                self.motorDriver.Drive(self.calulate_speed())
+                self.motorDriver.Drive(self.calculate_speed())
 
     def car_auto_stop(self):
         while True:
-            if self.control_type == 0 and time.time() - self.last_time > .05 and not self.car_speed == 0:
-                self.center_steering()
+            if self.control_type == 0 and time.time() - self.last_velo_time > .05 and not self.car_speed == 0:
                 self.stop()
+            if self.control_type == 0 and time.time() - self.last_steer_time > .05 and not self.straight:
+                self.stragith = 1
+                self.center_steering()
             time.sleep(.01)
 
     def turn_left(self):

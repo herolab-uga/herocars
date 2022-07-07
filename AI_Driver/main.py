@@ -2,98 +2,115 @@ import time
 import getch
 import socket
 import threading
+from flask import Flask, request,Response
 import Controllers.CarController as CarController
 
+car = CarController.CarController()
 
-def main_socket():
+# Initialize web server for controlling the car
+app = Flask("LGT_Car")
 
-    car = CarController.CarController()
-    control_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    control_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_address = ("",5000)
-    control_socket.bind(server_address)
-    control_socket.listen()
-    conn, addr = control_socket.accept()
-    with conn:
-        while True:
-            try:
-                command = int(conn.recv(1024).decode("ascii"))
-                if command == 1:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.p = data
-                    print(data)
+@app.route("/p", methods=["GET","POST"])
+def p():
+    if request.method == "GET":
+       return str(car.p)
+    else:
+        print(request.data)
+        car.p = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                elif command == 2:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.i = data
-                    print(data)
-                elif command == 3:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.d = data
-                    print(data)
-                elif command == 4:
-                    conn.send(str(car.car_speed).encode("ascii"))
-                    
-                elif command == 5:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.min_speed = data
-                    print(data)
-                elif command == 6:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.max_speed = data
-                    print(data)
-                elif command == 7:
-                    # need to send a list
-                    conn.send(str(c).encode("ascii"))
+@app.route("/i", methods=["GET","POST"])
+def p():
+    if request.method == "GET":
+       return str(car.i)
+    else:
+        car.i = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                elif command == 8:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.line_color = data
-                    print(data)
-                elif command == 9:
-                    data = int(conn.recv(1024).decode("ascii"))
-                    car.control_type = data
+# Create route of /d 
+@app.route("/d", methods=["GET","POST"])
+def d():
+    if request.method == "GET":
+       return str(car.d)
+    else:
+        car.d = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                elif command == 10:
-                    if car.control_type == 0:
-                        car.car_speed = car.max_speed
-                        car.last_time = time.time()
-                        car.drive_forward()
+@app.route("/min_speed", methods=["GET","POST"])
+def min_speed():
+    if request.method == "GET":
+       return str(car.min_speed)
+    else:
+        car.min_speed = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                elif command == 11:
-                    if car.control_type == 0:
-                        car.car_speed = car.max_speed
-                        car.last_time = time.time()
-                        car.drive_backward()
+@app.route("/max_speed", methods=["GET","POST"])
+def max_speed():
+    if request.method == "GET":
+       return str(car.max_speed)
+    else:
+        car.max_speed = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                elif command == 12:
-                    if car.control_type == 0:
-                        car.car_speed = car.max_speed
-                        car.last_time = time.time()
-                        car.turn_left()
+@app.route("/current_speed", methods=["GET"])
+def current_speed():
+    if request.method == "GET":
+       return str(car.car_speed)
 
-                elif command == 13:
-                    if car.control_type == 0:
-                        car.car_speed = car.max_speed
-                        car.last_time = time.time()
-                        car.turn_right()
+@app.route("/line_type", methods=["GET","POST"])
+def line_type():
+    if request.method == "GET":
+       return str(car.line_type)
+    else:
+        car.line_type = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                else:
-                    print(data)
-                    car.stop()
-                    car.center_steering()
+@app.route("/control_type", methods=["GET","POST"])
+def control_type():
+    if request.method == "GET":
+       return str(car.control_type)
+    else:
+        car.control_type = int(request.form["data"])
+        return Flask.Response(status=200)
 
-                conn.send("0".encode("ascii"))
+@app.route("/forward", methods=["GET"])
+def min_speed():
+    if request.method == "GET":
+        car.last_velo_time = time.time()
+        car.car_speed = car.max_speed
+        car.drive_forward()
+        return Flask.Response(status=200)
 
-            except Exception:
-                try:
-                    conn.send("255".encode("ascii"))
-                except BrokenPipeError:
-                    print("Broken Pipe")
-                    conn.close()
+@app.route("/backward", methods=["GET"])
+def backward():
+    if request.method == "GET":
+        car.last_velo_time = time.time()
+        car.car_speed = -car.max_speed
+        car.drive_backward()
+        return Flask.Response(status=200)
+
+@app.route("/left", methods=["GET"])
+def min_speed():
+    if request.method == "GET":
+        car.last_steer_time = time.time()
+        car.straight = 0
+        car.turn_left()
+        return Flask.Response(status=200)
+
+@app.route("/right", methods=["GET"])
+def min_speed():
+    if request.method == "GET":
+        car.last_steer_time = time.time()
+        car.straight = 0
+        car.turn_right()
+        return Flask.Response(status=200)
+
+@app.route("/camera_frame", methods=["GET"])
+def camera_frame():
+    if request.method == "GET":
+        return car.camera_frame["frame"]
 
 if __name__ == '__main__':
-    while True:
-        main_socket()
+    app.run("127.0.0.1", port=5000)
 
 

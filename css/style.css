@@ -145,7 +145,7 @@
   }
 
   button:active {
-    background-color: rgb(49, 45, 45);
+    background-color: rgb(17, 16, 16);
   }
 
   .bottom {
@@ -173,5 +173,9 @@
   }
 
   body {
-    background-color: #1e1e1e;
+    background-color: #343434;
+  }
+
+  .bottom {
+    height: 120px;
   }

@@ -1,27 +1,37 @@
+import * as bg from './index.js';
 var lineType = "White";
 var slidep = 50;
 var slidei = 50;
 var slided = 50;
 var slideMin, slideMax = 50;
 
-var slideValues = {
-    p: function(value) {
-        slidep = value;
-        // console.log(slidep);
-    },
-    i: function(value) {
-        slidei = value;
-    },
-    d: function(value) {
-        slided = value;
-    },
-    minSpeed: function(value) {
-        slideMin = value;
-    },
-    maxSpeed: function(value) {
-        slideMax = value;
+if (typeof window !== 'undefined') {
+    let p = document.getElementById("pRange");
+    let i = document.getElementById("iRange");
+    let d = document.getElementById("dRange");
+    let minSpeed = document.getElementById("minSpeed");
+    let maxSpeed = document.getElementById("maxSpeed");
+    let button = document.querySelector("button");
+
+    button.addEventListener('click', function(e) {
+        console.log('button was clicked');
+    });
+
+
+    p.oninput = function() {
+        slidep = p.value;
+        console.log("HI"+slidep);
+        bg.updateP(slidep);
+    }
+    i.onchange = function() {
+        slidei = i.value;
+    }
+    d.onchange = function() {
+        slided = d.value;
     }
 }
+
+
 
 function changeLineType() {
     if (lineType == "Black") {
@@ -85,14 +95,14 @@ function updateCar() {
     });
 }
 
-export {
-    getD,
-    getI,
-    getP,
-    getLineType,
-    getMinSpeed,
-    getMaxSpeed,
-    changeLineType,
-    lineType,
-    slideValues,
-}
+// module.exports = {
+//     getD,
+//     getI,
+//     getP,
+//     getLineType,
+//     getMinSpeed,
+//     getMaxSpeed,
+//     changeLineType,
+//     lineType,
+//     slideValues,
+// }
