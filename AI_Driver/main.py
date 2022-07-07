@@ -113,6 +113,7 @@ def execute():
     return render_template("../index.html")
 
 if __name__ == '__main__':
-    app.run("127.0.0.1", port=5000)
+    host_addr = socket.gethostbyname(socket.gethostname() + ".local")
+    app.run(host_addr, port=8080)
 
 
