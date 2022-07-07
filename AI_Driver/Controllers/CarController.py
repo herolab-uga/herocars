@@ -236,6 +236,7 @@ class CarController:
             if self._control_type == 0 and time.time() - self._last_steer_time > .05 and not self._straight:
                 self._straight = 1
                 self.center_steering()
+            time.sleep(.01)
 
     def turn_left(self):
         self._motor_driver.ManualLeft()
