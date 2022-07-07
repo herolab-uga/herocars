@@ -7,7 +7,7 @@ import Controllers.CarController as CarController
 car = CarController.CarController()
 
 # Initialize web server for controlling the car
-app = Flask("LGT_Car")
+app = Flask("LTG_Car")
 CORS(app)
 
 @app.route("/p", methods=["GET","POST"])
@@ -73,36 +73,36 @@ def control_type():
         car.control_type = int(request.form["data"])
         return Flask.Response(status=200)
 
-@app.route("/forward", methods=["GET"])
+@app.route("/forward", methods=["POST"])
 def forward():
-    if request.method == "GET":
+    if request.method == "POST":
         print("forward")
         car.last_velo_time = time.time()
         car.car_speed = car.max_speed
         car.drive_forward()
         return Flask.Response(status=200)
 
-@app.route("/backward", methods=["GET"])
+@app.route("/backward", methods=["POST"])
 def backward():
-    if request.method == "GET":
+    if request.method == "POST":
         print("backward")
         car.last_velo_time = time.time()
         car.car_speed = -car.max_speed
         car.drive_backward()
         return Flask.Response(status=200)
 
-@app.route("/left", methods=["GET"])
+@app.route("/left", methods=["POST"])
 def left():
-    if request.method == "GET":
+    if request.method == "POST":
         print("left")
         car.last_steer_time = time.time()
         car.straight = 0
         car.turn_left()
         return Flask.Response(status=200)
 
-@app.route("/right", methods=["GET"])
+@app.route("/right", methods=["POST"])
 def right():
-    if request.method == "GET":
+    if request.method == "POST":
         print("right")
         car.last_steer_time = time.time()
         car.straight = 0
