@@ -107,6 +107,16 @@ def right():
     car.turn_right()
     return ("nothing")
 
+@app.route("/0")
+def line_type():
+    car.line_color = "white"
+    return ("nothing")
+
+@app.route("/1")
+def line_type():
+    car.line_color = "black"
+    return ("nothing")
+
 @app.route("/camera_frame", methods=["GET"])
 def camera_frame():
     if request.method == "GET":
