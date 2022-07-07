@@ -175,7 +175,7 @@ class CarController:
         # Loop until the camera is open
         while True:
             # Read the frame
-            ret, self.camera["frame"] = cap.read()
+            ret, self._camera["frame"] = cap.read()
 
             # Wait for the user to press a key
             key = cv2.waitKey(30)
