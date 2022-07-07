@@ -69,7 +69,6 @@ def control_type():
 
 @app.route("/forward")
 def forward():
-    print("forward",file=sys.stderr)
     car.last_velo_time = time.time()
     car.car_speed = car.max_speed
     car.drive_forward()
@@ -77,7 +76,6 @@ def forward():
 
 @app.route("/backward")
 def backward():
-    print("backward")
     car.last_velo_time = time.time()
     car.car_speed = -car.max_speed
     car.drive_backward()
@@ -85,7 +83,6 @@ def backward():
 
 @app.route("/left")
 def left():
-    print("left")
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_left()
@@ -93,7 +90,6 @@ def left():
 
 @app.route("/right")
 def right():
-    print("right")
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_right()
