@@ -100,12 +100,12 @@ def right():
     return ("nothing")
 
 @app.route("/0")
-def line_type():
+def set_white():
     car.line_color = "white"
     return ("nothing")
 
 @app.route("/1")
-def line_type():
+def set_black():
     car.line_color = "black"
     return ("nothing")
 
