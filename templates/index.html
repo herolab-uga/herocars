@@ -130,14 +130,14 @@
                     //   });
                     //   return false;
                     // });
-                    $('a#testB').on('mousedown', function(e) {
-                      e.preventDefault()
-                      $.getJSON('/backward',
-                          function(data) {
-                        //do nothing
-                      });
-                      return false;
-                    });
+                    // $('a#testB').on('mousedown', function(e) {
+                    //   e.preventDefault()
+                    //   $.getJSON('/backward',
+                    //       function(data) {
+                    //     //do nothing
+                    //   });
+                    //   return false;
+                    // });
                     $('a#testL').on('mousedown', function(e) {
                       e.preventDefault()
                       $.getJSON('/left',
@@ -156,29 +156,39 @@
                     });
                   });
 
-                  var lock = true;
 
-                  $('a#testF').mousedown(function() {
-                      lock = false;
+                  $('a#testF').on({
+                    click: function () {
+                      $(this).data('clicked', true);
+                      var process = function() {
 
-                      setTimeout(function() {
-                          while(!lock) {
-                            $(function() {
-                              $('a#testF').on('click', function(e) {
-                                e.preventDefault()
-                                $.getJSON('/forward',
-                                    function(data) {
-                                  //do nothing
-                                });
-                                return false;
+                        if ($(this).data('clicked')) {
+                          // Do your stuff
+                          setTimeout($(function(e) {
+                            e.preventDefault();
+                            $.getJSON('/forward',
+                              function(data) {
+                                //do nothing
+                              }
+                            );
+                            return false;
+                          }), 100);
+                        }
+                      };
+                      process();
+                    },
+                    mouseup: function () {
+                        $(this).data('clicked', false);
+                        $(function() {
+                            $('a#testF').on('click', function(e) {
+                              e.preventDefault()
+                              $.getJSON('/center_steering',
+                                  function(data) {
+                                //do nothing
                               });
-                            });
-                          }
-                      }, 5);
-                  });
-
-                  $(document).mouseup(function() {
-                      lock = true;
+                              return false;
+                            })})
+                    }
                   });
                   
           </script>
