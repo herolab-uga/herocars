@@ -74,6 +74,7 @@ def control_type():
 @app.route("/forward", methods=["GET"])
 def forward():
     if request.method == "GET":
+        print("forward")
         car.last_velo_time = time.time()
         car.car_speed = car.max_speed
         car.drive_forward()
@@ -82,6 +83,7 @@ def forward():
 @app.route("/backward", methods=["GET"])
 def backward():
     if request.method == "GET":
+        print("backward")
         car.last_velo_time = time.time()
         car.car_speed = -car.max_speed
         car.drive_backward()
@@ -90,6 +92,7 @@ def backward():
 @app.route("/left", methods=["GET"])
 def left():
     if request.method == "GET":
+        print("left")
         car.last_steer_time = time.time()
         car.straight = 0
         car.turn_left()
@@ -98,6 +101,7 @@ def left():
 @app.route("/right", methods=["GET"])
 def right():
     if request.method == "GET":
+        print("right")
         car.last_steer_time = time.time()
         car.straight = 0
         car.turn_right()
