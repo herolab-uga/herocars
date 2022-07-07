@@ -73,14 +73,13 @@ def control_type():
         car.control_type = int(request.form["data"])
         return Flask.Response(status=200)
 
-@app.route("/forward", methods=["POST"])
+@app.route("/forward", methods=["HEAD"])
 def forward():
     print("forward")
-    if request.method == "POST":
+    if request.method == "HEAD":
         car.last_velo_time = time.time()
         car.car_speed = car.max_speed
         car.drive_forward()
-        return Flask.Response(status=200)
 
 @app.route("/backward", methods=["POST"])
 def backward():
