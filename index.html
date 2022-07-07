@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LTG Cars</title>
     <link rel="stylesheet" href="./css/style.css" type="text/css" />
-
+    <!-- make buttons send continuously -->
     
   </head>
   <body>
@@ -128,6 +128,7 @@
 
         <!-- Movements -->
         <div class="movements">
+          <form method="POST">
           <div class="top">
             <button onclick="sendData('forward')" style="width: 25%">FORWARD</button>
           </div>
@@ -139,6 +140,7 @@
             <button onclick="sendData('backward')" style="width: 25%">BACKWARD</button>
             
           </div>
+        </form>
         </div>
       </div>
       
@@ -240,7 +242,7 @@
         xhr.setRequestHeader("Content-Type", "text/html;charset=UTF-8");
         // Send the request over the network
 
-        xhr.send("forward");
+        // xhr.send("forward");
     }
     
     function changeLineType() {
