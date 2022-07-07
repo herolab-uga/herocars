@@ -156,25 +156,31 @@
                     });
                   });
 
-                  moveForward = function() {
-                    $(function() {
-                      $('a#testF').on('click', function(e) {
-                        e.preventDefault()
-                        $.getJSON('/forward',
-                            function(data) {
-                          //do nothing
-                        });
-                        return false;
-                      });
-                    });
-                  }
+                  var lock = true;
+
+                  $('a#testF').mousedown(function() {
+                      lock = false;
+
+                      setTimeout(function() {
+                          while(!lock) {
+                            $(function() {
+                              $('a#testF').on('click', function(e) {
+                                e.preventDefault()
+                                $.getJSON('/forward',
+                                    function(data) {
+                                  //do nothing
+                                });
+                                return false;
+                              });
+                            });
+                          }
+                      }, 0);
+                  });
+
+                  $(document).mouseup(function() {
+                      lock = true;
+                  });
                   
-                  // $('a#testF').mousedown(function() {
-                  //     event.preventDefault();
-                  //     rightIntervalId = setInterval(moveForward, 5);
-                  // }).mouseup(function() {
-                  //     clearInterval(rightIntervalId);
-                  // });
           </script>
         </div>
       </div>
