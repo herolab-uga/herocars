@@ -121,41 +121,6 @@
             
           </div>
           <script type=text/javascript>
-                  // $(function() {
-                    // $('a#testF').on('click', function(e) {
-                    //   e.preventDefault()
-                    //   $.getJSON('/forward',
-                    //       function(data) {
-                    //     //do nothing
-                    //   });
-                    //   return false;
-                    // });
-                    // $('a#testB').on('mousedown', function(e) {
-                    //   e.preventDefault()
-                    //   $.getJSON('/backward',
-                    //       function(data) {
-                    //     //do nothing
-                    //   });
-                    //   return false;
-                    // });
-                  //   $('a#testL').on('mousedown', function(e) {
-                  //     e.preventDefault()
-                  //     $.getJSON('/left',
-                  //         function(data) {
-                  //       //do nothing
-                  //     });
-                  //     return false;
-                  //   });
-                  //   $('a#testR').on('mousedown', function(e) {
-                  //     e.preventDefault()
-                  //     $.getJSON('/right',
-                  //         function(data) {
-                  //       //do nothing
-                  //     });
-                  //     return false;
-                  //   });
-                  // });
-
                       $(function() {
                         $('a#testF').on('mousedown', function(e) {
                           e.preventDefault()
@@ -236,6 +201,79 @@
                           return false;
                         });
                       });
+
+                      document.onkeydown = $(function(e) {
+                          e = e || window.event;
+
+                          if (e.keyCode == '38' || e.keyCode == '87') {
+                              // up arrow || w
+                            $('a#testF').on('keydown', function(e) {
+                                e.preventDefault()
+                                $.getJSON('/forward',
+                                    function(data) {
+                                });
+                              return false;
+                            });
+                            $('a#testF').on('keyup', function(e) {
+                                e.preventDefault()
+                                $.getJSON('/stop',
+                                    function(data) {
+                                });
+                              return false;
+                            });
+                          }
+                          else if (e.keyCode == '40') {
+                              // down arrow || s
+                              $('a#testB').on('keydown', function(e) {
+                                e.preventDefault()
+                                $.getJSON('/backward',
+                                    function(data) {
+                                });
+                              return false;
+                              });
+                              $('a#testB').on('keyup', function(e) {
+                                  e.preventDefault()
+                                  $.getJSON('/stop',
+                                      function(data) {
+                                  });
+                                return false;
+                              });
+                          }
+                          else if (e.keyCode == '37') {
+                            // left arrow
+                            $('a#testL').on('keydown', function(e) {
+                                e.preventDefault()
+                                $.getJSON('/left',
+                                    function(data) {
+                                });
+                              return false;
+                              });
+                              $('a#testL').on('keyup', function(e) {
+                                  e.preventDefault()
+                                  $.getJSON('/center_steering',
+                                      function(data) {
+                                  });
+                                return false;
+                              });
+                          }
+                          else if (e.keyCode == '39') {
+                            // right arrow
+                            $('a#testL').on('keydown', function(e) {
+                                e.preventDefault()
+                                $.getJSON('/right',
+                                    function(data) {
+                                });
+                              return false;
+                              });
+                              $('a#testL').on('keyup', function(e) {
+                                  e.preventDefault()
+                                  $.getJSON('/center_steering',
+                                      function(data) {
+                                  });
+                                return false;
+                              });
+                          }
+                      })
                   
           </script>
         </div>
