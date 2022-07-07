@@ -46,15 +46,15 @@ class CarController:
         GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
         self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
-        self.thread.start()
+        # self.thread.start()
 
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
-        update_thread.start()
+        # update_thread.start()
 
         # Create stop thread
         stop_thread = threading.Thread(target=self.car_auto_stop,args=(),daemon=True)
-        stop_thread.start()
+        # stop_thread.start()
 
     # Create getter and setter methods for the last_time variable
     @property
