@@ -238,9 +238,8 @@
         // asynchronous requests
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "text/html;charset=UTF-8");
-        console.log("made it this")
         // Send the request over the network
-        xhr.send(dataToSend[1]);
+        xhr.send(url);
     }
     
     function changeLineType() {
