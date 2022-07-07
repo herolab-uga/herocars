@@ -128,7 +128,7 @@
 
         <!-- Movements -->
         <div class="movements">
-          <form method="POST" accept-charset="UTF-8">
+          <form method="HEAD" accept-charset=utf-8>
           <div class="top">
             <button onclick="sendData('forward')" style="width: 25%">FORWARD</button>
           </div>
@@ -238,11 +238,11 @@
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
-        xhr.open("POST", url, true);
+        xhr.open("HEAD", url, true);
         xhr.setRequestHeader("Content-Type", "text/html;accept-charset=UTF-8");
         // Send the request over the network
 
-        // xhr.send("forward");
+        xhr.send(null);
     }
     
     function changeLineType() {
