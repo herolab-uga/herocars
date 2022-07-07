@@ -157,7 +157,7 @@
                   // });
 
                       $(function() {
-                        $('a#testF').on('click', function(e) {
+                        $('a#testF').on('mousedown', function(e) {
                           e.preventDefault()
                           $.getJSON('/forward',
                               function(data) {
@@ -167,7 +167,17 @@
                         });
                       });
                       $(function() {
-                        $('a#testB').on('click', function(e) {
+                        $('a#testF').on('mouseup', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/stop',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testB').on('mousedown', function(e) {
                           e.preventDefault()
                           $.getJSON('/backward',
                               function(data) {
@@ -177,7 +187,17 @@
                         });
                       });
                       $(function() {
-                        $('a#testR').on('click', function(e) {
+                        $('a#testB').on('mouseup', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/stop',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testR').on('mousedown', function(e) {
                           e.preventDefault()
                           $.getJSON('/right',
                               function(data) {
@@ -197,7 +217,7 @@
                         });
                       });
                       $(function() {
-                        $('a#testL').on('click', function(e) {
+                        $('a#testL').on('mousedown', function(e) {
                           e.preventDefault()
                           $.getJSON('/left',
                               function(data) {
