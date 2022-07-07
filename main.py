@@ -4,7 +4,7 @@ import getch
 import socket
 from flask_cors import CORS
 from flask import Flask, request, Response, render_template
-import Controllers.CarController as CarController
+import CarController as CarController
 
 car = CarController.CarController()
 
