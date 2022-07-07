@@ -128,9 +128,11 @@
 
         <!-- Movements -->
         <div class="movements">
-          <form method="HEAD" accept-charset=utf-8>
           <div class="top">
-            <button onclick="sendData('forward')" style="width: 25%">FORWARD</button>
+            <form>
+              <a href=# id=test><button style="width: 25%">FORWARD</button></a>
+          </form>
+            
           </div>
           <div class="mid">
             <button onclick="sendData('left')" style="width: 25%">LEFT</button>
@@ -140,7 +142,19 @@
             <button onclick="sendData('backward')" style="width: 25%">BACKWARD</button>
             
           </div>
-        </form>
+          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+          <script type=text/javascript>
+                  $(function() {
+                    $('a#test').on('click', function(e) {
+                      e.preventDefault()
+                      $.getJSON('http://127.0.0.1/forward',
+                          function(data) {
+                        //do nothing
+                      });
+                      return false;
+                    });
+                  });
+          </script>
         </div>
       </div>
       
@@ -238,11 +252,11 @@
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
-        xhr.open("HEAD", url, true);
+        xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "text/html;accept-charset=UTF-8");
         // Send the request over the network
-
-        xhr.send(null);
+        
+        xhr.send();
     }
     
     function changeLineType() {
