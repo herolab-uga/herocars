@@ -110,7 +110,7 @@ def camera_frame():
 
 @app.route("/")
 def execute():
-    return render_template("../index.html")
+    return render_template("index.html")
 
 if __name__ == '__main__':
     host_addr = socket.gethostbyname(socket.gethostname() + ".local")
