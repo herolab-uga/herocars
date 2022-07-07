@@ -1,3 +1,4 @@
+import sys
 import time
 import getch
 from flask_cors import CORS
@@ -75,7 +76,7 @@ def control_type():
 
 @app.route("/forward", methods=["HEAD"])
 def forward():
-    print("forward")
+    print("forward",file=sys.stderr)
     if request.method == "HEAD":
         car.last_velo_time = time.time()
         car.car_speed = car.max_speed
