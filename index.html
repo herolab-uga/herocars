@@ -206,7 +206,7 @@
     };
     function dataCallback() {
         // Check response is ready or not
-        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201)) {
+        if ((xhr.status == 200 || xhr.status == 201)) {
             console.log("User data received!");
         }
     }
@@ -220,7 +220,7 @@
     }
     function sendDataCallback() {
         // Check response is ready or not
-        if (xhr.readyState == 4 && (xhr.status == 201 || xhr.status == 200)) {
+        if ((xhr.status == 201 || xhr.status == 200)) {
           console.log("Data creation response received!");
         }
     }
@@ -238,6 +238,7 @@
         // asynchronous requests
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "text/html;charset=UTF-8");
+        console.log("made it this")
         // Send the request over the network
         xhr.send(dataToSend[1]);
     }
