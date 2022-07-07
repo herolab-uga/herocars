@@ -75,8 +75,8 @@ def control_type():
 
 @app.route("/forward", methods=["POST"])
 def forward():
+    print("forward")
     if request.method == "POST":
-        print("forward")
         car.last_velo_time = time.time()
         car.car_speed = car.max_speed
         car.drive_forward()
