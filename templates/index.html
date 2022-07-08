@@ -214,8 +214,7 @@
                         document.addEventListener('keydown', function(e) {
                           
                           log = ` ${e.code}`;
-                          console.log(log.toString() == "ArrowUp");
-                          console.log(log.toString().equals("ArrowUp"));
+                          console.log(log.toString() == '38');
                           if (log.toString() == "ArrowUp") {
                             e.preventDefault()
                             $.getJSON('/forward',
