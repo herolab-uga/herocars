@@ -121,6 +121,8 @@
             
           </div>
           <script type=text/javascript>
+
+
                       $(function() {
                         $('a#testF').on('mousedown', function(e) {
                           e.preventDefault()
@@ -141,14 +143,6 @@
                           return false;
                         });
                       });
-                    
-                      $(function() {
-                        window.on('keydown', function(e) {
-                          console.log(e.keyCode);
-                        })
-                      })
-
-
 
                       $(function() {
                         $('a#testB').on('mousedown', function(e) {
@@ -210,6 +204,18 @@
                           return false;
                         });
                       });
+
+
+                      // key presses
+
+                      const log = document.getElementById('log');
+
+                      document.addEventListener('keydown', logKey);
+
+                      function logKey(e) {
+                        log.textContent += ` ${e.code}`;
+                        console.log(log.textContent);
+                      }
 
           </script>
         </div>
