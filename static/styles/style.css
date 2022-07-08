@@ -69,6 +69,7 @@
     margin:10px;
     padding:5px;
     width: 250px;
+    border-radius: 10%;
     background-color: rgb(17, 16, 16);
     color: rgb(192, 186, 186);
     display:flex;
