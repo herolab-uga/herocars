@@ -210,8 +210,18 @@
 
                       var log;
 
+                      $(function() {
+                      document.addEventListener('keydown', function(e) {
 
-                      document.addEventListener('keydown', logKey);
+                        e.preventDefault()
+                          $.getJSON('/forward',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                          
+                      });
+                    });
                       document.addEventListener('keyup', changeFalse);
 
                       function logKey(e) {
