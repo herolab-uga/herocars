@@ -259,9 +259,8 @@
                             
                         });
                     });
-                      document.addEventListener('keyup', changeFalse);
-
-                      function changeFalse(function(e) {
+                    $(function() {
+                      document.addEventListener('keyup', function(e) {
                         e.preventDefault()
                             $.getJSON('/center_steering',
                                 function(data) {
@@ -272,7 +271,8 @@
                               //do nothing
                             });
                             return false;
-                      }) 
+                      })
+                    }); 
                       
 
           </script>
