@@ -145,7 +145,7 @@
                         $('a#testF').on('keydown', function(e) {
                           if (eK == '38') {
                             e.preventDefault()
-                          $.getJSON('/stop',
+                          $.getJSON('/forward',
                               function(data) {
                             //do nothing
                           });
@@ -217,17 +217,6 @@
                           return false;
                         });
                       });
-
-                      document.onkeydown = checkKey;
-                      let eK = 0;
-                      
-                      function getKey() {
-                        return eK;
-                      }
-
-                      function checkKey(eK) {
-                        eK = eK || window.event;
-                      }
 
           </script>
         </div>
