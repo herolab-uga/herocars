@@ -214,28 +214,28 @@
                         document.addEventListener('keydown', function(e) {
                           kC = e.keyCode;
 
-                          if (kC == '38') {
+                          if (kC == '38' || kC == '87') {
                             e.preventDefault()
                             $.getJSON('/forward',
                                 function(data) {
                               //do nothing
                             });
                             return false;
-                          } else if (kC == '40') {
+                          } else if (kC == '40' || kC == '83') {
                             e.preventDefault()
                             $.getJSON('/backward',
                                 function(data) {
                               //do nothing
                             });
                             return false;
-                          } else if (kC == '37') {
+                          } else if (kC == '37' || kC == '65') {
                             e.preventDefault()
                             $.getJSON('/left',
                                 function(data) {
                               //do nothing
                             });
                             return false;
-                          } else if (kC == '39') {
+                          } else if (kC == '39' || kC == '68') {
                             e.preventDefault()
                             $.getJSON('/right',
                                 function(data) {
