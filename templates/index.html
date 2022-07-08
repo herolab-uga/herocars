@@ -202,45 +202,50 @@
                         });
                       });
 
+                      document.onkeydown = checkKey;
 
-                      $('a#testL').on('keydown', function(e) {
-                          e.preventDefault()
-                          $.getJSON('/left',
-                            function(data) {
-                          });
-                          return false;
-                      });
-                              $('a#testL').on('keyup', function(e) {
-                                  e.preventDefault()
-                                  $.getJSON('/center_steering',
-                                      function(data) {
-                                  });
-                                return false;
-                              });
+                      function checkKey(e) {
 
-                      $("a#testF").keydown(function(e){
                         e = e || window.event;
-                        console.log(e);
 
                         if (e.keyCode == '38') {
                             // up arrow
+                            console.log("up was pressed");
                         }
-                        e.preventDefault();
-                        $.getJSON('/forward',
-                          function(data) {
-                            //do nothing
-                          });
-                          return false;
-                        });
+                      }
+
+                      // $('a#testL').on('keydown', function(e) {
+                      //     e.preventDefault()
+                      //     $.getJSON('/left',
+                      //       function(data) {
+                      //     });
+                      //     return false;
+                      // });
+                      //         $('a#testL').on('keyup', function(e) {
+                      //             e.preventDefault()
+                      //             $.getJSON('/center_steering',
+                      //                 function(data) {
+                      //             });
+                      //           return false;
+                      //         });
+
+                      // $("a#testF").keydown(function(e){
+                      //   e.preventDefault();
+                      //   $.getJSON('/forward',
+                      //     function(data) {
+                      //       //do nothing
+                      //     });
+                      //     return false;
+                      //   });
                         
-                        $("a#testF").keyup(function(e){
-                        e.preventDefault()
-                          $.getJSON('/stop',
-                              function(data) {
-                            //do nothing
-                          });
-                          return false;
-                        });
+                      //   $("a#testF").keyup(function(e){
+                      //   e.preventDefault()
+                      //     $.getJSON('/stop',
+                      //         function(data) {
+                      //       //do nothing
+                      //     });
+                      //     return false;
+                      //   });
                   
           </script>
         </div>
