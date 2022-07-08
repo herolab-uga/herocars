@@ -244,6 +244,10 @@
                             return false;
                           } else if (kC == '13') {
                             e.preventDefault()
+                            $.getJSON('/center_steering',
+                                function(data) {
+                              //do nothing
+                            });
                             $.getJSON('/stop',
                                 function(data) {
                               //do nothing
