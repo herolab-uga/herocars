@@ -211,33 +211,44 @@
                       var log;
 
                       $(function() {
-                      document.addEventListener('keydown', function(e) {
-
-                        e.preventDefault()
-                          $.getJSON('/forward',
-                              function(data) {
-                            //do nothing
-                          });
-                          return false;
+                        document.addEventListener('keydown', function(e) {
                           
-                      });
-                    });
-                      document.addEventListener('keyup', changeFalse);
-
-                      function logKey(e) {
-                        log = ` ${e.code}`;
-                        console.log(log);
-
-                        if (log == "ArrowUp") {
-                          $(function() {
-                            $.getJSON('/center_steering',
-                              function(data) {
-                            //do nothing
+                          log = ` ${e.code}`;
+                          if (log == "ArrowUp") {
+                            e.preventDefault()
+                            $.getJSON('/forward',
+                                function(data) {
+                              //do nothing
                             });
                             return false;
-                          });
-                        }
-                      }
+                          } else if (log == "ArrowDown") {
+                            e.preventDefault()
+                            $.getJSON('/backward',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          } else if (log.equals("ArrowLeft") || log.equals("keyA")) {
+                            e.preventDefault()
+                            $.getJSON('/left',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          } else if (log.equals("ArrowRight") || log.equals("keyD")) {
+                            e.preventDefault()
+                            $.getJSON('/right',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          }
+
+                          
+                            
+                        });
+                    });
+                      document.addEventListener('keyup', changeFalse);
 
                       function changeFalse() {
                         // make val false
