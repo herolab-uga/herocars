@@ -208,13 +208,13 @@
 
                       // key presses
 
-                      const log = document.getElementById('log');
+                      var log;
 
                       document.addEventListener('keydown', logKey);
 
                       function logKey(e) {
-                        log.textContent += ` ${e.code}`;
-                        console.log(log.textContent);
+                        log = ` ${e.code}`;
+                        console.log(log);
                       }
 
           </script>
