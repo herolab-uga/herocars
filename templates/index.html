@@ -228,14 +228,14 @@
                               //do nothing
                             });
                             return false;
-                          } else if (log.equals("ArrowLeft") || log.equals("keyA")) {
+                          } else if (log == ("ArrowLeft") || log == ("keyA")) {
                             e.preventDefault()
                             $.getJSON('/left',
                                 function(data) {
                               //do nothing
                             });
                             return false;
-                          } else if (log.equals("ArrowRight") || log.equals("keyD")) {
+                          } else if (log == ("ArrowRight") || log == ("keyD")) {
                             e.preventDefault()
                             $.getJSON('/right',
                                 function(data) {
