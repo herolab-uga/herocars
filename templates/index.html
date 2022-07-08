@@ -210,7 +210,14 @@
 
                         if (e.keyCode == '38') {
                             // up arrow
-                            console.log("up was pressed");
+                            $("a#testF").keydown(function(e){
+                              e.preventDefault();
+                              $.getJSON('/forward',
+                                function(data) {
+                                  //do nothing
+                                });
+                                return false;
+                              });
                         }
                       }
 
