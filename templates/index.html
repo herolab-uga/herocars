@@ -142,6 +142,22 @@
                         });
                       });
                       $(function() {
+                        $('a#testF').on('keydown', function(e) {
+                          if (eK == '38') {
+                            e.preventDefault()
+                          $.getJSON('/stop',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                          }
+                          
+                        });
+                      });
+
+
+
+                      $(function() {
                         $('a#testB').on('mousedown', function(e) {
                           e.preventDefault()
                           $.getJSON('/backward',
@@ -203,86 +219,16 @@
                       });
 
                       document.onkeydown = checkKey;
-
-                      function checkKey(e) {
-
-                        e = e || window.event;
-
-                        if (e.keyCode == '38') {
-                            // up arrow
-                            $(function(){
-                              $.getJSON('/forward',
-                                function(data) {
-                                  //do nothing
-                                });
-                                return false;
-                            });
-                        } else if (e.keyCode == '40') {
-                          console.log("backward");
-                          // down arrow
-                          $(function(){
-                              $.getJSON('/backward',
-                                function(data) {
-                                  //do nothing
-                                });
-                                return false;
-                            });
-                        } else if (e.keyCode == '37') {
-                          console.log("left");
-                          // down arrow
-                          $(function(){
-                              $.getJSON('/left',
-                                function(data) {
-                                  //do nothing
-                                });
-                                return false;
-                            });
-                        } else if (e.keyCode == '39') {
-                          console.log("right");
-                          // down arrow
-                          $(function(){
-                              $.getJSON('/right',
-                                function(data) {
-                                  //do nothing
-                                });
-                                return false;
-                            });
-                        }
+                      let eK = 0;
+                      
+                      function getKey() {
+                        return eK;
                       }
 
-                      // $('a#testL').on('keydown', function(e) {
-                      //     e.preventDefault()
-                      //     $.getJSON('/left',
-                      //       function(data) {
-                      //     });
-                      //     return false;
-                      // });
-                      //         $('a#testL').on('keyup', function(e) {
-                      //             e.preventDefault()
-                      //             $.getJSON('/center_steering',
-                      //                 function(data) {
-                      //             });
-                      //           return false;
-                      //         });
+                      function checkKey(eK) {
+                        eK = eK || window.event;
+                      }
 
-                      // $("a#testF").keydown(function(e){
-                      //   e.preventDefault();
-                      //   $.getJSON('/forward',
-                      //     function(data) {
-                      //       //do nothing
-                      //     });
-                      //     return false;
-                      //   });
-                        
-                      //   $("a#testF").keyup(function(e){
-                      //   e.preventDefault()
-                      //     $.getJSON('/stop',
-                      //         function(data) {
-                      //       //do nothing
-                      //     });
-                      //     return false;
-                      //   });
-                  
           </script>
         </div>
       </div>
