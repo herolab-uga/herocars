@@ -215,7 +215,7 @@
                           
                           log = ` ${e.code}`;
                           console.log(log);
-                          if (log == "ArrowUp") {
+                          if (log.toString() == "ArrowUp") {
                             e.preventDefault()
                             $.getJSON('/forward',
                                 function(data) {
