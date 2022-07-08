@@ -215,8 +215,8 @@
                           
                           log = ` ${e.keyCode}`;
                           c = e.keyCode;
-                          console.log(log == '38' || c == '38');
-                          if (log == '38') {
+                          console.log(log == '38');
+                          if (c == '38') {
                             e.preventDefault()
                             $.getJSON('/forward',
                                 function(data) {
