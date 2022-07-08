@@ -259,11 +259,21 @@
                             
                         });
                     });
-                      document.addEventListener('keyup', changeFalse);
-
-                      function changeFalse() {
-                        // make val false
-                      }
+                    $(function() {
+                      document.addEventListener('keyup', function(e) {
+                        e.preventDefault()
+                            $.getJSON('/center_steering',
+                                function(data) {
+                              //do nothing
+                            });
+                            $.getJSON('/stop',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                      })
+                    }); 
+                      
 
           </script>
         </div>
