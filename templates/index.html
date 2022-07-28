@@ -79,12 +79,10 @@
                 e.preventDefault()
                 $.getJSON('/d', function(data) {
                     // send d.value to python
+                    // checking request.data
+                    data = d.value;
                     
                 });
-                var dV = {
-                  "d": d.value
-                }
-                $.setData(dV);
                 return false;
               });
             });
