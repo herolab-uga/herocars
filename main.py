@@ -130,7 +130,7 @@ def set_i():
     return ("nothing")
 
 @app.route("/d")
-def set_d(d):
+def set_d():
     content = request.json
     print(content["d"])
 
