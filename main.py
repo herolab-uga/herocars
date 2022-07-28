@@ -136,7 +136,7 @@ def set_i():
 
 @app.route("/d")
 def set_d():
-    print(request.data)
+    print(request)
     car.d = int(request.form["d"])
     print(car.d)
     return Flask.Response(status=200)
