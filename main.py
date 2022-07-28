@@ -14,31 +14,31 @@ app = Flask("LTG_Car")
 CORS(app)
 socketio = SocketIO(app)
 
-@app.route("/p", methods=["GET","POST"])
-def p():
-    if request.method == "GET":
-       return str(car.p)
-    else:
-        print(request.data)
-        car.p = int(request.form["data"])
-        return Flask.Response(status=200)
+# @app.route("/p", methods=["GET","POST"])
+# def p():
+#     if request.method == "GET":
+#        return str(car.p)
+#     else:
+#         print(request.data)
+#         car.p = int(request.form["data"])
+#         return Flask.Response(status=200)
 
-@app.route("/i", methods=["GET","POST"])
-def i():
-    if request.method == "GET":
-       return str(car.i)
-    else:
-        car.i = int(request.form["data"])
-        return Flask.Response(status=200)
+# @app.route("/i", methods=["GET","POST"])
+# def i():
+#     if request.method == "GET":
+#        return str(car.i)
+#     else:
+#         car.i = int(request.form["data"])
+#         return Flask.Response(status=200)
 
-# Create route of /d 
-@app.route("/d", methods=["GET","POST"])
-def d():
-    if request.method == "GET":
-       return str(car.d)
-    else:
-        car.d = int(request.form["data"])
-        return Flask.Response(status=200)
+# # Create route of /d 
+# @app.route("/d", methods=["GET","POST"])
+# def d():
+#     if request.method == "GET":
+#        return str(car.d)
+#     else:
+#         car.d = int(request.form["data"])
+#         return Flask.Response(status=200)
 
 @app.route("/min_speed", methods=["GET","POST"])
 def min_speed():
