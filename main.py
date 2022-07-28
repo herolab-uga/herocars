@@ -125,6 +125,7 @@ def set_p():
 @app.route("/i")
 def set_i():
     car.i = 0
+    console.log(car.i)
     return ("nothing")
 
 @app.route("/d")
