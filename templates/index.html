@@ -74,10 +74,14 @@
             $(function() {
               $('input#dRange').on('input', function(e) {
                 e.preventDefault()
-                $.getJSON('/d',
-                  function(data) {
-                    //do nothing
+                $.getJSON('/d', function(data) {
+                    // send d.value to python
+                    
                 });
+                var dV = {
+                  "d": d.value
+                }
+                $.setData(dV);
                 return false;
               });
             });

@@ -130,9 +130,10 @@ def set_i():
     return ("nothing")
 
 @app.route("/d")
-def set_d():
-    car.d = 0
-    print(car.d)
+def set_d(d):
+    content = request.json
+    print(content["d"])
+
     return ("nothing")
 
 @app.route("/camera_frame", methods=["GET"])
