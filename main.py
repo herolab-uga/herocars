@@ -120,19 +120,17 @@ def set_black():
 @app.route("/p")
 def set_p():
     car.p = 0
-    print(car.p)
     return ("nothing")
 
 @app.route("/i")
 def set_i():
     car.i = 0
-    print(car.i)
+    console.log(car.i)
     return ("nothing")
 
 @app.route("/d")
 def set_d():
     car.d = 0
-    print(car.d)
     return ("nothing")
 
 @app.route("/camera_frame", methods=["GET"])
