@@ -19,7 +19,9 @@
         <!-- PID Constant Values -->
         <div class="box2">
           <div class="speeds">
-            <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="pRange">
+            <form>  
+              <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="pRange">
+            </form>
           </div>
           <div class="speeds">
             <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
@@ -28,7 +30,7 @@
             <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
           </div>
 
-          <script>
+          <script type="text/javascript">
             var p = document.getElementById("pRange");
             var outputP = document.getElementById("pValToPrint");
             var i = document.getElementById("iRange");
@@ -49,6 +51,36 @@
               outputD.innerHTML = this.value;
             }
 
+            $(function() {
+              $('input#pRange').on('input', function(e) {
+                e.preventDefault()
+                $.getJSON('/p',
+                  function(data) {
+                    //do nothing
+                });
+                return false;
+              });
+            });
+            $(function() {
+              $('input#iRange').on('input', function(e) {
+                e.preventDefault()
+                $.getJSON('/i',
+                  function(data) {
+                    //do nothing
+                });
+                return false;
+              });
+            });
+            $(function() {
+              $('input#dRange').on('input', function(e) {
+                e.preventDefault()
+                $.getJSON('/d',
+                  function(data) {
+                    //do nothing
+                });
+                return false;
+              });
+            });
           </script>
         </div>
 

@@ -117,6 +117,24 @@ def set_black():
     car.line_color = "black"
     return ("nothing")
 
+@app.route("/p")
+def set_p():
+    car.p = 0
+    print(car.p)
+    return ("nothing")
+
+@app.route("/i")
+def set_i():
+    car.i = 0
+    print(car.i)
+    return ("nothing")
+
+@app.route("/d")
+def set_d():
+    car.d = 0
+    print(car.d)
+    return ("nothing")
+
 @app.route("/camera_frame", methods=["GET"])
 def camera_frame():
     if request.method == "GET":
