@@ -21,6 +21,7 @@ socketio = SocketIO(app)
 #     else:
 #         print(request.data)
 #         car.p = int(request.form["data"])
+#         print(car.p)
 #         return Flask.Response(status=200)
 
 # @app.route("/i", methods=["GET","POST"])
@@ -29,6 +30,7 @@ socketio = SocketIO(app)
 #        return str(car.i)
 #     else:
 #         car.i = int(request.form["data"])
+#         print(car.i)
 #         return Flask.Response(status=200)
 
 # # Create route of /d 
@@ -38,6 +40,7 @@ socketio = SocketIO(app)
 #        return str(car.d)
 #     else:
 #         car.d = int(request.form["data"])
+#         print(car.d)
 #         return Flask.Response(status=200)
 
 @app.route("/min_speed", methods=["GET","POST"])
@@ -119,22 +122,24 @@ def set_black():
 
 @app.route("/p")
 def set_p():
-    car.p = 0
+    print(request.data)
+    car.p = int(request.form["data"])
     print(car.p)
-    return ("nothing")
+    return Flask.Response(status=200)
 
 @app.route("/i")
 def set_i():
-    car.i = 0
+    print(request.data)
+    car.i = int(request.form["data"])
     print(car.i)
-    return ("nothing")
+    return Flask.Response(status=200)
 
 @app.route("/d")
 def set_d():
-    content = request.json
-    print(content["d"])
-
-    return ("nothing")
+    print(request.data)
+    car.d = int(request.form["d"])
+    print(car.d)
+    return Flask.Response(status=200)
 
 @app.route("/camera_frame", methods=["GET"])
 def camera_frame():
