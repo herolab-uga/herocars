@@ -139,8 +139,8 @@ def set_d():
     print(request)
     print(request.data)
     print(request.form["dRange"])
-    car.d = int(request.form["dRange"])
-    print(car.d)
+    # car.d = int(request.form["dRange"])
+    # print(car.d)
     return Flask.Response(status=200)
 
 @app.route("/camera_frame", methods=["GET"])
