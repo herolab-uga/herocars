@@ -138,7 +138,7 @@ def set_i():
 def set_d():
     print(request)
     print(request.data)
-    print(request.form.get("dRange"))
+    print(jsonify(data))
     # car.d = int(request.form["dRange"])
     # print(car.d)
     return Flask.Response(status=200)
