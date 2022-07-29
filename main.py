@@ -134,7 +134,7 @@ def set_i():
     print(car.i)
     return Flask.Response(status=200)
 
-@app.route("/d", methods=["GET", "POST"])
+@app.route("/d", methods=["POST"])
 def set_d():
     print(request)
     print(request.get_data)
