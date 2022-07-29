@@ -26,9 +26,9 @@
           <div class="speeds">
             <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
           </div>
-          <form action="POST">
+          <form action="{{ url_for('/d') }}" method=post>
             <div class="speeds">
-              <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange">
+              <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange" name="dRange">
             </div>
           </form>
           
@@ -77,7 +77,6 @@
             $(function() {
               $('input#dRange').on('input', function(e) {
                 e.preventDefault()
-                data = d.value;
                 $.getJSON('/d', function(data) {
                     // send d.value to python
                     // checking request.data

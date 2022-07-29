@@ -134,10 +134,12 @@ def set_i():
     print(car.i)
     return Flask.Response(status=200)
 
-@app.route("/d", methods=["GET"])
+@app.route("/d", methods=["GET", "POST"])
 def set_d():
+    print(request)
     print(request.data)
-    car.d = int(request.form["d"])
+    print(request.form["dRange"])
+    car.d = int(request.form["dRange"])
     print(car.d)
     return Flask.Response(status=200)
 
