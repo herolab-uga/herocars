@@ -75,17 +75,17 @@
                 return false;
               });
             });
-            // $(function() {
-            //   $('input#dRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/d', function(data) {
-            //         // send d.value to python
-            //         // checking request.data
+            $(function() {
+              $('input#dRange').on('input', function(e) {
+                e.preventDefault()
+                $.getJSON('/d', function(data) {
+                    // send d.value to python
+                    // checking request.data
                     
-            //     });
-            //     return false;
-            //   });
-            // });
+                });
+                return false;
+              });
+            });
           </script>
         </div>
 
