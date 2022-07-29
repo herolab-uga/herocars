@@ -28,7 +28,8 @@
           </div>
           <form action="{{ url_for('set_d') }}" method=post>
             <div class="speeds">
-              <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange" name="dRange">
+              <p>d: <span id="dValToPrint"></span></p>
+              <input type="range" min="1" max="100" value="50" class="sliderp" id="dRange" name="dRange">
             </div>
           </form>
           
@@ -74,17 +75,17 @@
                 return false;
               });
             });
-            $(function() {
-              $('input#dRange').on('input', function(e) {
-                e.preventDefault()
-                $.getJSON('/d', function(data) {
-                    // send d.value to python
-                    // checking request.data
+            // $(function() {
+            //   $('input#dRange').on('input', function(e) {
+            //     e.preventDefault()
+            //     $.getJSON('/d', function(data) {
+            //         // send d.value to python
+            //         // checking request.data
                     
-                });
-                return false;
-              });
-            });
+            //     });
+            //     return false;
+            //   });
+            // });
           </script>
         </div>
 
