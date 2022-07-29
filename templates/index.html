@@ -26,7 +26,7 @@
           <div class="speeds">
             <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
           </div>
-          <form action="{{ url_for('/d') }}" method=post>
+          <form action="{{ url_for('set_d') }}" method=post>
             <div class="speeds">
               <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="dRange" name="dRange">
             </div>
