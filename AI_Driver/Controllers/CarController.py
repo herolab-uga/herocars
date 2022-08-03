@@ -193,11 +193,12 @@ class CarController:
                 
 
     def get_frame(self):
-        frame = self._camera_queue.get()
-        ret,buffer = cv2.imencode('.jpg',frame)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+        while True:
+            frame = self._camera_queue.get()
+            ret,buffer = cv2.imencode('.jpg',frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
     # Gets the state of the car's line
     def get_line_state(self):
