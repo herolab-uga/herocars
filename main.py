@@ -19,7 +19,7 @@ socketio = SocketIO(app)
 def min_speed():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.min_speed(todo)
+#        car.min_speed(todo)
         print("Minimum speed: " , todo)
     return render_template('index.html')
 
@@ -28,7 +28,7 @@ def min_speed():
 def max_speed():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.max_speed(todo)
+#        car.max_speed(todo)
         print("Maximum speed: " , todo)
     return render_template('index.html')
 
@@ -98,23 +98,25 @@ def set_black():
 @app.route("/p", methods=["POST"])
 def set_p():
     if request.method == "POST":
-        todo = request.values.get("todo")
+        todo = request.form.get("todo")
         print(todo)
-        car.p(todo)
+        #car.p(todo)
     return render_template('index.html')
 
 @app.route("/i", methods=["POST"])
 def set_i():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.i(todo)
+        print("I " ,todo)
+        #car.i(todo)
     return render_template('index.html')
 
 @app.route("/d", methods=["POST"])
 def set_d():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.d(todo)
+        print("D ", todo)
+        #car.d(todo)
     return render_template('index.html')
 
 @app.route("/camera_frame", methods=["GET"])
@@ -122,14 +124,17 @@ def camera_frame():
     if request.method == "GET":
         return car.camera_frame["frame"]
 
+
 @app.route("/")
 def execute():
     return render_template("index.html")
+
 
 @socketio.on('disconnect')
 def test_disconnect():
     car.stop()
     car.center_steering()
+
 
 if __name__ == '__main__':
     host_addr = socket.gethostbyname(socket.gethostname() + ".local")

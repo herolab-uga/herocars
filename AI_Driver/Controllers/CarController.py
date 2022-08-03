@@ -1,21 +1,19 @@
 from cv2 import VideoCapture, waitKey
 import time
 import threading
-# import RPi.GPIO as GPIO
-# from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
+import RPi.GPIO as GPIO
+from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
 
 class CarController:
 
     def __init__(self) -> None:
-        
         # Initialize the car
 
         # Autohat Object
-        # self._motor_driver = AutoPhatMD()
+        self._motor_driver = AutoPhatMD()
 
         self._min_speed = 0
         self._max_speed = 150
-        
         self._line_color = 1 # 1: white, 0: black
 
         self._last_velo_time = 0 # last time the car was commanded to drive in manual mode
@@ -38,15 +36,15 @@ class CarController:
             "frame": None
         }
 
-        # GPIO.setmode(GPIO.BOARD)
-        # GPIO.setup(29, GPIO.IN)  # RR IR Sensor
-        # GPIO.setup(31, GPIO.IN)  # RM IR Sensor
-        # GPIO.setup(33, GPIO.IN)  # MM IR Sensor
-        # GPIO.setup(35, GPIO.IN)  # LM IR Sensor
-        # GPIO.setup(37, GPIO.IN)  # LL IR Sensor
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(29, GPIO.IN)  # RR IR Sensor
+        GPIO.setup(31, GPIO.IN)  # RM IR Sensor
+        GPIO.setup(33, GPIO.IN)  # MM IR Sensor
+        GPIO.setup(35, GPIO.IN)  # LM IR Sensor
+        GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
-        # self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
-        # self.thread.start()
+        self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
+        self.thread.start()
 
         # Create update thread
         update_thread = threading.Thread(target=self.auton_control_update,args=(),daemon=True)
@@ -60,7 +58,7 @@ class CarController:
     @property
     def last_velo_time(self):
         return self.last_velo_time
-    
+
     @last_velo_time.setter
     def last_velo_time(self, value):
         self._last_velo_time = value
@@ -82,37 +80,37 @@ class CarController:
     @p.setter
     def p(self, value):
         self._p = value
-    
+
     @property
     def i(self):
         return self._i
-    
+
     @i.setter
     def i(self, value):
         self._i = value
-    
+
     @property
     def d(self):
         return self._d
-    
+
     @d.setter
     def d(self, value):
-        self._d = value  
+        self._d = value
 
     # Create getter and setter methods for the car's _car_speed
     @property
     def car_speed(self):
         return self._car_speed
-    
+
     @car_speed.setter
     def car_speed(self, value):
         self._car_speed = value
-    
+
     # Create getter and setter methods for the car's _line_color
     @property
     def line_color(self):
         return self._line_color
-    
+
     @line_color.setter
     def line_color(self, value):
         self._line_color = value
@@ -121,7 +119,7 @@ class CarController:
     @property
     def error(self):
         return self._error
-    
+
     @error.setter
     def error(self, value):
         self._error = value
@@ -130,7 +128,7 @@ class CarController:
     @property
     def min_speed(self):
         return self._min_speed
-    
+
     @min_speed.setter
     def min_speed(self, value):
         self._min_speed = value
@@ -238,22 +236,22 @@ class CarController:
                 self.center_steering()
             time.sleep(.01)
 
-    # def turn_left(self):
-    #     self._motor_driver.ManualLeft()
+    def turn_left(self):
+        self._motor_driver.ManualLeft()
     
-    # def turn_right(self):
-    #     self._motor_driver.ManualRight()
+    def turn_right(self):
+        self._motor_driver.ManualRight()
     
-    # def drive_forward(self):
-    #     self._motor_driver.ManualForward()
+    def drive_forward(self):
+        self._motor_driver.ManualForward()
     
-    # def drive_backward(self):
-    #     self._motor_driver.ManualReverse()
+    def drive_backward(self):
+        self._motor_driver.ManualReverse()
     
-    # def stop(self):
-    #     self._car_speed = 0
-    #     self._motor_driver.ManualDriveStop()
+    def stop(self):
+        self._car_speed = 0
+        self._motor_driver.ManualDriveStop()
     
-    # def center_steering(self):
-    #     self._motor_driver.ManualSteerStop()
+    def center_steering(self):
+        self._motor_driver.ManualSteerStop()
 

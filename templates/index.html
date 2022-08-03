@@ -33,7 +33,7 @@
 
           <div class="speeds">
             <form method="post" id="d-form">
-              <p>d: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
+              <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
             </form>
           </div>
           
@@ -72,7 +72,7 @@
                 },
                 success:function()
                 {
-                  alert(p.value)
+//                  alert(p.value)
                 }
               })
             });
@@ -83,7 +83,7 @@
                 type:'POST',
                 url:'/i',
                 data:{
-                todo:$(i.value).val()
+                todo:i.value
                 },
                 success:function()
                 {
@@ -98,7 +98,7 @@
                 type:'POST',
                 url:'/d',
                 data:{
-                todo:$(d.value).val()
+                todo:d.value
                 },
                 success:function()
                 {
@@ -123,8 +123,8 @@
 
           <div class="speeds">
             <form method="post" id="minSpeed-form">
-              <p>Max Speed: <span id="minSpeedPrint"></span></p>
-              <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+              <p>Min Speed: <span id="minSpeedPrint"></span></p>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="minSpeed" id="minSpeed">
             </form>
           </div>
 
@@ -136,12 +136,12 @@
             outputMS.innerHTML = sliderMS.value;
             outputMiS.innerHTML = sliderMiS.value;
 
-            // sliderMS.oninput = function() { // see if needs this???
-            //   outputMS.innerHTML = this.value; 
-            // }
-            // sliderMiS.oninput = function() {
-            //   outputMiS.innerHTML = this.value;
-            // }
+            sliderMS.oninput = function() { // see if needs this???
+              outputMS.innerHTML = this.value; 
+            }
+            sliderMiS.oninput = function() {
+              outputMiS.innerHTML = this.value;
+            }
             
             $(document).on('change','#maxSpeed-form',function(e) {
               e.preventDefault();
@@ -149,7 +149,7 @@
                 type:'POST',
                 url:'/max_speed',
                 data:{
-                todo:$(sliderMS.value).val()
+                todo:sliderMS.value
                 },
                 success:function()
                 {
@@ -164,7 +164,7 @@
                 type:'POST',
                 url:'/min_speed',
                 data:{
-                todo:$(sliderMiS.value).val()
+                todo:sliderMiS.value
                 },
                 success:function()
                 {
