@@ -124,7 +124,7 @@ def set_black():
 def set_p():
     print("routed to p")
     if request.method == "POST":
-        todo = request.form.get("ptodo")
+        todo = request.form.get("todo")
         print(todo)
     return render_template('index.html')
     # print(request.data)
