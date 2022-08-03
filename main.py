@@ -122,15 +122,10 @@ def set_black():
 
 @app.route("/p", methods=["POST","GET"])
 def set_p():
-    print(request.json)
     if request.method == "POST":
-        todo = request.form.get("todo")
+        todo = request.values.get("todo")
         print(todo)
     return render_template('index.html')
-    # print(request.data)
-    # car.p = int(request.form["data"])
-    # print(car.p)
-    # return Flask.Response(status=200)
 
 @app.route("/i")
 def set_i():

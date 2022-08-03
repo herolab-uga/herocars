@@ -68,17 +68,16 @@
             }
 
             $(document).on('change','#p-form',function(e) {
-              console.log('hello');
               e.preventDefault();
               $.ajax({
                 type:'POST',
                 url:'/p',
                 data:{
-                todo:$(p.value).val()
+                todo:p.value
                 },
                 success:function()
                 {
-                // alert('saved');
+                  alert(p.value)
                 }
               })
             });
