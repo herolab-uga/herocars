@@ -188,12 +188,68 @@
           </div>
         </div>
 
-        <!-- Current Lap Time don't need to send to Michael -->
+        <!-- Current Lap Time -->
         <div class="box1">
           <h2>Current Lap Time</h2>
-          <p>00:00:00</p>
-        </div>
+          <p><span id="seconds">00</span>:<span id="tens">00</span></p>
 
+          <script>
+          window.onload = function () {
+            
+            var seconds = 00; 
+            var tens = 00; 
+            var appendTens = document.getElementById("tens")
+            var appendSeconds = document.getElementById("seconds")
+            var buttonStart = document.getElementById('startTime');
+            var buttonStop = document.getElementById('stopTime');
+            var buttonReset = document.getElementById('resetTime');
+            var Interval ;
+
+            buttonStart.onclick = function() {
+              clearInterval(Interval);
+              Interval = setInterval(startTimer, 10);
+            }
+            
+            buttonStop.onclick = function() {
+                clearInterval(Interval);
+            }
+            
+            buttonReset.onclick = function() {
+              clearInterval(Interval);
+              tens = "00";
+              seconds = "00";
+              appendTens.innerHTML = tens;
+              appendSeconds.innerHTML = seconds;
+            }
+            
+            function startTimer () {
+              tens++; 
+              
+              if(tens <= 9){
+                appendTens.innerHTML = "0" + tens;
+              }
+              
+              if (tens > 9){
+                appendTens.innerHTML = tens;
+                
+              } 
+              
+              if (tens > 99) {
+                console.log("seconds");
+                seconds++;
+                appendSeconds.innerHTML = "0" + seconds;
+                tens = 0;
+                appendTens.innerHTML = "0" + 0;
+              }
+              
+              if (seconds > 9){
+                appendSeconds.innerHTML = seconds;
+              }
+            
+            }
+          }
+          </script>
+        </div>
       </div>
 
 
@@ -386,11 +442,11 @@
         <div class="box1">
           <div class="speeds">
             <button>Menu</button>
-            <button>Exit</button>
+            <button id="resetTime">Reset Race</button>
           </div>
           <div class="speeds">
-            <button>Start Race</button>
-            <button>Reset Interface</button>
+            <button id="startTime">Start Race</button>
+            <button id="stopTime">Stop Race</button>
           </div>
           
         </div>
