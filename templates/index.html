@@ -19,39 +19,33 @@
         <!-- PID Constant Values -->
         <div class="box2">
 
-
-
-
           <div class="speeds">
             <form method="post" id="p-form">
               <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" name="ptodo" id="ptodo">
-              <!-- <input type="text" name="todo" id="todo">
-              <button type="submit">submit</button> -->
+            </form>
+          </div>
+          
+          <div class="speeds">
+            <form method="post" id="i-form">
+              <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="slideri" name="itodo" id="itodo">
+            </form>
+          </div>
+
+          <div class="speeds">
+            <form method="post" id="d-form">
+              <p>d: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
             </form>
           </div>
           
 
-
-
-          <div class="speeds">
-            <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
-          </div>
-
-          <form action="{{ url_for('set_d') }}" method=post>
-            <div class="speeds">
-              <p>d: <span id="dValToPrint"></span></p>
-              <input type="range" min="1" max="100" value="50" class="sliderp" id="dRange" name="dRange">
-            </div>
-          </form>
-          
-
           <script type="text/javascript">
 
+            // purely aesthetics
             var p = document.getElementById("ptodo");
             var outputP = document.getElementById("pValToPrint");
-            var i = document.getElementById("iRange");
+            var i = document.getElementById("itodo");
             var outputI = document.getElementById("iValToPrint");
-            var d = document.getElementById("dRange");
+            var d = document.getElementById("dtodo");
             var outputD = document.getElementById("dValToPrint");
             outputP.innerHTML = p.value;
             outputI.innerHTML = i.value;
@@ -67,8 +61,8 @@
               outputD.innerHTML = this.value;
             }
 
+            // actually what gets sent to main.py
             $(document).on('change','#p-form',function(e) {
-              console.log('hello');
               e.preventDefault();
               $.ajax({
                 type:'POST',
@@ -83,39 +77,39 @@
               })
             });
 
+            $(document).on('change','#i-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/i',
+                data:{
+                todo:$(i.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
+
+            $(document).on('change','#d-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/d',
+                data:{
+                todo:$(d.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
 
 
-            // $(function() {
-            //   $('input#pRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/p',
-            //       function(data) {
-            //         //do nothing
-            //     });
-            //     return false;
-            //   });
-            // });
-            // $(function() {
-            //   $('input#iRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/i',
-            //       function(data) {
-            //         //do nothing
-            //     });
-            //     return false;
-            //   });
-            // });
-            // $(function() {
-            //   $('input#dRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/d', function(data) {
-            //         // send d.value to python
-            //         // checking request.data
-                    
-            //     });
-            //     return false;
-            //   });
-            // });
+
+            
           </script>
         </div>
 
