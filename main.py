@@ -14,28 +14,32 @@ app = Flask("LTG_Car")
 CORS(app)
 socketio = SocketIO(app)
 
-@app.route("/min_speed", methods=["GET","POST"])
+# needs test
+@app.route("/min_speed", methods=["POST"])
 def min_speed():
-    if request.method == "GET":
-       return str(car.min_speed)
-    else:
-        car.min_speed = int(request.form["data"])
-        return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.min_speed(todo)
+        print("Minimum speed: " , todo)
+    return render_template('index.html')
 
-@app.route("/max_speed", methods=["GET","POST"])
+# needs test
+@app.route("/max_speed", methods=["POST"])
 def max_speed():
-    if request.method == "GET":
-       return str(car.max_speed)
-    else:
-        car.max_speed = int(request.form["data"])
-        return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.max_speed(todo)
+        print("Maximum speed: " , todo)
+    return render_template('index.html')
 
+# needs to be added
 @app.route("/current_speed", methods=["GET"])
 def current_speed():
     if request.method == "GET":
        return str(car.car_speed)
 
-@app.route("/control_type", methods=["GET","POST"])
+# needs fix
+@app.route("/control_type", methods=["GET","POST"]) 
 def control_type():
     if request.method == "GET":
        return str(car.control_type)
@@ -91,28 +95,25 @@ def set_black():
     car.line_color = "black"
     return ("nothing")
 
-@app.route("/p", methods=["POST","GET"])
+@app.route("/p", methods=["POST"])
 def set_p():
-    print(request.json)
     if request.method == "POST":
         todo = request.form.get("todo")
-        print(todo)
+        car.p(todo)
     return render_template('index.html')
 
-@app.route("/i")
+@app.route("/i", methods=["POST"])
 def set_i():
-    print(request.json)
     if request.method == "POST":
         todo = request.form.get("todo")
-        print(todo)
+        car.i(todo)
     return render_template('index.html')
 
 @app.route("/d", methods=["POST"])
 def set_d():
-    print(request.json)
     if request.method == "POST":
         todo = request.form.get("todo")
-        print(todo)
+        car.d(todo)
     return render_template('index.html')
 
 @app.route("/camera_frame", methods=["GET"])

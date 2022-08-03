@@ -106,24 +106,26 @@
                 }
               })
             });
-
-
-
-            
+           
           </script>
         </div>
 
         <!-- Speed -->
         <div class="box1">
           <h2>Current Speed</h2>
+
           <div class="speeds">
-            <p>Max Speed: <span id="maxSpeedPrint"></span></p>
-            <input type="range" min="1" max="100" value="50" class="sliderp" id="maxSpeed">
+            <form method="post" id="maxSpeed-form">
+              <p>Max Speed: <span id="maxSpeedPrint"></span></p>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+            </form>
           </div>
 
           <div class="speeds">
-            <p>Min Speed: <span id="minSpeedPrint"></span></p>
-            <input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
+            <form method="post" id="minSpeed-form">
+              <p>Max Speed: <span id="minSpeedPrint"></span></p>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+            </form>
           </div>
 
           <script>
@@ -133,7 +135,44 @@
             var outputMiS = document.getElementById("minSpeedPrint");
             outputMS.innerHTML = sliderMS.value;
             outputMiS.innerHTML = sliderMiS.value;
+
+            // sliderMS.oninput = function() { // see if needs this???
+            //   outputMS.innerHTML = this.value; 
+            // }
+            // sliderMiS.oninput = function() {
+            //   outputMiS.innerHTML = this.value;
+            // }
             
+            $(document).on('change','#maxSpeed-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/max_speed',
+                data:{
+                todo:$(sliderMS.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
+
+            $(document).on('change','#minSpeed-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/min_speed',
+                data:{
+                todo:$(sliderMiS.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
+
           </script>
         </div>
 
