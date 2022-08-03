@@ -120,12 +120,17 @@ def set_black():
     car.line_color = "black"
     return ("nothing")
 
-@app.route("/p")
+@app.route("/p", methods=["POST","GET"])
 def set_p():
-    print(request.data)
-    car.p = int(request.form["data"])
-    print(car.p)
-    return Flask.Response(status=200)
+    print("routed to p")
+    if request.method == "POST":
+        todo = request.form.get("ptodo")
+        print(todo)
+    return render_template('index.html')
+    # print(request.data)
+    # car.p = int(request.form["data"])
+    # print(car.p)
+    # return Flask.Response(status=200)
 
 @app.route("/i")
 def set_i():
@@ -150,9 +155,6 @@ def camera_frame():
 
 @app.route("/")
 def execute():
-    if request.method == "POST":
-        todo = request.form.get("ptodo")
-        print(todo)
     return render_template("index.html")
 
 @socketio.on('disconnect')
