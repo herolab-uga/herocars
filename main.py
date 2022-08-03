@@ -14,57 +14,32 @@ app = Flask("LTG_Car")
 CORS(app)
 socketio = SocketIO(app)
 
-# @app.route("/p", methods=["GET","POST"])
-# def p():
-#     if request.method == "GET":
-#        return str(car.p)
-#     else:
-#         print(request.data)
-#         car.p = int(request.form["data"])
-#         print(car.p)
-#         return Flask.Response(status=200)
-
-# @app.route("/i", methods=["GET","POST"])
-# def i():
-#     if request.method == "nGET":
-#        return str(car.i)
-#     else:
-#         car.i = int(request.form["data"])
-#         print(car.i)
-#         return Flask.Response(status=200)
-
-# # Create route of /d 
-# @app.route("/d", methods=["GET","POST"])
-# def d():
-#     if request.method == "GET":
-#        return str(car.d)
-#     else:
-#         car.d = int(request.form["data"])
-#         print(car.d)
-#         return Flask.Response(status=200)
-
-@app.route("/min_speed", methods=["GET","POST"])
+# needs test
+@app.route("/min_speed", methods=["POST"])
 def min_speed():
-    if request.method == "GET":
-       return str(car.min_speed)
-    else:
-        car.min_speed = int(request.form["data"])
-        return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.min_speed(todo)
+        print("Minimum speed: " , todo)
+    return render_template('index.html')
 
-@app.route("/max_speed", methods=["GET","POST"])
+# needs test
+@app.route("/max_speed", methods=["POST"])
 def max_speed():
-    if request.method == "GET":
-       return str(car.max_speed)
-    else:
-        car.max_speed = int(request.form["data"])
-        return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.max_speed(todo)
+        print("Maximum speed: " , todo)
+    return render_template('index.html')
 
+# needs to be added
 @app.route("/current_speed", methods=["GET"])
 def current_speed():
     if request.method == "GET":
        return str(car.car_speed)
 
-@app.route("/control_type", methods=["GET","POST"])
+# needs fix
+@app.route("/control_type", methods=["GET","POST"]) 
 def control_type():
     if request.method == "GET":
        return str(car.control_type)
@@ -120,28 +95,31 @@ def set_black():
     car.line_color = "black"
     return ("nothing")
 
-@app.route("/p", methods=["POST","GET"])
+@app.route("/p", methods=["POST"])
 def set_p():
     if request.method == "POST":
+<<<<<<< HEAD
         todo = request.values.get("todo")
         print(todo)
+=======
+        todo = request.form.get("todo")
+        car.p(todo)
+>>>>>>> e27602e44db198cba3755ebf17c298ae84835002
     return render_template('index.html')
 
-@app.route("/i")
+@app.route("/i", methods=["POST"])
 def set_i():
-    print(request.data)
-    car.i = int(request.form["data"])
-    print(car.i)
-    return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.i(todo)
+    return render_template('index.html')
 
 @app.route("/d", methods=["POST"])
 def set_d():
-    print(request)
-    print(request.get_data)
-    # print(jsonify(data))
-    # car.d = int(request.form["dRange"])
-    # print(car.d)
-    return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.d(todo)
+    return render_template('index.html')
 
 @app.route("/camera_frame", methods=["GET"])
 def camera_frame():
