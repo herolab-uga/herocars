@@ -151,7 +151,7 @@ def camera_frame():
 @app.route("/")
 def execute():
     if request.method == "POST":
-        todo = request.form.get("todo")
+        todo = request.form.get("ptodo")
         print(todo)
     return render_template("index.html")
 
