@@ -19,6 +19,9 @@
         <!-- PID Constant Values -->
         <div class="box2">
 
+
+
+
           <div class="speeds">
             <form method="post" id="p-form">
               <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" name="ptodo" id="ptodo">
@@ -27,6 +30,9 @@
             </form>
           </div>
           
+
+
+
           <div class="speeds">
             <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
           </div>
@@ -66,7 +72,7 @@
               e.preventDefault();
               $.ajax({
                 type:'POST',
-                url:'/',
+                url:'/p',
                 data:{
                 todo:$("#ptodo").val()
                 },
