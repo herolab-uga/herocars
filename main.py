@@ -98,13 +98,9 @@ def set_black():
 @app.route("/p", methods=["POST"])
 def set_p():
     if request.method == "POST":
-<<<<<<< HEAD
         todo = request.values.get("todo")
         print(todo)
-=======
-        todo = request.form.get("todo")
         car.p(todo)
->>>>>>> e27602e44db198cba3755ebf17c298ae84835002
     return render_template('index.html')
 
 @app.route("/i", methods=["POST"])
