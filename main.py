@@ -26,7 +26,7 @@ socketio = SocketIO(app)
 
 # @app.route("/i", methods=["GET","POST"])
 # def i():
-#     if request.method == "GET":
+#     if request.method == "nGET":
 #        return str(car.i)
 #     else:
 #         car.i = int(request.form["data"])
@@ -150,6 +150,9 @@ def camera_frame():
 
 @app.route("/")
 def execute():
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        print(todo)
     return render_template("index.html")
 
 @socketio.on('disconnect')
