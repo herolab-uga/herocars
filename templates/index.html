@@ -136,12 +136,12 @@
             outputMS.innerHTML = sliderMS.value;
             outputMiS.innerHTML = sliderMiS.value;
 
-            // sliderMS.oninput = function() { // see if needs this???
-            //   outputMS.innerHTML = this.value; 
-            // }
-            // sliderMiS.oninput = function() {
-            //   outputMiS.innerHTML = this.value;
-            // }
+            sliderMS.oninput = function() { // see if needs this???
+              outputMS.innerHTML = this.value; 
+            }
+            sliderMiS.oninput = function() {
+              outputMiS.innerHTML = this.value;
+            }
             
             $(document).on('change','#maxSpeed-form',function(e) {
               e.preventDefault();

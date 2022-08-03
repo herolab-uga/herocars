@@ -97,8 +97,9 @@ def set_black():
 
 @app.route("/p", methods=["POST"])
 def set_p():
+    # please fix these changes 
     if request.method == "POST":
-        todo = request.values.get("todo")
+        todo = request.form.get("todo")
         print(todo)
         car.p(todo)
     return render_template('index.html')
