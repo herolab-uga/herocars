@@ -19,39 +19,33 @@
         <!-- PID Constant Values -->
         <div class="box2">
 
-
-
-
           <div class="speeds">
             <form method="post" id="p-form">
               <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" name="ptodo" id="ptodo">
-              <!-- <input type="text" name="todo" id="todo">
-              <button type="submit">submit</button> -->
+            </form>
+          </div>
+          
+          <div class="speeds">
+            <form method="post" id="i-form">
+              <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="slideri" name="itodo" id="itodo">
+            </form>
+          </div>
+
+          <div class="speeds">
+            <form method="post" id="d-form">
+              <p>d: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
             </form>
           </div>
           
 
-
-
-          <div class="speeds">
-            <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" id="iRange">
-          </div>
-
-          <form action="{{ url_for('set_d') }}" method=post>
-            <div class="speeds">
-              <p>d: <span id="dValToPrint"></span></p>
-              <input type="range" min="1" max="100" value="50" class="sliderp" id="dRange" name="dRange">
-            </div>
-          </form>
-          
-
           <script type="text/javascript">
 
+            // purely aesthetics
             var p = document.getElementById("ptodo");
             var outputP = document.getElementById("pValToPrint");
-            var i = document.getElementById("iRange");
+            var i = document.getElementById("itodo");
             var outputI = document.getElementById("iValToPrint");
-            var d = document.getElementById("dRange");
+            var d = document.getElementById("dtodo");
             var outputD = document.getElementById("dValToPrint");
             outputP.innerHTML = p.value;
             outputI.innerHTML = i.value;
@@ -67,14 +61,29 @@
               outputD.innerHTML = this.value;
             }
 
+            // actually what gets sent to main.py
             $(document).on('change','#p-form',function(e) {
-              console.log('hello');
               e.preventDefault();
               $.ajax({
                 type:'POST',
                 url:'/p',
                 data:{
-                todo:$(p.value).val()
+                todo:p.value
+                },
+                success:function()
+                {
+                  alert(p.value)
+                }
+              })
+            });
+
+            $(document).on('change','#i-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/i',
+                data:{
+                todo:$(i.value).val()
                 },
                 success:function()
                 {
@@ -83,53 +92,40 @@
               })
             });
 
-
-
-            // $(function() {
-            //   $('input#pRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/p',
-            //       function(data) {
-            //         //do nothing
-            //     });
-            //     return false;
-            //   });
-            // });
-            // $(function() {
-            //   $('input#iRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/i',
-            //       function(data) {
-            //         //do nothing
-            //     });
-            //     return false;
-            //   });
-            // });
-            // $(function() {
-            //   $('input#dRange').on('input', function(e) {
-            //     e.preventDefault()
-            //     $.getJSON('/d', function(data) {
-            //         // send d.value to python
-            //         // checking request.data
-                    
-            //     });
-            //     return false;
-            //   });
-            // });
+            $(document).on('change','#d-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/d',
+                data:{
+                todo:$(d.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
+           
           </script>
         </div>
 
         <!-- Speed -->
         <div class="box1">
           <h2>Current Speed</h2>
+
           <div class="speeds">
-            <p>Max Speed: <span id="maxSpeedPrint"></span></p>
-            <input type="range" min="1" max="100" value="50" class="sliderp" id="maxSpeed">
+            <form method="post" id="maxSpeed-form">
+              <p>Max Speed: <span id="maxSpeedPrint"></span></p>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+            </form>
           </div>
 
           <div class="speeds">
-            <p>Min Speed: <span id="minSpeedPrint"></span></p>
-            <input type="range" min="1" max="100" value="50" class="sliderp" id="minSpeed">
+            <form method="post" id="minSpeed-form">
+              <p>Max Speed: <span id="minSpeedPrint"></span></p>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+            </form>
           </div>
 
           <script>
@@ -139,7 +135,44 @@
             var outputMiS = document.getElementById("minSpeedPrint");
             outputMS.innerHTML = sliderMS.value;
             outputMiS.innerHTML = sliderMiS.value;
+
+            // sliderMS.oninput = function() { // see if needs this???
+            //   outputMS.innerHTML = this.value; 
+            // }
+            // sliderMiS.oninput = function() {
+            //   outputMiS.innerHTML = this.value;
+            // }
             
+            $(document).on('change','#maxSpeed-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/max_speed',
+                data:{
+                todo:$(sliderMS.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
+
+            $(document).on('change','#minSpeed-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/min_speed',
+                data:{
+                todo:$(sliderMiS.value).val()
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              })
+            });
+
           </script>
         </div>
 
@@ -155,12 +188,68 @@
           </div>
         </div>
 
-        <!-- Current Lap Time don't need to send to Michael -->
+        <!-- Current Lap Time -->
         <div class="box1">
           <h2>Current Lap Time</h2>
-          <p>00:00:00</p>
-        </div>
+          <p><span id="seconds">00</span>:<span id="tens">00</span></p>
 
+          <script>
+          window.onload = function () {
+            
+            var seconds = 00; 
+            var tens = 00; 
+            var appendTens = document.getElementById("tens")
+            var appendSeconds = document.getElementById("seconds")
+            var buttonStart = document.getElementById('startTime');
+            var buttonStop = document.getElementById('stopTime');
+            var buttonReset = document.getElementById('resetTime');
+            var Interval ;
+
+            buttonStart.onclick = function() {
+              clearInterval(Interval);
+              Interval = setInterval(startTimer, 10);
+            }
+            
+            buttonStop.onclick = function() {
+                clearInterval(Interval);
+            }
+            
+            buttonReset.onclick = function() {
+              clearInterval(Interval);
+              tens = "00";
+              seconds = "00";
+              appendTens.innerHTML = tens;
+              appendSeconds.innerHTML = seconds;
+            }
+            
+            function startTimer () {
+              tens++; 
+              
+              if(tens <= 9){
+                appendTens.innerHTML = "0" + tens;
+              }
+              
+              if (tens > 9){
+                appendTens.innerHTML = tens;
+                
+              } 
+              
+              if (tens > 99) {
+                console.log("seconds");
+                seconds++;
+                appendSeconds.innerHTML = "0" + seconds;
+                tens = 0;
+                appendTens.innerHTML = "0" + 0;
+              }
+              
+              if (seconds > 9){
+                appendSeconds.innerHTML = seconds;
+              }
+            
+            }
+          }
+          </script>
+        </div>
       </div>
 
 
@@ -353,11 +442,11 @@
         <div class="box1">
           <div class="speeds">
             <button>Menu</button>
-            <button>Exit</button>
+            <button id="resetTime">Reset Race</button>
           </div>
           <div class="speeds">
-            <button>Start Race</button>
-            <button>Reset Interface</button>
+            <button id="startTime">Start Race</button>
+            <button id="stopTime">Stop Race</button>
           </div>
           
         </div>

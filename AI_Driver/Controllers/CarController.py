@@ -1,8 +1,8 @@
 from cv2 import VideoCapture, waitKey
 import time
 import threading
-import RPi.GPIO as GPIO
-from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
+# import RPi.GPIO as GPIO
+# from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
 
 class CarController:
 
@@ -11,7 +11,7 @@ class CarController:
         # Initialize the car
 
         # Autohat Object
-        self._motor_driver = AutoPhatMD()
+        # self._motor_driver = AutoPhatMD()
 
         self._min_speed = 0
         self._max_speed = 150
@@ -38,12 +38,12 @@ class CarController:
             "frame": None
         }
 
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(29, GPIO.IN)  # RR IR Sensor
-        GPIO.setup(31, GPIO.IN)  # RM IR Sensor
-        GPIO.setup(33, GPIO.IN)  # MM IR Sensor
-        GPIO.setup(35, GPIO.IN)  # LM IR Sensor
-        GPIO.setup(37, GPIO.IN)  # LL IR Sensor
+        # GPIO.setmode(GPIO.BOARD)
+        # GPIO.setup(29, GPIO.IN)  # RR IR Sensor
+        # GPIO.setup(31, GPIO.IN)  # RM IR Sensor
+        # GPIO.setup(33, GPIO.IN)  # MM IR Sensor
+        # GPIO.setup(35, GPIO.IN)  # LM IR Sensor
+        # GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
         # self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
         # self.thread.start()
@@ -226,8 +226,8 @@ class CarController:
             if self._control_type == 1:
                 _error = self.calculate_error()
                 correction = self._p * _error + self._i * self._PV + self._d * (self._error -self._prev_error)
-                self.motorDriver.Turn(correction)
-                self.motorDriver.Drive(self.calculate_speed())
+                # self._motor_river.Turn(correction)
+                # self._motor_driver.Drive(self.calculate_speed())
 
     def car_auto_stop(self):
         while True:
@@ -238,22 +238,22 @@ class CarController:
                 self.center_steering()
             time.sleep(.01)
 
-    def turn_left(self):
-        self._motor_driver.ManualLeft()
+    # def turn_left(self):
+    #     self._motor_driver.ManualLeft()
     
-    def turn_right(self):
-        self._motor_driver.ManualRight()
+    # def turn_right(self):
+    #     self._motor_driver.ManualRight()
     
-    def drive_forward(self):
-        self._motor_driver.ManualForward()
+    # def drive_forward(self):
+    #     self._motor_driver.ManualForward()
     
-    def drive_backward(self):
-        self._motor_driver.ManualReverse()
+    # def drive_backward(self):
+    #     self._motor_driver.ManualReverse()
     
-    def stop(self):
-        self._car_speed = 0
-        self._motor_driver.ManualDriveStop()
+    # def stop(self):
+    #     self._car_speed = 0
+    #     self._motor_driver.ManualDriveStop()
     
-    def center_steering(self):
-        self._motor_driver.ManualSteerStop()
+    # def center_steering(self):
+    #     self._motor_driver.ManualSteerStop()
 
