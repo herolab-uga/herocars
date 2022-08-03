@@ -1,8 +1,10 @@
-from cv2 import VideoCapture, waitKey
+from socketserver import ThreadingUnixDatagramServer
+import cv2
 import time
 import threading
-import RPi.GPIO as GPIO
-from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
+import queue
+# import RPi.GPIO as GPIO
+# from AI_Driver.AutoPhat.AutoPhatMD import AutoPhatMD
 
 class CarController:
 
@@ -10,7 +12,7 @@ class CarController:
         # Initialize the car
 
         # Autohat Object
-        self._motor_driver = AutoPhatMD()
+        # self._motor_driver = AutoPhatMD()
 
         self._min_speed = 0
         self._max_speed = 150
@@ -32,16 +34,14 @@ class CarController:
 
         self._car_speed = 0 # speed of the car
 
-        self._camera_frame = {
-            "frame": None
-        }
+        self._camera_queue = queue.Queue(maxsize=1)
 
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(29, GPIO.IN)  # RR IR Sensor
-        GPIO.setup(31, GPIO.IN)  # RM IR Sensor
-        GPIO.setup(33, GPIO.IN)  # MM IR Sensor
-        GPIO.setup(35, GPIO.IN)  # LM IR Sensor
-        GPIO.setup(37, GPIO.IN)  # LL IR Sensor
+        # GPIO.setmode(GPIO.BOARD)
+        # GPIO.setup(29, GPIO.IN)  # RR IR Sensor
+        # GPIO.setup(31, GPIO.IN)  # RM IR Sensor
+        # GPIO.setup(33, GPIO.IN)  # MM IR Sensor
+        # GPIO.setup(35, GPIO.IN)  # LM IR Sensor
+        # GPIO.setup(37, GPIO.IN)  # LL IR Sensor
 
         self.thread = threading.Thread(target=self.read_camera, args=(), daemon=True)
         self.thread.start()
@@ -174,7 +174,7 @@ class CarController:
     # Reads the frame from the camera
     def read_camera(self):
         # Create the video capture object
-        cap = VideoCapture(0)
+        cap = cv2.VideoCapture(0)
 
         # Loop until the camera is open
         while not cap.isOpened():
@@ -183,10 +183,21 @@ class CarController:
         # Loop until the camera is open
         while True:
             # Read the frame
-            ret, self._camera_frame["frame"] = cap.read()
+            success,frame = cap.read()
 
-            # Wait for the user to press a key
-            key = waitKey(30)
+            if not success:
+                continue
+
+            if self._camera_queue.empty():
+                self._camera_queue.put(frame)
+                
+
+    def get_frame(self):
+        frame = self._camera_queue.get()
+        ret,buffer = cv2.imencode('.jpg',frame)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
     # Gets the state of the car's line
     def get_line_state(self):
@@ -236,22 +247,22 @@ class CarController:
                 self.center_steering()
             time.sleep(.01)
 
-    def turn_left(self):
-        self._motor_driver.ManualLeft()
+    # def turn_left(self):
+    #     self._motor_driver.ManualLeft()
     
-    def turn_right(self):
-        self._motor_driver.ManualRight()
+    # def turn_right(self):
+    #     self._motor_driver.ManualRight()
     
-    def drive_forward(self):
-        self._motor_driver.ManualForward()
+    # def drive_forward(self):
+    #     self._motor_driver.ManualForward()
     
-    def drive_backward(self):
-        self._motor_driver.ManualReverse()
+    # def drive_backward(self):
+    #     self._motor_driver.ManualReverse()
     
-    def stop(self):
-        self._car_speed = 0
-        self._motor_driver.ManualDriveStop()
+    # def stop(self):
+    #     self._car_speed = 0
+    #     self._motor_driver.ManualDriveStop()
     
-    def center_steering(self):
-        self._motor_driver.ManualSteerStop()
+    # def center_steering(self):
+    #     self._motor_driver.ManualSteerStop()
 
