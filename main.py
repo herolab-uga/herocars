@@ -39,13 +39,13 @@ def current_speed():
        return str(car.car_speed)
 
 # needs fix
-@app.route("/control_type", methods=["GET","POST"]) 
+@app.route("/controltype", methods=["POST"]) 
 def control_type():
-    if request.method == "GET":
-       return str(car.control_type)
-    else:
-        car.control_type = int(request.form["data"])
-        return Flask.Response(status=200)
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        # print(todo)
+        car.control_type = todo
+    return render_template('index.html')
 
 @app.route("/forward")
 def forward():
@@ -85,15 +85,12 @@ def center_steering():
     car.center_steering()
     return ("nothing")
 
-@app.route("/0")
-def set_white():
-    car.line_color = "white"
-    return ("nothing")
-
-@app.route("/1")
-def set_black():
-    car.line_color = "black"
-    return ("nothing")
+@app.route("/linetype", methods=["POST"])
+def linetype():
+    if request.method == "POST":
+        todo = request.form.get("todo")
+        car.line_color = todo
+    return render_template('index.html')
 
 @app.route("/p", methods=["POST"])
 def set_p():

@@ -455,16 +455,15 @@
         <div class="box2">
           <h2>Line Type</h2>
           <div class="speeds">
-            <p>Line Color: <span id="blackVwhite"></span></p>
+            <p>Line Color: <span id="blackVwhite">White</span></p>
             <label class="switch">
               <input type="checkbox" value="White" id="blackorwhite">
               <span class="slider"></span>
             </label>
             <script type=text/javascript>
+              var lineType = document.getElementById('blackorwhite');
+              var linePost = document.getElementById('blackVwhite');
               function changeLineType() {
-
-                let lineType = document.getElementById('blackorwhite');
-                let linePost = document.getElementById('blackVwhite');
                 linePost.innerHTML = lineType.value;
 
                 if (lineType.value == "Black") {
@@ -483,10 +482,16 @@
                 $('input#blackorwhite').on('change', function(e) {
                   let d = changeLineType();
                   e.preventDefault()
-                  $.getJSON(d,
-                      function(data) {
-                  });
-                  return false;
+                  $.ajax({
+                    type:'POST',
+                    url:'/linetype',
+                    data:{
+                    todo:lineType.value
+                    },
+                    success:function()
+                    {
+                    }
+                  })
                 });
               });
             </script>
@@ -498,11 +503,46 @@
         <div class="box1">
           <h2>Control Modes</h2>
           <div class="speeds">
-            <p>W1 or 2 (switch)</p>
+            <p>Type: <span id="controlmode">Manual</span></p>
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" value="Manual" id="manorauton">
               <span class="slider"></span>
             </label>
+            <script type=text/javascript>
+             var controlType = document.getElementById('manorauton');
+              var controlPost = document.getElementById('controlmode');
+              function changeControlType() {
+                controlPost.innerHTML = controlType.value;
+
+                if (controlType.value == "Manual") {
+                  controlType.value = "Autonomous";
+                  controlPost.innerHTML = controlType.value;
+                  // return "/0";
+                } else if (controlType.value == "Autonomous") {
+                  controlType.value = "Manual";
+                  controlPost.innerHTML = controlType.value;
+                  // return "/1";
+                }
+
+              }
+
+              $(function() {
+                $('input#manorauton').on('change', function(e) {
+                  let d = changeControlType();
+                  e.preventDefault();
+                  $.ajax({
+                    type:'POST',
+                    url:'/controltype',
+                    data:{
+                    todo:controlType.value
+                    },
+                    success:function()
+                    {
+                    }
+                  })
+                });
+              });
+            </script>
           </div>
           
         </div>
