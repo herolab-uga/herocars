@@ -88,7 +88,7 @@
     text-align: center;
 
   }
-  .circVals {
+  #circVals {
     display:flex;
     justify-content: space-around;
   }
