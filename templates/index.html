@@ -179,16 +179,42 @@
         <!-- IR Tracker Indicators -->
         <div class="box2">
           <h2>IR Tracker Indicators</h2>
-          <div class="circVals">
-            <p>LL</p>
-            <p>LM</p>
-            <p>MM</p>
-            <p>RM</p>
-            <p>RR</p>
-          </div>
+          <form action="post">
+            <div id="circVals">
+              <p>LL</p>
+              <p>LM</p>
+              <p>MM</p>
+              <p>RM</p>
+              <p>RR</p>
+            </div>
+        </form>
         </div>
 
       </div>
+
+      <script>
+          setInterval(function() {
+            var x = localStorage.getItem('circVals');
+            document.getElementById('circVals').innerHTML = x;
+
+            // $(document).on('change','#maxSpeed-form',function(e) {
+              e.preventDefault();
+              $.ajax({
+                type:'POST',
+                url:'/irsensors',
+                data:{
+                // todo:sliderMS.value
+                },
+                success:function()
+                {
+                // alert('saved');
+                }
+              });
+            // });
+
+
+          }, 1000);
+      </script>
 
 
       <!-- =================== center =================== -->
