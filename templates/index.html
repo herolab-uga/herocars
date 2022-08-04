@@ -193,14 +193,13 @@
       </div>
 
       <script>
-          setInterval(function() {
-            var x = localStorage.getItem('circVals');
-            document.getElementById('circVals').innerHTML = x;
 
-            // $(document).on('change','#maxSpeed-form',function(e) {
-              e.preventDefault();
-              $.ajax({
-                type:'POST',
+        var refInterval = window.setInterval('update()', 1000); // 1 second
+
+        var update = function(e) {
+          e.preventDefault();
+          $.ajax({
+                type:'GET',
                 url:'/irsensors',
                 data:{
                 // todo:sliderMS.value
@@ -210,10 +209,32 @@
                 // alert('saved');
                 }
               });
-            // });
+          };
+        update();
 
 
-          }, 1000);
+
+          // setInterval(function() {
+          //   var x = localStorage.getItem('circVals');
+          //   document.getElementById('circVals').innerHTML = x;
+
+          //   $(document).on('change','#maxSpeed-form',function(e) {
+          //     e.preventDefault();
+          //     $.ajax({
+          //       type:'POST',
+          //       url:'/irsensors',
+          //       data:{
+          //       // todo:sliderMS.value
+          //       },
+          //       success:function()
+          //       {
+          //       // alert('saved');
+          //       }
+          //     });
+          //   });
+
+
+          // }, 1000);
       </script>
 
 
