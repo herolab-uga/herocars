@@ -1,216 +1,215 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LTG Cars</title>
-    <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/style.css') }}"/>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <!-- make buttons send continuously -->
-    <!-- //192.168.1.33 -->
-    
-  </head>
-  <body>
 
-    <div class="game">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LTG Cars</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- make buttons send continuously -->
+  <!-- //192.168.1.33 -->
+
+</head>
+
+<body>
+
+  <div class="game">
 
 
-      <!-- =================== left side =================== -->
-      <div class="left">
-        <!-- PID Constant Values -->
-        <div class="box2">
+    <!-- =================== left side =================== -->
+    <div class="left">
+      <!-- PID Constant Values -->
+      <div class="box2">
 
-          <div class="speeds">
-            <form method="post" id="p-form">
-              <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp" name="ptodo" id="ptodo">
-            </form>
-          </div>
-          
-          <div class="speeds">
-            <form method="post" id="i-form">
-              <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="slideri" name="itodo" id="itodo">
-            </form>
-          </div>
-
-          <div class="speeds">
-            <form method="post" id="d-form">
-              <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
-            </form>
-          </div>
-          
-
-          <script type="text/javascript">
-
-            // purely aesthetics
-            var p = document.getElementById("ptodo");
-            var outputP = document.getElementById("pValToPrint");
-            var i = document.getElementById("itodo");
-            var outputI = document.getElementById("iValToPrint");
-            var d = document.getElementById("dtodo");
-            var outputD = document.getElementById("dValToPrint");
-            outputP.innerHTML = p.value;
-            outputI.innerHTML = i.value;
-            outputD.innerHTML = d.value;
-            
-            p.oninput = function() {
-              outputP.innerHTML = this.value; 
-            }
-            i.oninput = function() {
-              outputI.innerHTML = this.value;
-            }
-            d.oninput = function() {
-              outputD.innerHTML = this.value;
-            }
-
-            // actually what gets sent to main.py
-            $(document).on('change','#p-form',function(e) {
-              e.preventDefault();
-              $.ajax({
-                type:'POST',
-                url:'/p',
-                data:{
-                todo:p.value
-                },
-                success:function()
-                {
-//                  alert(p.value)
-                }
-              })
-            });
-
-            $(document).on('change','#i-form',function(e) {
-              e.preventDefault();
-              $.ajax({
-                type:'POST',
-                url:'/i',
-                data:{
-                todo:i.value
-                },
-                success:function()
-                {
-                // alert('saved');
-                }
-              })
-            });
-
-            $(document).on('change','#d-form',function(e) {
-              e.preventDefault();
-              $.ajax({
-                type:'POST',
-                url:'/d',
-                data:{
-                todo:d.value
-                },
-                success:function()
-                {
-                // alert('saved');
-                }
-              })
-            });
-           
-          </script>
+        <div class="speeds">
+          <form method="post" id="p-form">
+            <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp"
+              name="ptodo" id="ptodo">
+          </form>
         </div>
 
-        <!-- Speed -->
-        <div class="box1">
-          <h2>Current Speed</h2>
-
-          <div class="speeds">
-            <form method="post" id="maxSpeed-form">
-              <p>Max Speed: <span id="maxSpeedPrint"></span></p>
-              <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
-            </form>
-          </div>
-
-          <div class="speeds">
-            <form method="post" id="minSpeed-form">
-              <p>Min Speed: <span id="minSpeedPrint"></span></p>
-              <input type="range" min="1" max="100" value="50" class="sliderp" name="minSpeed" id="minSpeed">
-            </form>
-          </div>
-
-          <script>
-            var sliderMS = document.getElementById("maxSpeed");
-            var outputMS = document.getElementById("maxSpeedPrint");
-            var sliderMiS = document.getElementById("minSpeed");
-            var outputMiS = document.getElementById("minSpeedPrint");
-            outputMS.innerHTML = sliderMS.value;
-            outputMiS.innerHTML = sliderMiS.value;
-
-            sliderMS.oninput = function() { // see if needs this???
-              outputMS.innerHTML = this.value; 
-            }
-            sliderMiS.oninput = function() {
-              outputMiS.innerHTML = this.value;
-            }
-            
-            $(document).on('change','#maxSpeed-form',function(e) {
-              e.preventDefault();
-              $.ajax({
-                type:'POST',
-                url:'/max_speed',
-                data:{
-                todo:sliderMS.value
-                },
-                success:function()
-                {
-                // alert('saved');
-                }
-              })
-            });
-
-            $(document).on('change','#minSpeed-form',function(e) {
-              e.preventDefault();
-              $.ajax({
-                type:'POST',
-                url:'/min_speed',
-                data:{
-                todo:sliderMiS.value
-                },
-                success:function()
-                {
-                // alert('saved');
-                }
-              })
-            });
-
-          </script>
+        <div class="speeds">
+          <form method="post" id="i-form">
+            <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="slideri"
+              name="itodo" id="itodo">
+          </form>
         </div>
 
-        <!-- IR Tracker Indicators -->
-        <div class="box2">
-          <h2>IR Tracker Indicators</h2>
-          <form action="post">
-            <div id="circVals">
-              <p>LL</p>
-              <p>LM</p>
-              <p>MM</p>
-              <p>RM</p>
-              <p>RR</p>
-            </div>
-        </form>
+        <div class="speeds">
+          <form method="post" id="d-form">
+            <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd"
+              name="dtodo" id="dtodo">
+          </form>
         </div>
 
+
+        <script type="text/javascript">
+
+          // purely aesthetics
+          var p = document.getElementById("ptodo");
+          var outputP = document.getElementById("pValToPrint");
+          var i = document.getElementById("itodo");
+          var outputI = document.getElementById("iValToPrint");
+          var d = document.getElementById("dtodo");
+          var outputD = document.getElementById("dValToPrint");
+          outputP.innerHTML = p.value;
+          outputI.innerHTML = i.value;
+          outputD.innerHTML = d.value;
+
+          p.oninput = function () {
+            outputP.innerHTML = this.value;
+          }
+          i.oninput = function () {
+            outputI.innerHTML = this.value;
+          }
+          d.oninput = function () {
+            outputD.innerHTML = this.value;
+          }
+
+          // actually what gets sent to main.py
+          $(document).on('change', '#p-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/p',
+              data: {
+                todo: p.value
+              },
+              success: function () {
+                //                  alert(p.value)
+              }
+            })
+          });
+
+          $(document).on('change', '#i-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/i',
+              data: {
+                todo: i.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+          $(document).on('change', '#d-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/d',
+              data: {
+                todo: d.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+        </script>
       </div>
 
-      <script>
+      <!-- Speed -->
+      <div class="box1">
+        <h2>Current Speed</h2>
 
-        var refInterval = window.setInterval('update()', 1000); // 1 second
+        <div class="speeds">
+          <form method="post" id="maxSpeed-form">
+            <p>Max Speed: <span id="maxSpeedPrint"></span></p>
+            <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+          </form>
+        </div>
 
-        var update = function(e) {
-          e.preventDefault();
-          $.ajax({
-                type:'GET',
-                url:'/irsensors',
-                data:{
-                // todo:sliderMS.value
-                },
-                success:function()
-                {
+        <div class="speeds">
+          <form method="post" id="minSpeed-form">
+            <p>Min Speed: <span id="minSpeedPrint"></span></p>
+            <input type="range" min="1" max="100" value="50" class="sliderp" name="minSpeed" id="minSpeed">
+          </form>
+        </div>
+
+        <script>
+          var sliderMS = document.getElementById("maxSpeed");
+          var outputMS = document.getElementById("maxSpeedPrint");
+          var sliderMiS = document.getElementById("minSpeed");
+          var outputMiS = document.getElementById("minSpeedPrint");
+          outputMS.innerHTML = sliderMS.value;
+          outputMiS.innerHTML = sliderMiS.value;
+
+          sliderMS.oninput = function () { // see if needs this???
+            outputMS.innerHTML = this.value;
+          }
+          sliderMiS.oninput = function () {
+            outputMiS.innerHTML = this.value;
+          }
+
+          $(document).on('change', '#maxSpeed-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/max_speed',
+              data: {
+                todo: sliderMS.value
+              },
+              success: function () {
                 // alert('saved');
-                }
-              });
-          };
-        update();
+              }
+            })
+          });
+
+          $(document).on('change', '#minSpeed-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/min_speed',
+              data: {
+                todo: sliderMiS.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+        </script>
+      </div>
+
+      <!-- IR Tracker Indicators -->
+      <div class="box2">
+        <h2>IR Tracker Indicators</h2>
+        <form action="post">
+          <div id="circVals">
+            <p>LL</p>
+            <p>LM</p>
+            <p>MM</p>
+            <p>RM</p>
+            <p>RR</p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <script>
+
+      // var refInterval = window.setInterval(update, 1000); // 1 second
+
+      (function update() {
+        $.ajax({
+          type: 'GET',
+          url: '/irsensors',
+          data: {
+            // todo:sliderMS.value
+          },
+          success: function () {
+            // alert('saved');
+          }
+        }).then(function () {
+          setTimeout(update, 1000);
+        });
+      })();
 
 
 
@@ -235,33 +234,33 @@
 
 
           // }, 1000);
-      </script>
+    </script>
 
 
-      <!-- =================== center =================== -->
-      <div class="center">
-        <!-- Camera -->
-        <div class="imageHolder" style="margin-top:50px;">
-          <img src="{{ url_for('camera_feed') }}" width="100%">
+    <!-- =================== center =================== -->
+    <div class="center">
+      <!-- Camera -->
+      <div class="imageHolder" style="margin-top:50px;">
+        <img src="{{ url_for('camera_feed') }}" width="100%">
+      </div>
+
+      <!-- Movements -->
+      <div class="movements">
+        <div class="top">
+          <form>
+            <a href=# id=testF style="width: 25%"><button>FORWARD</button></a>
+          </form>
+
         </div>
+        <div class="mid">
+          <a href=# id=testL style="width: 25%"><button>LEFT</button></a>
+          <a href=# id=testR style="width: 25%"><button>RIGHT</button></a>
+        </div>
+        <div class="bot">
+          <a href=# id=testB style="width: 25%"><button>BACKWARD</button></a>
 
-        <!-- Movements -->
-        <div class="movements">
-          <div class="top">
-            <form>
-              <a href=# id=testF style="width: 25%"><button>FORWARD</button></a>
-            </form>
-            
-          </div>
-          <div class="mid">
-            <a href=# id=testL style="width: 25%"><button>LEFT</button></a>
-            <a href=# id=testR style="width: 25%"><button>RIGHT</button></a>
-          </div>
-          <div class="bot">
-            <a href=# id=testB style="width: 25%"><button>BACKWARD</button></a>
-            
-          </div>
-          <script type=text/javascript>
+        </div>
+        <script type=text/javascript>
 
 
                       $(function() {
@@ -417,98 +416,98 @@
                       
 
           </script>
-        </div>
       </div>
-      
+    </div>
 
-      <!-- =================== right side =================== -->
-      <div class="right">
-        <!-- Menu Buttons -->
-        <div class="box1">
-          <div class="speeds">
-            <button>Menu</button>
-            <button id="resetTime">Reset Race</button>
-          </div>
-          <div class="speeds">
-            <button id="startTime">Start Race</button>
-            <button id="stopTime">Stop Race</button>
-          </div>
-          
+
+    <!-- =================== right side =================== -->
+    <div class="right">
+      <!-- Menu Buttons -->
+      <div class="box1">
+        <div class="speeds">
+          <button>Menu</button>
+          <button id="resetTime">Reset Race</button>
+        </div>
+        <div class="speeds">
+          <button id="startTime">Start Race</button>
+          <button id="stopTime">Stop Race</button>
         </div>
 
-        <!-- Current Lap Time -->
-        <div class="box1">
-                  <h2>Current Lap Time</h2>
-                  <p><span id="seconds">00</span>:<span id="tens">00</span></p>
-        
-                  <script>
-                  window.onload = function () {
-                    
-                    var seconds = 00; 
-                    var tens = 00; 
-                    var appendTens = document.getElementById("tens")
-                    var appendSeconds = document.getElementById("seconds")
-                    var buttonStart = document.getElementById('startTime');
-                    var buttonStop = document.getElementById('stopTime');
-                    var buttonReset = document.getElementById('resetTime');
-                    var Interval ;
-        
-                    buttonStart.onclick = function() {
-                      clearInterval(Interval);
-                      Interval = setInterval(startTimer, 10);
-                    }
-                    
-                    buttonStop.onclick = function() {
-                        clearInterval(Interval);
-                    }
-                    
-                    buttonReset.onclick = function() {
-                      clearInterval(Interval);
-                      tens = "00";
-                      seconds = "00";
-                      appendTens.innerHTML = tens;
-                      appendSeconds.innerHTML = seconds;
-                    }
-                    
-                    function startTimer () {
-                      tens++; 
-                      
-                      if(tens <= 9){
-                        appendTens.innerHTML = "0" + tens;
-                      }
-                      
-                      if (tens > 9){
-                        appendTens.innerHTML = tens;
-                        
-                      } 
-                      
-                      if (tens > 99) {
-                        console.log("seconds");
-                        seconds++;
-                        appendSeconds.innerHTML = "0" + seconds;
-                        tens = 0;
-                        appendTens.innerHTML = "0" + 0;
-                      }
-                      
-                      if (seconds > 9){
-                        appendSeconds.innerHTML = seconds;
-                      }
-                    
-                    }
-                  }
-                  </script>
-        </div>
-        
-        <!-- Line Type -->
-        <div class="box2">
-          <h2>Line Type</h2>
-          <div class="speeds">
-            <p>Line Color: <span id="blackVwhite">White</span></p>
-            <label class="switch">
-              <input type="checkbox" value="White" id="blackorwhite">
-              <span class="slider"></span>
-            </label>
-            <script type=text/javascript>
+      </div>
+
+      <!-- Current Lap Time -->
+      <div class="box1">
+        <h2>Current Lap Time</h2>
+        <p><span id="seconds">00</span>:<span id="tens">00</span></p>
+
+        <script>
+          window.onload = function () {
+
+            var seconds = 00;
+            var tens = 00;
+            var appendTens = document.getElementById("tens")
+            var appendSeconds = document.getElementById("seconds")
+            var buttonStart = document.getElementById('startTime');
+            var buttonStop = document.getElementById('stopTime');
+            var buttonReset = document.getElementById('resetTime');
+            var Interval;
+
+            buttonStart.onclick = function () {
+              clearInterval(Interval);
+              Interval = setInterval(startTimer, 10);
+            }
+
+            buttonStop.onclick = function () {
+              clearInterval(Interval);
+            }
+
+            buttonReset.onclick = function () {
+              clearInterval(Interval);
+              tens = "00";
+              seconds = "00";
+              appendTens.innerHTML = tens;
+              appendSeconds.innerHTML = seconds;
+            }
+
+            function startTimer() {
+              tens++;
+
+              if (tens <= 9) {
+                appendTens.innerHTML = "0" + tens;
+              }
+
+              if (tens > 9) {
+                appendTens.innerHTML = tens;
+
+              }
+
+              if (tens > 99) {
+                console.log("seconds");
+                seconds++;
+                appendSeconds.innerHTML = "0" + seconds;
+                tens = 0;
+                appendTens.innerHTML = "0" + 0;
+              }
+
+              if (seconds > 9) {
+                appendSeconds.innerHTML = seconds;
+              }
+
+            }
+          }
+        </script>
+      </div>
+
+      <!-- Line Type -->
+      <div class="box2">
+        <h2>Line Type</h2>
+        <div class="speeds">
+          <p>Line Color: <span id="blackVwhite">White</span></p>
+          <label class="switch">
+            <input type="checkbox" value="White" id="blackorwhite">
+            <span class="slider"></span>
+          </label>
+          <script type=text/javascript>
               var lineType = document.getElementById('blackorwhite');
               var linePost = document.getElementById('blackVwhite');
               function changeLineType() {
@@ -543,20 +542,20 @@
                 });
               });
             </script>
-          </div>
-          
         </div>
-        
-        <!-- Controls Modes -->
-        <div class="box1">
-          <h2>Control Modes</h2>
-          <div class="speeds">
-            <p>Type: <span id="controlmode">Manual</span></p>
-            <label class="switch">
-              <input type="checkbox" value="Manual" id="manorauton">
-              <span class="slider"></span>
-            </label>
-            <script type=text/javascript>
+
+      </div>
+
+      <!-- Controls Modes -->
+      <div class="box1">
+        <h2>Control Modes</h2>
+        <div class="speeds">
+          <p>Type: <span id="controlmode">Manual</span></p>
+          <label class="switch">
+            <input type="checkbox" value="Manual" id="manorauton">
+            <span class="slider"></span>
+          </label>
+          <script type=text/javascript>
              var controlType = document.getElementById('manorauton');
               var controlPost = document.getElementById('controlmode');
               function changeControlType() {
@@ -591,18 +590,19 @@
                 });
               });
             </script>
-          </div>
-          
         </div>
 
       </div>
-    </div>
 
-    <!-- HeRo Lab Logo -->
-    <div class="bottom">
-      <img src="{{ url_for('static',filename='styles/img/herolab_newlogo_whitebg.png') }}">
-      
     </div>
+  </div>
 
-  </body>
+  <!-- HeRo Lab Logo -->
+  <div class="bottom">
+    <img src="{{ url_for('static',filename='styles/img/herolab_newlogo_whitebg.png') }}">
+
+  </div>
+
+</body>
+
 </html>
