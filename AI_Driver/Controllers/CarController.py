@@ -36,7 +36,7 @@ class CarController:
 
         self._camera_queue = queue.Queue(maxsize=1)
 
-        # GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(29, GPIO.IN)  # RR IR Sensor
         GPIO.setup(31, GPIO.IN)  # RM IR Sensor
         GPIO.setup(33, GPIO.IN)  # MM IR Sensor
