@@ -195,13 +195,13 @@
     <script>
 
       // var refInterval = window.setInterval(update, 1000); // 1 second
-      var circValue = document.getElementByID("circVals");
+
       (function update() {
         $.ajax({
           type: 'GET',
           url: '/irsensors',
           data: {
-            circVal: circValue
+            circVal: "Hi"
           },
           success: function () {
             // alert('saved');
