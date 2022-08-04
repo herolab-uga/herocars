@@ -120,16 +120,18 @@ def set_d():
 def camera_feed():
     return Response(car.get_frame(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route("/irsensors")
+def irsensors():
+    print(request.form["circVals"])
+
 @app.route("/")
 def execute():
     return render_template("index.html")
-
 
 @socketio.on('disconnect')
 def test_disconnect():
     car.stop()
     car.center_steering()
-
 
 if __name__ == '__main__':
     host_addr = socket.gethostbyname(socket.gethostname() + ".local")
