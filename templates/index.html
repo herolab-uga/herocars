@@ -196,9 +196,10 @@
 
         var refInterval = window.setInterval('update()', 1000); // 1 second
 
-        var update = function() {
+        var update = function(e) {
+          e.preventDefault();
           $.ajax({
-                type:'POST',
+                type:'GET',
                 url:'/irsensors',
                 data:{
                 // todo:sliderMS.value
