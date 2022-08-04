@@ -70,7 +70,7 @@
     padding:5px;
     width: 250px;
     border-radius: 10%;
-    background-color: rgb(17, 16, 16);
+    background-color: rgb(46, 44, 44);
     color: rgb(192, 186, 186);
     display:flex;
     flex-direction: column;
@@ -81,7 +81,7 @@
     margin:10px;
     padding:5px;
     width: 250px;
-    background-color: rgb(251, 72, 72);
+    background-color: rgb(46, 44, 44);
     color: white;
     display:flex;
     flex-direction: column;
