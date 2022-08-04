@@ -194,10 +194,9 @@
 
       <script>
 
-        var refInterval = window.setInterval(update, 1000); // 1 second
+        // var refInterval = window.setInterval(update, 1000); // 1 second
 
-        var update = function(e) {
-          e.preventDefault();
+        (function update () {
           $.ajax({
                 type:'GET',
                 url:'/irsensors',
@@ -208,10 +207,11 @@
                 {
                 // alert('saved');
                 }
+              }).then(function() {
+                setTimeout(update,1000);
               });
-          };
-        update();
-
+          })();
+ 
 
 
           // setInterval(function() {
