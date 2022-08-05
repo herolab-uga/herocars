@@ -195,16 +195,15 @@
     <script>
 
       // var refInterval = window.setInterval(update, 1000); // 1 second
-
       (function update() {
         $.ajax({
-          type: 'GET',
+          type: 'POST',
           url: '/irsensors',
           data: {
             // circVal:
           },
           success: function () {
-            // alert('saved');
+            console.log(((irlist|tojson)))
           }
         }).then(function () {
           setTimeout(update, 1000);
