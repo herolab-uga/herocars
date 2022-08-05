@@ -1,19 +1,31 @@
+import enum
 import sys
 import time
 import getch
 import socket
 from flask_cors import CORS
 from flask_socketio import SocketIO
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, session
 import AI_Driver.Controllers.CarController as CarController
-# from app.api import api_bp
+import jyserver.Flask as jsf
 
 car = CarController.CarController()
 
 # Initialize web server for controlling the car
-app = Flask("LTG_Car")
+app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
+
+@jsf.use(app)
+class App:
+    def __init__(self):
+        self.ids = ["ll","lm","mm","rm","rr"]
+
+    def update_ir(self):
+        line_state = [1,2,3,4,5]
+        # line_state = car.get_line_state()
+        for sensor,index in enumerate(line_state):
+            self.js.document.getElementById(self.ids[index]).innerHTML = "test"
 
 # needs test
 @app.route("/min_speed", methods=["POST"])
@@ -22,7 +34,7 @@ def min_speed():
         todo = request.form.get("todo")
         car.min_speed = int(todo)
         # print("Minimum speed: " , todo)
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 # needs test
 @app.route("/max_speed", methods=["POST"])
@@ -31,7 +43,7 @@ def max_speed():
         todo = request.form.get("todo")
         car.max_speed = int(todo)
         # print("Maximum speed: " , todo)
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 # needs to be added
 @app.route("/current_speed", methods=["GET"])
@@ -46,40 +58,40 @@ def control_type():
         todo = request.form.get("todo")
         # print(todo)
         car.control_type = todo
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/forward")
 def forward():
     car.last_velo_time = time.time()
     car.car_speed = car.max_speed
     car.drive_forward()
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/backward")
 def backward():
     car.last_velo_time = time.time()
     car.car_speed = -car.max_speed
     car.drive_backward()
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/left")
 def left():
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_left()
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/right")
 def right():
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_right()
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/stop")
 def stop():
     car.stop()
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/center_steering")
 def center_steering():
@@ -91,7 +103,7 @@ def linetype():
     if request.method == "POST":
         todo = request.form.get("todo")
         car.line_color = todo
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/p", methods=["POST"])
 def set_p():
@@ -99,7 +111,7 @@ def set_p():
         todo = request.form.get("todo")
         # print(todo)
         car.p = todo
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/i", methods=["POST"])
 def set_i():
@@ -107,7 +119,7 @@ def set_i():
         todo = request.form.get("todo")
         # print("I " ,todo)
         car.i = todo
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/d", methods=["POST"])
 def set_d():
@@ -115,7 +127,7 @@ def set_d():
         todo = request.form.get("todo")
         # print("D ", todo)
         car.d = todo
-    return render_template('index.html')
+    return App.render(render_template('index.html'))
 
 @app.route("/camera_feed")
 def camera_feed():
@@ -123,11 +135,13 @@ def camera_feed():
 
 @app.route("/irsensors",methods=["POST"])
 def irsensors():
-    return render_template('index.html',irlist=car.get_line_state())
+    print(session)
+    # return render_template('index.html',irlist=car.get_line_state())
+    return App.render(render_template('index.html'))
 
 @app.route("/")
 def execute():
-    return render_template("index.html")
+    return App.render(render_template('index.html'))
 
 @socketio.on('disconnect')
 def test_disconnect():
