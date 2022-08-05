@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask import Flask, request, Response, render_template, session
 import AI_Driver.Controllers.CarController as CarController
-# import jyserver.Flask as jsf
+import jyserver.Flask as jsf
 
 car = CarController.CarController()
 
