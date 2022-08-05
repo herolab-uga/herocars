@@ -50,29 +50,29 @@ def control_type():
 
 @app.route("/forward")
 def forward():
-    # car.last_velo_time = time.time()
-    # car.car_speed = car.max_speed
+    car.last_velo_time = time.time()
+    car.car_speed = car.max_speed
     car.drive_forward()
     return ("nothing")
 
 @app.route("/backward")
 def backward():
-    # car.last_velo_time = time.time()
-    # car.car_speed = -car.max_speed
+    car.last_velo_time = time.time()
+    car.car_speed = -car.max_speed
     car.drive_backward()
     return ("nothing")
 
 @app.route("/left")
 def left():
-    # car.last_steer_time = time.time()
-    # car.straight = 0
+    car.last_steer_time = time.time()
+    car.straight = 0
     car.turn_left()
     return ("nothing")
 
 @app.route("/right")
 def right():
-    # car.last_steer_time = time.time()
-    # car.straight = 0
+    car.last_steer_time = time.time()
+    car.straight = 0
     car.turn_right()
     return ("nothing")
 
