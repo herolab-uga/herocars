@@ -70,27 +70,17 @@
     padding:5px;
     width: 250px;
     border-radius: 10%;
-    background-color: rgb(46, 44, 44);
+    background-color: rgb(68, 66, 66);
     color: rgb(192, 186, 186);
     display:flex;
     flex-direction: column;
     text-align: center;
 
   }
-  .box2 {
-    margin:10px;
-    padding:5px;
-    width: 250px;
-    background-color: rgb(46, 44, 44);
-    color: white;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
 
-  }
   #circVals {
     display:flex;
-    justify-content: space-around;
+
   }
 
   .speeds {
@@ -139,7 +129,7 @@
 
   button {
     margin:5px;
-    background-color: rgb(251, 72, 72);
+    background-color: rgb(105, 101, 101);
     color: white;
     height: 50px;
     width: 50%;

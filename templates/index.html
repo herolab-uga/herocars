@@ -19,26 +19,29 @@
     <!-- =================== left side =================== -->
     <div class="left">
       <!-- PID Constant Values -->
-      <div class="box2">
+      <div class="box1">
 
         <div class="speeds">
           <form method="post" id="p-form">
-            <p>p: <span id="pValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderp"
-              name="ptodo" id="ptodo">
+            <p>p: <span id="pValToPrint"></span>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="ptodo" id="ptodo">
+            </p>
           </form>
         </div>
 
         <div class="speeds">
           <form method="post" id="i-form">
-            <p>i: <span id="iValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="slideri"
-              name="itodo" id="itodo">
+            <p>i: <span id="iValToPrint"></span>
+              <input type="range" min="1" max="100" value="50" class="slideri" name="itodo" id="itodo">
+            </p>
           </form>
         </div>
 
         <div class="speeds">
           <form method="post" id="d-form">
-            <p>d: <span id="dValToPrint"></span></p><input type="range" min="1" max="100" value="50" class="sliderd"
-              name="dtodo" id="dtodo">
+            <p>d: <span id="dValToPrint"></span>
+              <input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
+            </p>
           </form>
         </div>
 
@@ -118,15 +121,17 @@
 
         <div class="speeds">
           <form method="post" id="maxSpeed-form">
-            <p>Max Speed: <span id="maxSpeedPrint"></span></p>
+            <p>Max Speed: <span id="maxSpeedPrint"></span>
             <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+          </p>
           </form>
         </div>
 
         <div class="speeds">
           <form method="post" id="minSpeed-form">
-            <p>Min Speed: <span id="minSpeedPrint"></span></p>
+            <p>Min Speed: <span id="minSpeedPrint"></span>
             <input type="range" min="1" max="100" value="50" class="sliderp" name="minSpeed" id="minSpeed">
+          </p>
           </form>
         </div>
 
@@ -177,7 +182,7 @@
       </div>
 
       <!-- IR Tracker Indicators -->
-      <div class="box2">
+      <div class="box1">
         <h2>IR Tracker Indicators</h2>
         <form action="post">
           <div id="circVals" name="irindicator">
@@ -210,10 +215,7 @@
       <!-- Movements -->
       <div class="movements">
         <div class="top">
-          <form>
-            <a href=# id=testF style="width: 25%"><button>FORWARD</button></a>
-          </form>
-
+          <a href=# id=testF style="width: 25%"><button>FORWARD</button></a>
         </div>
         <div class="mid">
           <a href=# id=testL style="width: 25%"><button>LEFT</button></a>
@@ -221,7 +223,6 @@
         </div>
         <div class="bot">
           <a href=# id=testB style="width: 25%"><button>BACKWARD</button></a>
-
         </div>
         <script type=text/javascript>
 
@@ -462,7 +463,7 @@
       </div>
 
       <!-- Line Type -->
-      <div class="box2">
+      <div class="box1">
         <h2>Line Type</h2>
         <div class="speeds">
           <p>Line Color: <span id="blackVwhite">White</span></p>
