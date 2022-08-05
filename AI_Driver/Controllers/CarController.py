@@ -233,7 +233,7 @@ class CarController:
 
     def auton_control_update(self):
         while True:
-            if self._control_type == 1:
+            if self._control_type == "Autonomous":
                 _error = self.calculate_error()
                 correction = self._p * _error + self._i * self._PV + self._d * (self._error -self._prev_error)
                 self._motor_river.Turn(correction)
