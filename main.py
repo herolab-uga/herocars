@@ -20,7 +20,7 @@ socketio = SocketIO(app)
 def min_speed():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.min_speed = todo
+        car.min_speed = int(todo)
         # print("Minimum speed: " , todo)
     return render_template('index.html')
 
@@ -29,7 +29,7 @@ def min_speed():
 def max_speed():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.max_speed = todo
+        car.max_speed = int(todo)
         # print("Maximum speed: " , todo)
     return render_template('index.html')
 
