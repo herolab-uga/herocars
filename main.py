@@ -123,7 +123,7 @@ def camera_feed():
 @app.route("/irsensors",methods=["GET"])
 def irsensors():
     print(request.form.keys())
-    return render_template('index.html')
+    return render_template('index.html'), [1,1,2,3,1]
 
 @app.route("/")
 def execute():
