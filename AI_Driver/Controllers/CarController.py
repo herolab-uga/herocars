@@ -220,9 +220,10 @@ class CarController:
 
         # Get the states of the IR sensors
         LL,LM,MM,RM,RR = self.get_line_state()
-
-        self._error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
-        
+        try:
+            self._error = (4*RR + 2*RM + 0 + -2*LM + -4*LL) / (RR + RM + MM + LM + LL)
+        except ZeroDivisionError:
+            print("not on line")
         if abs(self._error) < 4:
             self._PV += -.0001 * self._error
 
