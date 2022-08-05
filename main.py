@@ -120,7 +120,7 @@ def set_d():
 def camera_feed():
     return Response(car.get_frame(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route("/irsensors",methods=["GET"])
+@app.route("/irsensors",methods=["POST"])
 def irsensors():
     return render_template('index.html',irlist=car.get_line_state())
 
