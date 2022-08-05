@@ -122,8 +122,7 @@ def camera_feed():
 
 @app.route("/irsensors",methods=["GET"])
 def irsensors():
-    print(request.form.keys())
-    return render_template('index.html'), [1,1,2,3,1]
+    return render_template('index.html',irlist=car.get_line_state())
 
 @app.route("/")
 def execute():
