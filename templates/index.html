@@ -196,26 +196,20 @@
 
       // var refInterval = window.setInterval(update, 1000); // 1 second
 
-      // (function update() {
-
-        setInterval($("#circVals").submit(function(e) {
-          e.preventDefault();
-          $.ajax({
+      (function update() {
+        $.ajax({
           type: 'GET',
           url: '/irsensors',
           data: {
-            // circVal: document.getElementById("circvals")
+            // circVal:
           },
           success: function () {
             // alert('saved');
           }
-        })}), 1000);
-        // }).then(function () {
-        //   setTimeout(update, 1000);
-        // });
-        // })
-        
-      // })();
+        }).then(function () {
+          setTimeout(update, 1000);
+        });
+      })();
 
 
 
