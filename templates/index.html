@@ -186,11 +186,11 @@
         <h2>IR Tracker Indicators</h2>
         <form action="post">
           <div id="circVals" name="irindicator">
-            <p>LL</p>
-            <p>LM</p>
-            <p>MM</p>
-            <p>RM</p>
-            <p>RR</p>
+            <p id="ll">LL</p>
+            <p id="lm">LM</p>
+            <p id="mm">MM</p>
+            <p id="rm">RM</p>
+            <p id="rr">RR</p>
           </div>
         </form>
       </div>
@@ -199,46 +199,9 @@
 
     <script>
 
-      // // var refInterval = window.setInterval(update, 1000); // 1 second
-      // var irlist;
-      // (function update() {
-      //   $.ajax({
-      //     type: 'POST',
-      //     url: '/irsensors',
-      //     data: {
-      //       // circVal:
-      //     },
-      //     success: function () {
-      //       console.log(((irlist)))
-      //     }
-      //   }).then(function () {
-      //     setTimeout(update, 1000);
-      //   });
-      // })();
 
 
-
-          // setInterval(function() {
-          //   var x = localStorage.getItem('circVals');
-          //   document.getElementById('circVals').innerHTML = x;
-
-          //   $(document).on('change','#maxSpeed-form',function(e) {
-          //     e.preventDefault();
-          //     $.ajax({
-          //       type:'POST',
-          //       url:'/irsensors',
-          //       data:{
-          //       // todo:sliderMS.value
-          //       },
-          //       success:function()
-          //       {
-          //       // alert('saved');
-          //       }
-          //     });
-          //   });
-
-
-          // }, 1000);
+          setInterval("server.update_ir()",1000);
     </script>
 
 
