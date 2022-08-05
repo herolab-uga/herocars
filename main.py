@@ -34,7 +34,8 @@ def min_speed():
         todo = request.form.get("todo")
         car.min_speed = int(todo)
         # print("Minimum speed: " , todo)
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+        return render_template("index.html")
 
 # needs test
 @app.route("/max_speed", methods=["POST"])
@@ -43,13 +44,15 @@ def max_speed():
         todo = request.form.get("todo")
         car.max_speed = int(todo)
         # print("Maximum speed: " , todo)
-    return App.render(render_template('index.html'))
+    # #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 # needs to be added
 @app.route("/current_speed", methods=["GET"])
 def current_speed():
     if request.method == "GET":
        return str(car.car_speed)
+    return render_template("index.html")
 
 # needs fix
 @app.route("/controltype", methods=["POST"]) 
@@ -58,52 +61,59 @@ def control_type():
         todo = request.form.get("todo")
         # print(todo)
         car.control_type = todo
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/forward")
 def forward():
     car.last_velo_time = time.time()
     car.car_speed = car.max_speed
     car.drive_forward()
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/backward")
 def backward():
     car.last_velo_time = time.time()
     car.car_speed = -car.max_speed
     car.drive_backward()
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/left")
 def left():
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_left()
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/right")
 def right():
     car.last_steer_time = time.time()
     car.straight = 0
     car.turn_right()
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/stop")
 def stop():
     car.stop()
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/center_steering")
 def center_steering():
     car.center_steering()
-    return ("nothing")
+    return render_template("index.html")
 
 @app.route("/linetype", methods=["POST"])
 def linetype():
     if request.method == "POST":
         todo = request.form.get("todo")
         car.line_color = todo
-    return App.render(render_template('index.html'))
+    return render_template("index.html")
+    #return App.render(render_template('index.html'))
 
 @app.route("/p", methods=["POST"])
 def set_p():
@@ -111,7 +121,8 @@ def set_p():
         todo = request.form.get("todo")
         # print(todo)
         car.p = todo
-    return App.render(render_template('index.html'))
+    return render_template("index.html")
+    #return App.render(render_template('index.html'))
 
 @app.route("/i", methods=["POST"])
 def set_i():
@@ -119,7 +130,8 @@ def set_i():
         todo = request.form.get("todo")
         # print("I " ,todo)
         car.i = todo
-    return App.render(render_template('index.html'))
+    return render_template("index.html")
+    #return App.render(render_template('index.html'))
 
 @app.route("/d", methods=["POST"])
 def set_d():
@@ -127,7 +139,8 @@ def set_d():
         todo = request.form.get("todo")
         # print("D ", todo)
         car.d = todo
-    return App.render(render_template('index.html'))
+    return render_template("index.html")
+    #return App.render(render_template('index.html'))
 
 @app.route("/camera_feed")
 def camera_feed():
@@ -137,16 +150,19 @@ def camera_feed():
 def irsensors():
     print(session)
     # return render_template('index.html',irlist=car.get_line_state())
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @app.route("/")
 def execute():
-    return App.render(render_template('index.html'))
+    #return App.render(render_template('index.html'))
+    return render_template("index.html")
 
 @socketio.on('disconnect')
 def test_disconnect():
     car.stop()
     car.center_steering()
+
 
 if __name__ == '__main__':
     host_addr = socket.gethostbyname(socket.gethostname() + ".local")
