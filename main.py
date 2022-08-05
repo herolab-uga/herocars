@@ -26,7 +26,7 @@ class App:
         line_state = car.get_line_state()
         for sensor,index in enumerate(line_state):
             if sensor:
-                self.js.document.getElementById(self.ids[index]).innerHTML.style.color = "green"
+                self.js.document.getElementById(self.ids[index]).style.color = "green"
 
 # needs test
 @app.route("/min_speed", methods=["POST"])
