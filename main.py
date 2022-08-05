@@ -16,16 +16,17 @@ app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
 
-# @jsf.use(app)
-# class App:
-#     def __init__(self):
-#         self.ids = ["ll","lm","mm","rm","rr"]
+@jsf.use(app)
+class App:
+    def __init__(self):
+        self.circVals = ["ll","lm","mm","rm","rr"]
 
-#     def update_ir(self):
-#         line_state = [1,2,3,4,5]
-#         # line_state = car.get_line_state()
-#         for sensor,index in enumerate(line_state):
-#             self.js.document.getElementById(self.ids[index]).innerHTML = "test"
+    def update_ir(self):
+        # line_state = [1,2,3,4,5]
+        line_state = car.get_line_state()
+        for sensor,index in enumerate(line_state):
+            if sensor:
+                self.js.document.getElementById(self.ids[index]).innerHTML.style.color = "green"
 
 # needs test
 @app.route("/min_speed", methods=["POST"])
