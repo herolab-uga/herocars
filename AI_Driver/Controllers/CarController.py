@@ -237,7 +237,7 @@ class CarController:
             if self._control_type == "Autonomous":
                 _error = self.calculate_error()
                 correction = self._p * _error + self._i * self._PV + self._d * (self._error -self._prev_error)
-                self._motor_river.Turn(correction)
+                self._motor_driver.Turn(correction)
                 self._motor_driver.Drive(self.calculate_speed())
 
     def car_auto_stop(self):
