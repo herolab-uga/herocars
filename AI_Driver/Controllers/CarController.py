@@ -16,7 +16,7 @@ class CarController:
 
         self._min_speed = 0
         self._max_speed = 150
-        self._line_color = 1 # 1: white, 0: black
+        self._line_color = "White" # 1: white, 0: black
 
         self._last_velo_time = 0 # last time the car was commanded to drive in manual mode
         self._last_steer_time = 0 # last time the car was commanded steer in manual mode
@@ -28,7 +28,7 @@ class CarController:
         self._prev_error = 0  # _error of last calculation used for Derivative calc
         self._straight = 1     # 1: _straight, 0: not _straight
 
-        self._control_type = 0 # 0:Manual, 1:Auton
+        self._control_type = "Manual" # 0:Manual, 1:Auton
 
         self._PV = 0  # sum of all values errors that the car has experienced
 
@@ -206,7 +206,7 @@ class CarController:
         line_state = [GPIO.input(37), GPIO.input(35), GPIO.input(33), GPIO.input(31), GPIO.input(29)]
 
         # If the line is set to white return the list
-        if self._line_color == "white":
+        if self._line_color == "White":
             return line_state
         # If the line is set to black return the list with the opposite values
         else:
