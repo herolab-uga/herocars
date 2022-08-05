@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 from flask import Flask, request, Response, render_template, session
 import AI_Driver.Controllers.CarController as CarController
-import jyserver.Flask as jsf
+# import jyserver.Flask as jsf
 
 car = CarController.CarController()
 
@@ -16,16 +16,16 @@ app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
 
-@jsf.use(app)
-class App:
-    def __init__(self):
-        self.ids = ["ll","lm","mm","rm","rr"]
+# @jsf.use(app)
+# class App:
+#     def __init__(self):
+#         self.ids = ["ll","lm","mm","rm","rr"]
 
-    def update_ir(self):
-        line_state = [1,2,3,4,5]
-        # line_state = car.get_line_state()
-        for sensor,index in enumerate(line_state):
-            self.js.document.getElementById(self.ids[index]).innerHTML = "test"
+#     def update_ir(self):
+#         line_state = [1,2,3,4,5]
+#         # line_state = car.get_line_state()
+#         for sensor,index in enumerate(line_state):
+#             self.js.document.getElementById(self.ids[index]).innerHTML = "test"
 
 # needs test
 @app.route("/min_speed", methods=["POST"])
