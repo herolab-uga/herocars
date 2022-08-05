@@ -168,7 +168,7 @@ class CarController:
 
     # Gets the speed proportional to the _error
     def calculate_speed(self):
-        self._car_speed = min(abs(int(abs(self._error) * self.maxSpeed /4)) + self.minSpeed, self.maxSpeed)
+        self._car_speed = min(abs(int(abs(self._error) * self._max_speed /4)) + self._min_speed, self._max_speed)
         return self._car_speed
 
     # Reads the frame from the camera
