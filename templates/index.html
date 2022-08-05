@@ -197,7 +197,10 @@
       // var refInterval = window.setInterval(update, 1000); // 1 second
 
       (function update() {
-        $.ajax({
+
+        $("#circVals").submit(function(e) {
+          e.preventDefault();
+          $.ajax({
           type: 'GET',
           url: '/irsensors',
           data: {
@@ -209,6 +212,8 @@
         }).then(function () {
           setTimeout(update, 1000);
         });
+        })
+        
       })();
 
 
