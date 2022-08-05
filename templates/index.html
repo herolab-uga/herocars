@@ -180,7 +180,7 @@
       <div class="box2">
         <h2>IR Tracker Indicators</h2>
         <form action="post">
-          <div id="circVals">
+          <div id="circVals" name="irindicator">
             <p>LL</p>
             <p>LM</p>
             <p>MM</p>
@@ -201,7 +201,7 @@
           type: 'GET',
           url: '/irsensors',
           data: {
-            circVal: "Hi"
+            circVal: document.getElementById("circvals");
           },
           success: function () {
             // alert('saved');
