@@ -19,7 +19,7 @@ socketio = SocketIO(app)
 @jsf.use(app)
 class App:
     def __init__(self):
-        self.circVals = ["ll","lm","mm","rm","rr"]
+        self.ids = ["ll","lm","mm","rm","rr"]
 
     def update_ir(self):
         # line_state = [1,2,3,4,5]
