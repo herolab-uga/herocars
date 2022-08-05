@@ -23,6 +23,7 @@ class App:
 
     def update_ir(self):
         line_state = car.get_line_state()
+        print(car.line_color)
         print(line_state)
         # for sensor,index in enumerate(line_state):
         #     if sensor:
