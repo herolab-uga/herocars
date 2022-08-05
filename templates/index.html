@@ -196,9 +196,9 @@
 
       // var refInterval = window.setInterval(update, 1000); // 1 second
 
-      (function update() {
+      // (function update() {
 
-        $("#circVals").submit(function(e) {
+        setInterval($("#circVals").submit(function(e) {
           e.preventDefault();
           $.ajax({
           type: 'GET',
@@ -209,12 +209,13 @@
           success: function () {
             // alert('saved');
           }
-        }).then(function () {
-          setTimeout(update, 1000);
-        });
-        })
+        })}), 1000);
+        // }).then(function () {
+        //   setTimeout(update, 1000);
+        // });
+        // })
         
-      })();
+      // })();
 
 
 
