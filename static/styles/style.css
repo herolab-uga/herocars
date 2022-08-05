@@ -77,21 +77,6 @@
     text-align: center;
 
   }
-  .box2 {
-    margin:10px;
-    padding:5px;
-    width: 250px;
-    background-color: rgb(46, 44, 44);
-    color: white;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-
-  }
-  #circVals {
-    display:flex;
-    justify-content: space-around;
-  }
 
   .speeds {
     display: flex;
