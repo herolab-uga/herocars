@@ -23,13 +23,11 @@ class App:
 
     def update_ir(self):
         line_state = car.get_line_state()
-        print(car.line_color)
-        print(line_state)
-        # for sensor,index in enumerate(line_state):
-        #     if sensor:
-        #         self.js.document.getElementById(self.ids[index]).style.color = "yellow"
-        #     else:
-        #         self.js.document.getElementById(self.ids[index]).style.color = "white"
+        for sensor,index in enumerate(line_state):
+            if sensor:
+                self.js.document.getElementById(self.ids[index]).style.color = "yellow"
+            else:
+                self.js.document.getElementById(self.ids[index]).style.color = "white"
 # needs test
 @app.route("/min_speed", methods=["POST"])
 def min_speed():
