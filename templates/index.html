@@ -199,7 +199,13 @@
 
     <script>
       
-      setTimeout("server.update_ir()",2000);
+      
+
+      async function updateIR() {
+        setInterval("server.update_ir()",2000);
+      }
+
+      updateIR();
     </script>
 
 
