@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body onload="server.update_ir()">
 
   <div class="game">
 
@@ -198,8 +198,7 @@
     </div>
 
     <script>
-      
-      server.update_ir();      
+
 
       // async function updateIR() {
       //   setInterval("server.update_ir()",1000);
