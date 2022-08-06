@@ -8,6 +8,7 @@ from flask_socketio import SocketIO
 from flask import Flask, request, Response, render_template, session
 import AI_Driver.Controllers.CarController as CarController
 import jyserver.Flask as jsf
+import threading
 
 car = CarController.CarController()
 
@@ -20,14 +21,17 @@ socketio = SocketIO(app)
 class App:
     def __init__(self):
         self.ids = ["ll","lm","mm","rm","rr"]
+        self.ir_update_thread = threading.Thread(target=self.update_ir,args=(),daemon=True)
+        self.ir_update_thread.start()
 
     def update_ir(self):
-        line_state = car.get_line_state()
-        for sensor,index in enumerate(line_state):
-            if sensor:
-                self.js.document.getElementById(self.ids[index]).style.color = "yellow"
-            else:
-                self.js.document.getElementById(self.ids[index]).style.color = "white"
+        while True:
+            line_state = car.get_line_state()
+            for sensor,index in enumerate(line_state):
+                if sensor:
+                    self.js.document.getElementById(self.ids[index]).style.color = "yellow"
+                else:
+                    self.js.document.getElementById(self.ids[index]).style.color = "white"
 # needs test
 @app.route("/min_speed", methods=["POST"])
 def min_speed():
