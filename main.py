@@ -22,6 +22,9 @@ class App:
     def __init__(self):
         self.ids = ["ll","lm","mm","rm","rr"]
         self.ir_update_thread = threading.Thread(target=self.update_ir,args=(),daemon=True)
+        
+
+    def start_thread(self):
         self.ir_update_thread.start()
 
     def update_ir(self):
