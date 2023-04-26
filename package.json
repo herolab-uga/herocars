@@ -1,0 +1,29 @@
+{
+  "name": "herocars",
+  "version": "1.0.0",
+  "description": "This repo consists of details and open-sourced codes and materials of the HeRoCars - a Robotics Learning Technology developed at the Heterogeneous Robotics Lab of the University of Georgia. HeRoCars is a simulator-hardware integrative framework consisting of a game-inspired Unity-based Simulator module and a low-cost hardware module of robotized RC cars.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/herolab-uga/herocars.git"
+  },
+  "author": "Michael Starks, Mia Savelli, and",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/herolab-uga/herocars/issues"
+  },
+  "homepage": "https://github.com/herolab-uga/herocars#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "esm": "^3.2.25",
+    "express": "^4.18.1",
+    "mongodb": "^2.2.33",
+    "pi-camera": "^1.7.0",
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {}
+}

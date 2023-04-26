@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LTG Cars</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- make buttons send continuously -->
+  <!-- //192.168.1.33 -->
+
+</head>
+
+<body onload="server.start_thread()">
+
+  <div class="game">
+
+
+    <!-- =================== left side =================== -->
+    <div class="left">
+      <!-- PID Constant Values -->
+      <div class="box1">
+
+        <div class="speeds">
+          <form method="post" id="p-form">
+            <p>p: <span id="pValToPrint"></span>
+              <input type="range" min="1" max="100" value="50" class="sliderp" name="ptodo" id="ptodo">
+            </p>
+          </form>
+        </div>
+
+        <div class="speeds">
+          <form method="post" id="i-form">
+            <p>i: <span id="iValToPrint"></span>
+              <input type="range" min="1" max="100" value="50" class="slideri" name="itodo" id="itodo">
+            </p>
+          </form>
+        </div>
+
+        <div class="speeds">
+          <form method="post" id="d-form">
+            <p>d: <span id="dValToPrint"></span>
+              <input type="range" min="1" max="100" value="50" class="sliderd" name="dtodo" id="dtodo">
+            </p>
+          </form>
+        </div>
+
+
+        <script type="text/javascript">
+
+          // purely aesthetics
+          var p = document.getElementById("ptodo");
+          var outputP = document.getElementById("pValToPrint");
+          var i = document.getElementById("itodo");
+          var outputI = document.getElementById("iValToPrint");
+          var d = document.getElementById("dtodo");
+          var outputD = document.getElementById("dValToPrint");
+          outputP.innerHTML = p.value;
+          outputI.innerHTML = i.value;
+          outputD.innerHTML = d.value;
+
+          p.oninput = function () {
+            outputP.innerHTML = this.value;
+          }
+          i.oninput = function () {
+            outputI.innerHTML = this.value;
+          }
+          d.oninput = function () {
+            outputD.innerHTML = this.value;
+          }
+
+          // actually what gets sent to main.py
+          $(document).on('change', '#p-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/p',
+              data: {
+                todo: p.value
+              },
+              success: function () {
+                //                  alert(p.value)
+              }
+            })
+          });
+
+          $(document).on('change', '#i-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/i',
+              data: {
+                todo: i.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+          $(document).on('change', '#d-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/d',
+              data: {
+                todo: d.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+        </script>
+      </div>
+
+      <!-- Speed -->
+      <div class="box1">
+        <h2>Current Speed</h2>
+
+        <div class="speeds">
+          <form method="post" id="maxSpeed-form">
+            <p>Max Speed: <span id="maxSpeedPrint"></span>
+            <input type="range" min="1" max="100" value="50" class="sliderp" name="maxSpeed" id="maxSpeed">
+          </p>
+          </form>
+        </div>
+
+        <div class="speeds">
+          <form method="post" id="minSpeed-form">
+            <p>Min Speed: <span id="minSpeedPrint"></span>
+            <input type="range" min="1" max="100" value="50" class="sliderp" name="minSpeed" id="minSpeed">
+          </p>
+          </form>
+        </div>
+
+        <script>
+          var sliderMS = document.getElementById("maxSpeed");
+          var outputMS = document.getElementById("maxSpeedPrint");
+          var sliderMiS = document.getElementById("minSpeed");
+          var outputMiS = document.getElementById("minSpeedPrint");
+          outputMS.innerHTML = sliderMS.value;
+          outputMiS.innerHTML = sliderMiS.value;
+
+          sliderMS.oninput = function () { // see if needs this???
+            outputMS.innerHTML = this.value;
+          }
+          sliderMiS.oninput = function () {
+            outputMiS.innerHTML = this.value;
+          }
+
+          $(document).on('change', '#maxSpeed-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/max_speed',
+              data: {
+                todo: sliderMS.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+          $(document).on('change', '#minSpeed-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: '/min_speed',
+              data: {
+                todo: sliderMiS.value
+              },
+              success: function () {
+                // alert('saved');
+              }
+            })
+          });
+
+        </script>
+      </div>
+
+      <!-- IR Tracker Indicators -->
+      <div class="box1">
+        <h2>IR Tracker Indicators</h2>
+        <form action="post">
+          <div id="circVals" name="irindicator">
+            <p id="ll">LL</p>
+            <p id="lm">LM</p>
+            <p id="mm">MM</p>
+            <p id="rm">RM</p>
+            <p id="rr">RR</p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <script>
+
+
+      // async function updateIR() {
+      //   setInterval("server.update_ir()",1000);
+      // }
+
+      // updateIR();
+    </script>
+
+
+    <!-- =================== center =================== -->
+    <div class="center">
+      <!-- Camera -->
+      <div class="imageHolder" style="margin-top:50px;">
+        <img src="{{ url_for('camera_feed') }}" width="100%">
+      </div>
+
+      <!-- Movements -->
+      <div class="movements">
+        <div class="top">
+          <a href=# id=testF style="width: 25%"><button>FORWARD</button></a>
+        </div>
+        <div class="mid">
+          <a href=# id=testL style="width: 25%"><button>LEFT</button></a>
+          <a href=# id=testR style="width: 25%"><button>RIGHT</button></a>
+        </div>
+        <div class="bot">
+          <a href=# id=testB style="width: 25%"><button>BACKWARD</button></a>
+        </div>
+        <script type=text/javascript>
+
+
+                      $(function() {
+                        $('a#testF').on('mousedown', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/forward',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testF').on('mouseup', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/stop',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+
+                      $(function() {
+                        $('a#testB').on('mousedown', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/backward',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testB').on('mouseup', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/stop',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testR').on('mousedown', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/right',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testR').on('mouseup', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/center_steering',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testL').on('mousedown', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/left',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+                      $(function() {
+                        $('a#testL').on('mouseup', function(e) {
+                          e.preventDefault()
+                          $.getJSON('/center_steering',
+                              function(data) {
+                            //do nothing
+                          });
+                          return false;
+                        });
+                      });
+
+
+                      // key presses
+
+                      var log;
+
+                      $(function() {
+                        document.addEventListener('keydown', function(e) {
+                          kC = e.keyCode;
+
+                          if (kC == '38' || kC == '87') {
+                            e.preventDefault()
+                            $.getJSON('/forward',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          } else if (kC == '40' || kC == '83') {
+                            e.preventDefault()
+                            $.getJSON('/backward',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          } else if (kC == '37' || kC == '65') {
+                            e.preventDefault()
+                            $.getJSON('/left',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          } else if (kC == '39' || kC == '68') {
+                            e.preventDefault()
+                            $.getJSON('/right',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          } else if (kC == '13') {
+                            e.preventDefault()
+                            $.getJSON('/center_steering',
+                                function(data) {
+                              //do nothing
+                            });
+                            $.getJSON('/stop',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                          }
+
+                          
+                            
+                        });
+                    });
+                    $(function() {
+                      document.addEventListener('keyup', function(e) {
+                        e.preventDefault()
+                            $.getJSON('/center_steering',
+                                function(data) {
+                              //do nothing
+                            });
+                            $.getJSON('/stop',
+                                function(data) {
+                              //do nothing
+                            });
+                            return false;
+                      })
+                    }); 
+                      
+
+          </script>
+      </div>
+    </div>
+
+
+    <!-- =================== right side =================== -->
+    <div class="right">
+      <!-- Menu Buttons -->
+      <div class="box1">
+        <div class="speeds">
+          <button>Menu</button>
+          <button id="resetTime">Reset Race</button>
+        </div>
+        <div class="speeds">
+          <button id="startTime">Start Race</button>
+          <button id="stopTime">Stop Race</button>
+        </div>
+
+      </div>
+
+      <!-- Current Lap Time -->
+      <div class="box1">
+        <h2>Current Lap Time</h2>
+        <p><span id="seconds">00</span>:<span id="tens">00</span></p>
+
+        <script>
+          window.onload = function () {
+
+            var seconds = 00;
+            var tens = 00;
+            var appendTens = document.getElementById("tens")
+            var appendSeconds = document.getElementById("seconds")
+            var buttonStart = document.getElementById('startTime');
+            var buttonStop = document.getElementById('stopTime');
+            var buttonReset = document.getElementById('resetTime');
+            var Interval;
+
+            buttonStart.onclick = function () {
+              clearInterval(Interval);
+              Interval = setInterval(startTimer, 10);
+            }
+
+            buttonStop.onclick = function () {
+              clearInterval(Interval);
+            }
+
+            buttonReset.onclick = function () {
+              clearInterval(Interval);
+              tens = "00";
+              seconds = "00";
+              appendTens.innerHTML = tens;
+              appendSeconds.innerHTML = seconds;
+            }
+
+            function startTimer() {
+              tens++;
+
+              if (tens <= 9) {
+                appendTens.innerHTML = "0" + tens;
+              }
+
+              if (tens > 9) {
+                appendTens.innerHTML = tens;
+
+              }
+
+              if (tens > 99) {
+                console.log("seconds");
+                seconds++;
+                appendSeconds.innerHTML = "0" + seconds;
+                tens = 0;
+                appendTens.innerHTML = "0" + 0;
+              }
+
+              if (seconds > 9) {
+                appendSeconds.innerHTML = seconds;
+              }
+
+            }
+          }
+        </script>
+      </div>
+
+      <!-- Line Type -->
+      <div class="box1">
+        <h2>Line Type</h2>
+        <div class="speeds">
+          <p>Line Color: <span id="blackVwhite">White</span></p>
+          <label class="switch">
+            <input type="checkbox" value="White" id="blackorwhite">
+            <span class="slider"></span>
+          </label>
+          <script type=text/javascript>
+              var lineType = document.getElementById('blackorwhite');
+              var linePost = document.getElementById('blackVwhite');
+              function changeLineType() {
+                linePost.innerHTML = lineType.value;
+
+                if (lineType.value == "Black") {
+                  lineType.value = "White";
+                  linePost.innerHTML = lineType.value;
+                  return "/0";
+                } else if (lineType.value == "White") {
+                  lineType.value = "Black";
+                  linePost.innerHTML = lineType.value;
+                  return "/1";
+                }
+
+              }
+
+              $(function() {
+                $('input#blackorwhite').on('change', function(e) {
+                  let d = changeLineType();
+                  e.preventDefault()
+                  $.ajax({
+                    type:'POST',
+                    url:'/linetype',
+                    data:{
+                    todo:lineType.value
+                    },
+                    success:function()
+                    {
+                    }
+                  })
+                });
+              });
+            </script>
+        </div>
+
+      </div>
+
+      <!-- Controls Modes -->
+      <div class="box1">
+        <h2>Control Modes</h2>
+        <div class="speeds">
+          <p>Type: <span id="controlmode">Manual</span></p>
+          <label class="switch">
+            <input type="checkbox" value="Manual" id="manorauton">
+            <span class="slider"></span>
+          </label>
+          <script type=text/javascript>
+             var controlType = document.getElementById('manorauton');
+              var controlPost = document.getElementById('controlmode');
+              function changeControlType() {
+                controlPost.innerHTML = controlType.value;
+
+                if (controlType.value == "Manual") {
+                  controlType.value = "Autonomous";
+                  controlPost.innerHTML = controlType.value;
+                  // return "/0";
+                } else if (controlType.value == "Autonomous") {
+                  controlType.value = "Manual";
+                  controlPost.innerHTML = controlType.value;
+                  // return "/1";
+                }
+
+              }
+
+              $(function() {
+                $('input#manorauton').on('change', function(e) {
+                  let d = changeControlType();
+                  e.preventDefault();
+                  $.ajax({
+                    type:'POST',
+                    url:'/controltype',
+                    data:{
+                    todo:controlType.value
+                    },
+                    success:function()
+                    {
+                    }
+                  })
+                });
+              });
+            </script>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HeRo Lab Logo -->
+  <div class="bottom">
+    <img src="{{ url_for('static',filename='styles/img/herolab_newlogo_whitebg.png') }}">
+
+  </div>
+
+</body>
+
+</html>
