@@ -28,7 +28,7 @@ class CarController:
         self._prev_error = 0  # _error of last calculation used for Derivative calc
         self._straight = 1     # 1: _straight, 0: not _straight
 
-        self._control_type = "Manual" # 0:Manual, 1:Auton
+        self._control_type = "Auton" # 0:Manual, 1:Auton
 
         self._PV = 0  # sum of all values errors that the car has experienced
 
