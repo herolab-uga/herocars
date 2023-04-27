@@ -28,7 +28,7 @@ class CarController:
         self._prev_error = 0  # _error of last calculation used for Derivative calc
         self._straight = 1     # 1: _straight, 0: not _straight
 
-        self._control_type = "Auton" # 0:Manual, 1:Auton
+        self._control_type = 0 # 0:Manual, 1:Auton
 
         self._PV = 0  # sum of all values errors that the car has experienced
 
@@ -174,7 +174,7 @@ class CarController:
     # Reads the frame from the camera
     def read_camera(self):
         # Create the video capture object
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(-1)
 
         # Loop until the camera is open
         while not cap.isOpened():
@@ -234,7 +234,7 @@ class CarController:
 
     def auton_control_update(self):
         while True:
-            if self._control_type == "Autonomous":
+            if self._control_type == 1:
                 _error = self.calculate_error()
                 correction = self._p * _error + self._i * self._PV + self._d * (self._error -self._prev_error)
                 self._motor_driver.Turn(correction)
@@ -242,11 +242,12 @@ class CarController:
 
     def car_auto_stop(self):
         while True:
-            if self._control_type == 0 and time.time() - self._last_velo_time > .05 and not self._car_speed == 0 :
-                self.stop()
-            if self._control_type == 0 and time.time() - self._last_steer_time > .05 and not self._straight:
-                self._straight = 1
-                self.center_steering()
+            if self._control_type == 0: 
+                if time.time() - self._last_velo_time > .05 and not self._car_speed == 0 :
+                    self.stop()
+                if time.time() - self._last_steer_time > .05 and not self._straight:
+                    self._straight = 1
+                    self.center_steering()
             time.sleep(.01)
 
     def turn_left(self):
@@ -263,7 +264,7 @@ class CarController:
     
     def stop(self):
         self._car_speed = 0
-        self._motor_driver.ManualDriveStop()
+        self._motor_driver.Stop()
     
     def center_steering(self):
         self._motor_driver.ManualSteerStop()

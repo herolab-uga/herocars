@@ -64,9 +64,8 @@ def current_speed():
 @app.route("/controltype", methods=["POST"]) 
 def control_type():
     if request.method == "POST":
-        todo = request.form.get("todo")
-        # print(todo)
-        car.control_type = todo
+        car.control_type = request.form.get("todo")
+        car.stop()
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/forward")
