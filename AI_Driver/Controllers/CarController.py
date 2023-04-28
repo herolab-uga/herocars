@@ -14,25 +14,32 @@ class CarController:
         # Autohat Object
         self._motor_driver = AutoPhatMD()
 
-        self._min_speed = 0
-        self._max_speed = 150
-        self._line_color = "White" # 1: white, 0: black
+        self.control_variables ={
+            "line_color":0,         # 1: white, 0: black
+            "straight":1,
+            "control_type":0        # 0:Manual, 1:Auton
+        }
 
-        self._last_velo_time = 0 # last time the car was commanded to drive in manual mode
-        self._last_steer_time = 0 # last time the car was commanded steer in manual mode
+        self.speed = {
+            "min":0,
+            "max":150,
+            "current_speed":0
+        }
 
-        self._p = 43       # Proportion value
-        self._i = 1        # Integral Step value
-        self._d = 13       # Derivative Step Value
-        self._error = 0      # amount of _error on the line the car is experiencing
-        self._prev_error = 0  # _error of last calculation used for Derivative calc
-        self._straight = 1     # 1: _straight, 0: not _straight
+        self.last_times = {
+            "last_velo_time":0,
+            "last_steer_time":0
+        }
 
-        self._control_type = 0 # 0:Manual, 1:Auton
-
-        self._PV = 0  # sum of all values errors that the car has experienced
-
-        self._car_speed = 0 # speed of the car
+        # Sets the PID values for the car
+        self.pid_values = {
+            "p":50,
+            "i":50,
+            "d":50,
+            "errors":0,             # amount of _error on the line the car is experiencing
+            "prev_error":0,         # _error of last calculation used for Derivative calc
+            "PV":0
+        }
 
         self._camera_queue = queue.Queue(maxsize=1)
 
@@ -53,118 +60,6 @@ class CarController:
         # # Create stop thread
         stop_thread = threading.Thread(target=self.car_auto_stop,args=(),daemon=True)
         stop_thread.start()
-
-    # Create getter and setter methods for the last_time variable
-    @property
-    def last_velo_time(self):
-        return self.last_velo_time
-
-    @last_velo_time.setter
-    def last_velo_time(self, value):
-        self._last_velo_time = value
-
-    # Create getter and setter methods for the _last_steer_time variable
-    @property
-    def last_steer_time(self):
-        return self._last_steer_time
-
-    @last_steer_time.setter
-    def last_steer_time(self, value):
-        self._last_steer_time = value
-
-    # Create getter and setter methods for the car's _p, _i, and _d
-    @property
-    def p(self):
-        return self._p
-
-    @p.setter
-    def p(self, value):
-        self._p = value
-
-    @property
-    def i(self):
-        return self._i
-
-    @i.setter
-    def i(self, value):
-        self._i = value
-
-    @property
-    def d(self):
-        return self._d
-
-    @d.setter
-    def d(self, value):
-        self._d = value
-
-    # Create getter and setter methods for the car's _car_speed
-    @property
-    def car_speed(self):
-        return self._car_speed
-
-    @car_speed.setter
-    def car_speed(self, value):
-        self._car_speed = value
-
-    # Create getter and setter methods for the car's _line_color
-    @property
-    def line_color(self):
-        return self._line_color
-
-    @line_color.setter
-    def line_color(self, value):
-        self._line_color = value
-
-    # Create getter and setter methods for the car's _error
-    @property
-    def error(self):
-        return self._error
-
-    @error.setter
-    def error(self, value):
-        self._error = value
-
-    # Create getter and setter methods for the car's _min_speed
-    @property
-    def min_speed(self):
-        return self._min_speed
-
-    @min_speed.setter
-    def min_speed(self, value):
-        self._min_speed = value
-    
-    # Create getter and setter methods for the car's _max_speed
-    @property
-    def max_speed(self):
-        return self._max_speed
-    
-    @max_speed.setter
-    def max_speed(self, value):
-        self._max_speed = value
-
-    # Create getter and setter methods for the car's _control_type
-    @property
-    def control_type(self):
-        return self._control_type
-    
-    @control_type.setter
-    def control_type(self, value):
-        self._control_type = value
-
-    # Create getter for the camera frame
-    @property
-    def camera_frame(self):
-        return self._camera_frame
-
-    # Create getter for the _straight variable
-    @property
-    def straight(self):
-        return self._straight 
-
-    # Create setter for the _straight variable
-    @straight.setter
-    def straight(self, value):
-        self._straight = value
 
     # Gets the speed proportional to the _error
     def calculate_speed(self):

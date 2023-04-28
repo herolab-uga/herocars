@@ -40,7 +40,7 @@ class App:
 def min_speed():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.min_speed = int(todo)
+        car.speed["min"] = int(todo)
         # print("Minimum speed: " , todo)
     return App.render(render_template('index.html')) # return render_template("index.html")
 
@@ -49,7 +49,7 @@ def min_speed():
 def max_speed():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.max_speed = int(todo)
+        car.speed["max"] = int(todo)
         # print("Maximum speed: " , todo)
     return App.render(render_template('index.html')) # return render_template("index.html")
 
@@ -57,44 +57,44 @@ def max_speed():
 @app.route("/current_speed", methods=["GET"])
 def current_speed():
     if request.method == "GET":
-       return str(car.car_speed)
+       return str(car.speed["current_speed"])
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 # needs fix
 @app.route("/controltype", methods=["POST"]) 
 def control_type():
     if request.method == "POST":
-        car.control_type = request.form.get("todo")
+        car.control_variables["control_type"] = request.form.get("todo")
         car.stop()
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/forward")
 def forward():
-    car.last_velo_time = time.time()
-    car.car_speed = car.max_speed
+    car.last_times["last_velo_time"] = time.time()
+    car.speed["current_speed"] = car.speed["max"]
     car.drive_forward()
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/backward")
 def backward():
-    car.last_velo_time = time.time()
-    car.car_speed = -car.max_speed
+    car.last_times["last_velo_time"] = time.time()
+    car.speed["current_speed"] = -car.speed["max"]
     car.drive_backward()
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 
 @app.route("/left")
 def left():
-    car.last_steer_time = time.time()
-    car.straight = 0
+    car.last_times["last_steer_time"] = time.time()
+    car.control_variables["straight"] = 0
     car.turn_left()
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 
 @app.route("/right")
 def right():
-    car.last_steer_time = time.time()
-    car.straight = 0
+    car.last_times["last_steer_time"] = time.time()
+    car.control_variables["straight"] = 0
     car.turn_right()
     return App.render(render_template('index.html')) # return render_template("index.html")
 
@@ -114,7 +114,7 @@ def center_steering():
 def linetype():
     if request.method == "POST":
         todo = request.form.get("todo")
-        car.line_color = todo
+        car.control_variables["line_color"] = todo
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/p", methods=["POST"])
@@ -122,7 +122,7 @@ def set_p():
     if request.method == "POST":
         todo = request.form.get("todo")
         # print(todo)
-        car.p = todo
+        car.pid_values["p"] = todo
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/i", methods=["POST"])
@@ -130,7 +130,7 @@ def set_i():
     if request.method == "POST":
         todo = request.form.get("todo")
         # print("I " ,todo)
-        car.i = todo
+        car.pid_values["i"] = todo
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/d", methods=["POST"])
@@ -138,7 +138,7 @@ def set_d():
     if request.method == "POST":
         todo = request.form.get("todo")
         # print("D ", todo)
-        car.d = todo
+        car.pid_values["d"] = todo
     return App.render(render_template('index.html')) # return render_template("index.html")
 
 @app.route("/camera_feed")
