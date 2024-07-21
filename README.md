@@ -1,4 +1,4 @@
-# herocars
+# HeRoCars Project
 This repo consists of details and open-sourced codes and materials of the HeRoCars - a Robotics Learning Technology developed at the Heterogeneous Robotics Lab of the University of Georgia. HeRoCars is a simulator-hardware integrative framework consisting of a game-inspired Unity-based Simulator module and a low-cost hardware module of robotized RC cars. 
 
 Go to [Wiki page](https://github.com/herolab-uga/herocars/wiki) for more details.
@@ -7,8 +7,8 @@ Go to [Wiki page](https://github.com/herolab-uga/herocars/wiki) for more details
 In this research, we focus on innovation in low-cost, open, intuitive learning and  education  methodologies  for  teaching  Robotics,  AI,  and  related  subjects. Here,  we  integrate  the  use  of  games  (e.g.,  Unity simulator  tool  for  testing robotic algorithms) and toys (RC vehicles converted to innovative robot plat-forms) in the proposed project. We first transform (robotize) a commercial RC car into a programmable car capable of sensing its environment through cameras and IR sensors and moving on a race track on its own using a microcomputer unit. Then, we develop a game-inspired Unity-based simulator for the car. Both the real car and the simulator are integrated in terms of the same educational modules that help teach and learn Robotics and AI concepts such as lane following and motor control.
 
 
-## What you will learn from this project?
-This project is jampacked with cool ideas, interesting technologies, and interactive activities for the user to take part in! One major thing you will learn about is AI! AI comes in many shapes and sizes and has a very broad range of possibilities. For this project, we will be discussing a very popular AI that is common in self-driving cars around the world! That AI model is a PID controller or a proportional–integral–derivative controller . A PID controller consist of 3 calculations that are then combined together to give you a smooth decision tree. Ever wonder why your air conditioner doesn't constantly make the temperature way colder the moment the temperature goes ever so slightly below the set temp? The reason is many of them use a PID controller to help smooth out the temperature pattern to keep the temperature consistent without constantly over shooting the desired temperature. We will break the PID controller into 3 parts and describe what each element does, how it affects decisions, and how this can be applied into an RC car which we will make here shortly. But first, we must learn what an error is!
+## What will you learn from this project?
+This project is jampacked with cool ideas, interesting technologies, and interactive activities for the user to take part in! One major thing you will learn about is AI! AI comes in many shapes and sizes and has a very broad range of possibilities. For this project, we will be discussing a very popular AI that is common in self-driving cars around the world! That AI model is a PID controller or a proportional–integral–derivative controller . A PID controller consist of 3 calculations that are then combined together to give you a smooth decision tree. Ever wonder why your air conditioner doesn't constantly make the temperature way colder the moment the temperature goes ever so slightly below the set temp? The reason is that many of them use a PID controller to help smooth out the temperature pattern and keep the temperature consistent without constantly overshooting the desired temperature. We will break the PID controller into 3 parts and describe what each element does, how it affects decisions, and how this can be applied into an RC car which we will make here shortly. But first, we must learn what an error is!
 
 ## Basics of PID and Error
 [Click Here](https://github.com/herolab-uga/herocars/wiki/PID-Controller-and-Error) to learn about the PID controller and the concept of Error! You should fully read this before moving on for these two concepts are the main driving ideas behind this project.
@@ -56,10 +56,10 @@ This project is a part of a Learning Technology Grant (LTG) project at the Heter
 
 Please contact hero at uga . edu for any queries
 
-http://hero.uga.edu/
+https://hero.uga.edu/
 
 <p align="center">
-<img src="http://hero.uga.edu/wp-content/uploads/2021/04/herolab_newlogo_whitebg.png" width="300">
+<img src="https://herolab.org/wp-content/uploads/2021/04/herolab_newlogo_whitebg.png" width="300">
 </p>
 
 
